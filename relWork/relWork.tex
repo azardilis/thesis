@@ -1,0 +1,189 @@
+\documentclass[phd]{infthesis}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[british]{babel}
+\usepackage{microtype}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage[english=british,autopunct=false]{csquotes}
+\usepackage[natbib=true,style=authoryear-comp,maxbibnames=6]{biblatex}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{wrapfig}
+\usepackage{xfrac}
+\usepackage{xspace}
+\usepackage{mathcommon}
+\usepackage[sc]{mathpazo}
+\usepackage{hyperref}
+\usepackage{expl3}
+\usepackage{enumitem}
+
+\frenchspacing
+
+% Bibliography
+\addbibresource{relWork.bib}
+\bibliography{relWork}
+
+% Text
+\newcommand{\ie}{i.e.\xspace}
+\newcommand{\eg}{e.g.\xspace}
+
+% Referencing
+\newcommand{\chp}[1]{\S\ref{chp:#1}}
+\newcommand{\sct}[1]{\S\ref{sec:#1}}
+\newcommand{\subsct}[1]{\S\ref{subsec:#1}}
+\newcommand{\eqn}[1]{Eq.~\ref{eq:#1}}
+\newcommand{\eqns}[2]{Eq. \ref{eq:#1} and \ref{eq:#2}}
+\newcommand{\lem}[1]{Lemma~\ref{lemma:#1}}
+\newcommand{\lems}[2]{Lemmas \ref{lemma:#1} and \ref{lemma:#2}}
+\newcommand{\thm}[1]{Th.~\ref{thm:#1}}
+\newcommand{\fig}[1]{Fig.~\ref{fig:#1}}
+\newcommand{\diagram}[1]{diagram~\ref{eq:#1}}
+\newcommand{\app}[1]{Appendix~\ref{app:#1}}
+\newcommand{\mcite}[1]{\textcolor{gray}{#1}} % missing cite
+\newcommand{\defn}[1]{Def.~\ref{def:#1}}
+\newcommand{\prop}[1]{Prop.~\ref{prop:#1}}
+
+% Math
+\renewcommand{\tuple}[1]{\left(#1\right)}
+\DeclareMathOperator*{\expn}{exp}
+\renewcommand*{\exp}[1]{e^{\,#1}} % \mathrm{e}^{#1}}
+\renewcommand{\qedsymbol}{\ensuremath{\blacksquare}}
+\newcommand{\partialto}{\rightharpoonup}
+\newcommand{\id}{\vec{1}} % identity function
+
+% Other stuff
+\newcommand{\maybe}[1]{\textcolor{gray}{#1}}
+\newcommand{\todo}[1]{\textcolor{red}{TODO: #1}}
+
+% Abstract
+\begin{document}
+
+\chapter{Related Work}
+\label{chp:oc}
+
+Formal models of physical systems serve two roles (i) documentation and
+communication of our understanding (ii) formal analysis like simulation. The
+most common language for describing the natural world is dynamical systems
+theory. It has a long tradition in Physics starting from Newton, Poincare
+etc. It relies on a conceptual abstraction where instead of describing the
+objects that form the physical world, it describes quantifiable properties of
+such objects. For example, when explaining the movement of planets one does not
+talk about the moon but rather about the position of the moon. Then the
+evolution of the system in time (or space) is described by (partial)
+differential (or difference) equations that state the change in the numerical
+values of the quantifiable properties that form the system as they interact with
+each other. For example, one
+might write the equation of position of a particle or a molecule diffusing in a
+medium. This abstraction of avoiding dealing with the objects directly but
+rather with some numerical variables representing their properties has been at
+the core of the success of dynamical systems theory. A big ensemble of methods
+have been developed for the analysis of such systems, which one gets for free if
+they choose to describe a physical system of interest in these terms.
+
+Dynamical systems languages have not been as successful in scenarios where the
+structure of the  described system is not static. While one might be able to
+find a quantifiable property of the system to describe, in cases where the
+question posed is about the changing structure itself or about how it gives rise
+to other dynamics, such an abstraction is not adequate. Consider for example
+plant development and its effect on carbon intake for the entire
+plant. While in some cases writing an equation for the size of the plant is
+enough, a truly mechanistic understanding requires treating the developing structure that
+gives rise to plant size explicitly. How would one write equations though for the size
+of the leaves, for example, if new ones keep appearing?
+In those case one might be better off with a language that allows the
+description of the objects themselves, their interactions, and
+organisation. Unsurprisingly such languages have been developed for
+scientific fields that deal with parts of the natural world where structures are
+dynamic and self-organising. A whole strand of work on languages of
+increasing complexity exist for the description of biochemical systems starting
+from simple molecular reactions. The field of plant development also has seen an
+independent strand of work on languages with explicit description of objects.
+Both these strands of work have seen a heavy interaction and inspiration %stronger than just inspired
+from Computer Science where there exist many formalisms in the
+theory of computation for the description of object behaviour and interaction.
+% especially in concurrent computation but also in sequential
+
+%we need names for the two kinds of languages
+
+Here we are interested in understanding a plant or particular aspects of a plant
+at the organism level starting from genomes and molecular mechanisms. In order
+to understand the links between all relevant processes we need models with
+explicit representation of processes at multiple levels. Apart from the
+scientific challenges that this presents there are also technical and social
+challenges among which is the choice of representation (language) for describing
+our models. Since we are trying to recreate an organism in silico and especially
+one where development is plastic and happens throughout its life history, we
+need to be able to describe dynamics of discrete objects. At the same time we
+also have the need for abstraction through properties since the complexity of
+the task is large.
+
+There are language in both the dynamics and structure space that combine aspects
+of both worlds. The language we describe and that is a big part of this thesis
+is situated in this space too. It comes from the biochemistry tradition and has
+discrete objects at its core but at the same time also has attributes
+to abstract away some internal structure of these objects. It further has
+features for (i) linking the abstract (attributes) and the concrete
+(observables) and (ii) explicitly using time, which is inspired, again, by the dynamics
+world.
+
+Since language design is as much art as it is science it can sometimes be hard
+to properly situate a new language (Chromar) in the space of already existing languages for the
+description of the natural world especially if one is only familiar with one
+part of the world, perhaps the particular formalisms that are standard for their
+disciplines. We therefore feel the need to include an overview of existing
+languages (the ones we hinted to above) for Biology in order to be able to place
+our work in the language design space. Since we have particular requirements for
+structure representation, we will only deal with languages coming from the
+discrete world or from the dynamics world that include some support for defining
+discrete organisation as well.
+
+Concretely, in this chapter we will do the following:
+\begin{itemize}
+\item An overview of languages coming from (i) the dicrete world with an emphasis on
+  langauges from the biochemistry strand of work since Chromar is directly a
+  product of these and (ii) the dynamics world that have some aspect of
+  structural organisation. In order to place these languages in order to be able
+  to late compare them we will place them all in a feature space. The features
+  are related to their characteristics in regards to capturing complex
+  organisation, dynamics but also meta-features like readability.
+\item A comparison of representative languages from each family. While there are
+  attempts for formal comparisons between languages, here the design space is so
+  large that such an attempt is probably impossible. We instead will do our
+  comparison informally through example where each example is meant to exemplify
+  one of the interesting features from the overview.
+\end{itemize}
+% need more concrete statement of contributions
+In the next chapter  we introduce Chromar through the same examples so we can
+properly place it and its novel characteristics in the same feature space.
+\cite{fontana_barrier_1996}
+
+\section{Overview -- discrete objects}
+
+
+\section{Overview -- dynamics going to structure}
+
+
+\section{Comparison through examples}
+
+
+
+
+
+
+
+
+\singlespace
+
+%% Specify the bibliography file. Default is thesis.bib.
+
+
+\printbibliography[heading=bibintoc]
+
+%% ... that's all, folks!
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
