@@ -61,9 +61,8 @@
 
 \chapter{Related Work}
 \label{chp:oc}
-
 Formal models of physical systems serve two roles (i) documentation and
-communication of our understanding (ii) formal analysis like simulation. The
+communication of our understanding and (ii) formal analysis (simulation). The
 most common language for describing the natural world is dynamical systems
 theory. It has a long tradition in Physics starting from Newton, Poincare
 etc. It relies on a conceptual abstraction where instead of describing the
@@ -89,9 +88,9 @@ to other dynamics, such an abstraction is not adequate. Consider for example
 plant development and its effect on carbon intake for the entire
 plant. While in some cases writing an equation for the size of the plant is
 enough, a truly mechanistic understanding requires treating the developing structure that
-gives rise to plant size explicitly. How would one write equations though for the size
+gives rise to plant size explicitly. How would one write equations for the size
 of the leaves, for example, if new ones keep appearing?
-In those case one might be better off with a language that allows the
+In those cases one might be better off with a language that allows the
 description of the objects themselves, their interactions, and
 organisation. Unsurprisingly such languages have been developed for
 scientific fields that deal with parts of the natural world where structures are
@@ -99,26 +98,28 @@ dynamic and self-organising. A whole strand of work on languages of
 increasing complexity exist for the description of biochemical systems starting
 from simple molecular reactions. The field of plant development also has seen an
 independent strand of work on languages with explicit description of objects.
-Both these strands of work have seen a heavy interaction and inspiration %stronger than just inspired
+Both these strands of work have seen a heavy interaction and inspiration 
 from Computer Science where there exist many formalisms in the
 theory of computation for the description of object behaviour and interaction.
 % especially in concurrent computation but also in sequential
 
-%we need names for the two kinds of languages
-
+%we need names for the two kinds of languages -- make the distinction so we can
+%refer to them later
 Here we are interested in understanding a plant or particular aspects of a plant
 at the organism level starting from genomes and molecular mechanisms. In order
 to understand the links between all relevant processes we need models with
 explicit representation of processes at multiple levels. Apart from the
 scientific challenges that this presents there are also technical and social
-challenges among which is the choice of representation (language) for describing
-our models. Since we are trying to recreate an organism in silico and especially
-one where development is plastic and happens throughout its life history, we
-need to be able to describe dynamics of discrete objects. At the same time we
-also have the need for abstraction through properties since the complexity of
-the task is large.
+challenges, among which is the choice of representation (language) for
+describing our models. Since we are trying to recreate an organism in silico and
+especially one where development is plastic and happens throughout its life
+history, we need to be able to describe dynamics of discrete objects. At the
+same time we also have the need for abstraction through quantifiable properties
+since the complexity of the task is large. 
+% see Andrews email to Robert, Vincent after or during his sabbatical. I think
+% there was something relevant there
 
-There are language in both the dynamics and structure space that combine aspects
+There are languages in both the dynamics and structure space that combine aspects
 of both worlds. The language we describe and that is a big part of this thesis
 is situated in this space too. It comes from the biochemistry tradition and has
 discrete objects at its core but at the same time also has attributes
@@ -140,28 +141,104 @@ discrete organisation as well.
 
 Concretely, in this chapter we will do the following:
 \begin{itemize}
-\item An overview of languages coming from (i) the dicrete world with an emphasis on
-  langauges from the biochemistry strand of work since Chromar is directly a
-  product of these and (ii) the dynamics world that have some aspect of
-  structural organisation. In order to place these languages in order to be able
-  to late compare them we will place them all in a feature space. The features
-  are related to their characteristics in regards to capturing complex
-  organisation, dynamics but also meta-features like readability.
+\item An overview of languages coming from (i) the dicrete world with an
+emphasis on languages from the biochemistry strand of work since Chromar is a
+direct product of these and (ii) the dynamics world that have some aspect of
+structural organisation. In order to place these languages and later be able to
+compare them we will place them all in a feature space. The features are related
+to their characteristics in regards to capturing complex organisation, dynamics,
+but also meta-features like readability.
 \item A comparison of representative languages from each family. While there are
-  attempts for formal comparisons between languages, here the design space is so
-  large that such an attempt is probably impossible. We instead will do our
-  comparison informally through example where each example is meant to exemplify
-  one of the interesting features from the overview.
+attempts for formal comparisons between languages
+\citep{felleisen1991expressive}, here the design space is so large that such an
+attempt is probably impossible. We instead will do our comparison informally
+through example where each example is meant to exemplify one of the interesting
+features from the overview.
 \end{itemize}
 % need more concrete statement of contributions
 In the next chapter  we introduce Chromar through the same examples so we can
 properly place it and its novel characteristics in the same feature space.
-\cite{fontana_barrier_1996}
 
-\section{Overview -- discrete objects}
+
+\section{Overview -- discrete formalisms}
+
+\subsection{Biochemistry}
+A significant line of work in languages from the discrete tradition has stemmed
+from the world of Biochemistry. The first main camp of languages in this line
+are the \emph{rule-based} formalisms starting from notations for Chemical Reactions
+Networks (CRN). At the description level, CRNs represent discrete objects with types
+(species) where the dynamics are given as reactions that state how different
+species interact to change the number of objects of the corresponding species in the state of the
+system. The state of the system is an unstructured collection (multiset) of
+copies (molecules) of each species. Since all the objects of a
+species are equivalent, an alternative and equivalent formulation sees the state
+of the system as a record of the number of objects of each species. For example
+if we had species $A$ and $B$ the state could be $\{A \mapsto 3, B \mapsto 5 \}$ to denote
+that there are three molecules of species $A$ and 5 molecules of species
+$B$. Stochastic Petri Nets represent this view in a graphical way as bipartite graphs with
+two types of nodes, place nodes that represent species and hold a marking
+(number of molecules) and transition nodes that represent reactions that when
+'fired' change the markings of the place nodes.
+
+\begin{center}
+    \includegraphics{figures/pns.eps}
+\end{center}
+
+%A good overview of this path of increasing complexity starting from CRNs is in Mjolness
+Extensions to simple reactions add support for adding organisation to the unstructured
+multisets of objects in CRNs. Organisation is represented as relations on the
+collection of objects. There are many relations that could be represented and
+the ones in this thread are, unsuprisingly, inspired by cell biochemistry.
+P-systems and SMMR add nesting to represent hierarchical organisation to
+the objects to represent, for example, the compartment organisation inside
+cells. The dynamics (rules) can then select based on the additional structure,
+for example can say if it is inside the other etc.
+
+%add figure here
+
+
+Adding attributes
+Relations can also be represented in the dynamics.
+
+
+
+Another camp in this line of work are the \emph{process-calculi based} languages
+inspired by formalisms such as the pi-calculus of
+\cite{milner1999communicating}. The main metaphor is molecules as processes
+
+Like the rule-based
+camp these language have seen an evolution from the simple stochastic
+pi-calculus of Regev
+Based on process calculi
+
+
+
+\subsubsection*{Interpretations}
+Interpretation as CTMCs
+Given rates for each reaction, CRNs are usually
+interpreted as Continuous Time Markov Chains (CTMCs) where the states are all
+possible multisets over the species of the system. Stochastic Petri Nets that give
+rates to transitions are equivalent to CRNs and are likewise interpreted as
+CTMCs.
+
+Interpretation as ODEs
+
+Qualitative Intepretation
+
+\subsection{Plant development}
+Another line of work started in the plant development tradition.
+They followed roughly the same evolution
+
+Unlike the concurrency is not usually handled by mapping to continuous time
+processes and using race conditions based on exponential distributions.
+
+\subsection{Database and Knowledge representation}
+
+
 
 
 \section{Overview -- dynamics going to structure}
+This is harder
 
 
 \section{Comparison through examples}
