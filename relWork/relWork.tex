@@ -59,7 +59,7 @@
 % Abstract
 \begin{document}
 
-\chapter{Related Work}
+\chapter{Background and Related Work}
 \label{chp:oc}
 Formal models of physical systems serve two roles (i) documentation and
 communication of our understanding and (ii) formal analysis (simulation). The
@@ -129,19 +129,19 @@ features for (i) linking the abstract (attributes) and the concrete
 world.
 
 Since language design is as much art as it is science it can sometimes be hard
-to properly situate a new language (Chromar) in the space of already existing languages for the
-description of the natural world especially if one is only familiar with one
-part of the world, perhaps the particular formalisms that are standard for their
-disciplines. We therefore feel the need to include an overview of existing
-languages (the ones we hinted to above) for Biology in order to be able to place
-our work in the language design space. Since we have particular requirements for
-structure representation, we will only deal with languages coming from the
-discrete world or from the dynamics world that include some support for defining
-discrete organisation as well.
+to properly situate a new language (Chromar) in the space of already existing
+languages for the description of the natural world especially if one is only
+familiar with one part of the world, perhaps the particular formalisms that are
+standard for their disciplines. We therefore feel the need to include an
+overview of existing languages (the ones we hinted to above) for Biology in
+order to be able to place our work in the language design space. Since we have
+particular requirements for structure representation, we will only deal with
+languages coming from the discrete world or from the dynamics world that include
+some support for defining discrete organisation as well.
 
 Concretely, in this chapter we will do the following:
 \begin{itemize}
-\item An overview of languages coming from (i) the dicrete world with an
+\item An overview of languages coming from (i) the discrete world with an
 emphasis on languages from the biochemistry strand of work since Chromar is a
 direct product of these and (ii) the dynamics world that have some aspect of
 structural organisation. In order to place these languages and later be able to
@@ -156,74 +156,249 @@ through example where each example is meant to exemplify one of the interesting
 features from the overview.
 \end{itemize}
 % need more concrete statement of contributions
+A good overview of the above dichotomy between dynamics and structure appears in
+\citet{fontana1996barrier}.
 In the next chapter  we introduce Chromar through the same examples so we can
 properly place it and its novel characteristics in the same feature space.
 
 
-\section{Overview -- discrete formalisms}
+\section{Examples}
+In this section we will introduce two examples that we will throughout our late
+overview of languages to illustrate limitations of formalisms and the motivation
+for their extensions with new features.
 
-\subsection{Biochemistry}
+\subsection{Root apical meristem and whole-plant effects}
+Plant development happens at sites of meristematic activity. In the root this
+site is at root cap and it is called Root Apical Meristem (RAM). In root
+development this raises the question about the mechanism through which this gives
+rise to the root architecture but also how the meristematic cells maintain their
+position close to the root cap throughout development. The hormone auxin and its
+distribution of concentration along the root architecture has been pinpointed as
+a possible mechanism to explain both of these phenomena.
+
+Here we will consider auxin dynamics in a growing 1-D array of root cells
+proposed by \citep{mironova_plausible_2010} as a possible mechanism to explain
+the observed distribution of auxin concentrations throughout the root. We will
+further consider the effect of the resulting root architecture on above-ground
+plant growth through its effect on water intake. We will only consider a very
+abstract version of the shoot. This model is indicative of the kind of
+comprehensive models that are the focus of this thesis. Here, for example, a
+more detailed root model is placed in the context of the whole plant (more
+abstract model) and the surrounding environment.
+
+More precisely we will consider the following dynamics (Figure~\ref{fig:rootDev}):
+\begin{itemize}
+\item Auxin flow from the shoot
+\item Auxin degradation
+\item Auxin diffusion
+\item Auxin active transport
+\item Cell division and growth
+\item Shoot growth
+\end{itemize}
+
+
+\subsection{Plant development in a field}
+The example considers a very abstract view of plant development, but has
+nevertheless enough details to demonstrate the main features of our
+notation. Our model is inspired by the Framework Model (FM) of
+\citet{chew2014multiscale}, a modular whole-plant model that connects
+traditional plant biology representations of molecular processes with
+representations of organ and whole-plant development processes. We will put this
+model in a more ecologically relevant context (field).
+
+The above-ground part of an Arabidopsis plant
+architecture before flowering: a collection of leaves arranged in a circle. Each
+leaf photosynthesises, creating the main currency, carbon; uses some carbon for
+maintenance and some for growth; and transfers any remaining carbon to the other
+leaves. The FM represents the Arabidopsis rosette (collection of leaves) with no
+preference in the transfer, thus we have an all-to-all communication. Similarly
+to the FM, in our model all the molecular processes in our model reside in a
+central plant `cell' which allows us to keep the leaves as carbon sinks and
+track their growth, while avoiding the per-leaf molecular processes and their
+communication (see Figure~\ref{fig:fm}).
+
+The processes that affect growth are as follows: we think of \textit{carbon
+assimilation} per leaf as increasing the carbon concentration of the central
+Cell depending on the photosynthesis level of a leaf (which will depend on its
+size); we think of \textit{maintenance respiration} as the central Cell giving
+some carbon to a leaf; and we think of \textit{growth respiration} as the
+central Cell giving some carbon to a leaf and the leaf mass increasing. We will
+also have \textit{new leaf creation}. There are interesting dynamics here such
+as the interaction between growth and assimilation: the more we grow, the more
+the leaves can photosynthesise, and the more carbon can go to the central Cell.
+
+We assume that the plants are arranged in a two-dimensional field and that they
+compete for light, which affects their growth. While we use Arabidopsis here,
+such models are interesting for the interactions and competition between crops
+and weeds in the field.
+
+
+
+
+\section{Object-based languages}
+
 A significant line of work in languages from the discrete tradition has stemmed
-from the world of Biochemistry. The first main camp of languages in this line
-are the \emph{rule-based} formalisms starting from notations for Chemical Reactions
-Networks (CRN). At the description level, CRNs represent discrete objects with types
-(species) where the dynamics are given as reactions that state how different
-species interact to change the number of objects of the corresponding species in the state of the
-system. The state of the system is an unstructured collection (multiset) of
-copies (molecules) of each species. Since all the objects of a
-species are equivalent, an alternative and equivalent formulation sees the state
-of the system as a record of the number of objects of each species. For example
-if we had species $A$ and $B$ the state could be $\{A \mapsto 3, B \mapsto 5 \}$ to denote
-that there are three molecules of species $A$ and 5 molecules of species
-$B$. Stochastic Petri Nets represent this view in a graphical way as bipartite graphs with
-two types of nodes, place nodes that represent species and hold a marking
-(number of molecules) and transition nodes that represent reactions that when
-'fired' change the markings of the place nodes.
+from the world of Biochemistry. In the following we make a further distinction
+between \emph{rule-based} languages and \emph{process-calculi based} languages
+that differ in what they consider as their main unit of description.
+Here we will focus more on languages from the rule-based camp since Chromar follows that tradition. 
+
+
+Note the historical progression of simple objects \textrightarrow added
+structure \textright reaching to the dynamics world. Both camps follow similar
+trends driven by modelling requirements. The important thing for us here is the
+trend and the features not the exact formalisms so while we consider the
+rule-based languages that also applies to the other camp, which we will only
+note in passing in the following text.
+
+For more comprehensive review see?
+
+%A good overview of this path of increasing complexity starting from CRNs is in
+%Mjolness
+
+\subsection{Unstructured: Petri Nets}
+The first main camp of languages in this line are the \emph{rule-based}
+formalisms starting from notations for Chemical Reactions Networks (CRN)
+represented in the language of Petri Nets (PN). At the description level, PNs
+represent discrete objects with types (species) where the dynamics are given as
+reactions that state how different species interact to change the number of
+objects of the corresponding species in the state of the system. The state of
+the system is an unstructured collection (multiset) of copies (molecules) of
+each species.
 
 \begin{center}
     \includegraphics{figures/pns.eps}
 \end{center}
 
-%A good overview of this path of increasing complexity starting from CRNs is in Mjolness
+A \emph{multiset} $m$ over a set $A$ is a function from $A$ to $\mathbb{N}$ counting
+the multiplicity of each element $a \in A$ in the multiset. There is submultiset
+relation on multisets where for two multisets $m$ and $m'$, $m \preceq m'$ if for each
+element $a \in A$ $m(a) \leq m'(a)$. We write $M[A]$ for the set of all multisets
+over a set $A$. Given a set of species $\Sigma$, a \emph{reaction} is a structure $\rho
+= l \xrightarrow{k} r$ where $k \in R$ and both the left-hand and right-hand
+sides are multisets over the species. 
+
+\begin{definition}
+A \emph{Petri Net} is a pair $(\Sigma, R)$ of sets of species $\Sigma$ and reactions $R$.
+\end{definition}
+
+The state of the Petri Net is a multiset over $\Sigma$. A reaction in $\rho \in R$ can be
+applied to a state $s$ if $l(\rho) \preceq s$ giving a new state $s' = s -
+l(\rho) + r(\rho)$, which we write as $\rho \bullet s$.
+
+Petri Nets can be given a stochastic intepretation as Continuous Time Markov
+Chains (CTMCs). A CTMC is a triple $(S, Q, I)$ with a $S$ a set of states, $Q: S
+\times S \rightarrow \mathbb{R}$ that gives the transition rate between any two states, and $I$
+the initial state. For each reaction apart from the base rate given by $k$ we
+need to know how many times it can be applied in a give state $s$ (how many
+times its left-hand side appears in the state). The multiplicity of a multiset
+$m$ in another multiset $m'$ is given by:
+$$
+\mu(m, m') = \prod_{a \in m}  \binom{m'(a)}{m(a)}
+$$
+Given a PN $(\Sigma, R)$ and an initial state we can get a CTMC using the following
+translation:
+\begin{align*}
+  S & = M[\Sigma] \\
+  Q(s, s') &= \sum {k(\rho) \cdot \mu(l(\rho), s) | \rho \in R, r \bullet s = s'}
+\end{align*}
+
+
+%nesting
+
+\subsection{Structured}
 Extensions to simple reactions add support for adding organisation to the unstructured
-multisets of objects in CRNs. Organisation is represented as relations on the
-collection of objects. There are many relations that could be represented and
-the ones in this thread are, unsuprisingly, inspired by cell biochemistry.
-P-systems and SMMR add nesting to represent hierarchical organisation to
-the objects to represent, for example, the compartment organisation inside
-cells. The dynamics (rules) can then select based on the additional structure,
-for example can say if it is inside the other etc.
+multisets of objects in PNs. Organisation can be thought of as explicitly adding relations
+over the collections of objects. There are many relations that could be represented and
+the ones in this thread are, unsurprisingly, inspired by cell biochemistry. The
+first organisational principle is that of nesting inspired by the compartment
+organisation inside a cell. Following this cell organisation, languages usually
+distinguish two kinds of objects -- simple ones that cannot be nested and more
+complex ones that can. P-systems is a language for membrane computing and while
+it initially considered only simple objects enclosed in a static (potentially
+multilevel) membrane structure, in later extensions membranes become first class
+and are equipped with dynamics. SMMR also makes this distinction between simple
+objects (species) and complex objects that can be nested (agents). The Calculus of
+Wrapped Compartments also considers nesting but it also adds notational features
+for expressing computations that happen on the membrane. A later extension adds
+names to compartments and they can then be thought of as the agents of SMMR or the
+membranes of P-systems. The dynamics of these systems reflect the interpretation
+of the hierarchical relation over collections objects as the conceptual view of
+compartmental organisation inside cells. Therefore sometimes the permitted operations are
+directly inspired by this view while in other cases they seem more generic. In
+all cases, however, the additional structure allows to express more stringent
+conditions on the left-hand side of rules that select based on structure and
+type (as possible in PNs).
+\begin{center}
+    \includegraphics{figures/nest.eps}
+\end{center}
+The nesting relation can also take other interpretations, for example as
+part-of relations. At a static level this might be reasonable but some of the
+allowed dynamics might not be sensible any more as they only make sense for a
+particular cell inspired interpretation of the relation. 
+Another organisational principle sometimes considered explicitly is that of
+complexation inspired by protein complexes. Kappa considers the state of the
+system as graphs, for example.
 
-%add figure here
+Other calculi have different combinations of the above features of relation
+(organisation) representation, more than one relation
+
+An interesting discussion on representing part-whole relations and the
+distinction of implicit versus explicit representations in object-based
+systems appears in \citet{}.
+
+\subsection{Combining structure and dynamics}
+Going beyond the object world, other extensions to these rule-based languages
+try to combine traditional features of object-based formalisms with dynamical
+features to represent more abstract quantifiable properties of the
+objects.
+
+\subsubsection*{Coloured Stochastic Multilevel Multiset Rewriting (CSMMR)}
 
 
-Adding attributes
-Relations can also be represented in the dynamics.
+\subsubsection*{Dynamical Grammars}
+
+
+\subsubsection*{Coloured Petri Nets}
+CSMMR is an extension to SMMR that adds parameters to agents. These
+parameters can then take part in rules either passively by influencing rates
+rules, conditions and so on but can also be actively changed in rules. ML-Rules,
+like CSMMR, combine a nesting relation on objects with quantifiable
+properties. There is also a parameterised Petri Net version called Coloured
+Petri Nets that have been used in Biology before. It is interesting to note that
+adding attributes allows one to implicitly represent relations based on
+attribute selections on the left-hand side of rules.  Other formalisms have a
+truly hybrid approach where the quantifiable properties of objects are defined
+by differential equations as in dynamical systems theory, for example Dynamical
+Grammars of \citep{} and Hybrid calculus of wrapped compartments of \citet{}.
+
+Finally, further extensions consider these simple calculi as programming
+languages and add advanced features that are geared towards the user. LBS and
+Dynamical Grammars add parameterised modules, for example, to overcome one of
+the main limitations in rule-base formalisms. LBS, again, also adds support for
+mixing in expressions from a general purpose programming language.
+
+In the comparison say something that parameters/properties/attributes/colours
+are usually taken to be either passive parameters or a way to distinguish
+between otherwise similar (or same type) objects.  However, when they are
+abstractions for whole pathways or bigger things at the lower level, then one
+might consider using higher level programming features for both the increased
+expressiveness but also for readability.  Say something about readability in the
+comparisons etc and how it relates to our requirements from models.
+
+Richer behaviour = richer types = fits well with higher level programming features.
+Introduce richer types
 
 
 
+\subsection{Process-calculi based}
 Another camp in this line of work are the \emph{process-calculi based} languages
 inspired by formalisms such as the pi-calculus of
-\cite{milner1999communicating}. The main metaphor is molecules as processes
-
-Like the rule-based
-camp these language have seen an evolution from the simple stochastic
-pi-calculus of Regev
-Based on process calculi
-
-
-
-\subsubsection*{Interpretations}
-Interpretation as CTMCs
-Given rates for each reaction, CRNs are usually
-interpreted as Continuous Time Markov Chains (CTMCs) where the states are all
-possible multisets over the species of the system. Stochastic Petri Nets that give
-rates to transitions are equivalent to CRNs and are likewise interpreted as
-CTMCs.
-
-Interpretation as ODEs
-
-Qualitative Intepretation
+\cite{milner1999communicating}. The main metaphor is objects (usually molecules
+in biochemistry) as processes and their interactions as process synchronisation,
+which is the main interaction primitive in process calculi. Like the rule-based
+camp these language have seen extensions starting from the simple stochastic
+pi-calculus of \citet{}. The extensions are similarly inspired by the 
 
 \subsection{Plant development}
 Another line of work started in the plant development tradition.
@@ -232,21 +407,9 @@ They followed roughly the same evolution
 Unlike the concurrency is not usually handled by mapping to continuous time
 processes and using race conditions based on exponential distributions.
 
-\subsection{Database and Knowledge representation}
 
-
-
-
-\section{Overview -- dynamics going to structure}
-This is harder
-
-
-\section{Comparison through examples}
-
-
-
-
-
+\section{Dynamics to structure}
+\subsection{Simile}
 
 
 
