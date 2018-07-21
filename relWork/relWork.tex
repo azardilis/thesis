@@ -250,7 +250,7 @@ requirements so while we focus more on rule-based languages, our observations
 should apply to the other camp as well, which we will only mention in passing in
 the following text.
 
-% Mjolness
+% cite Mjolness paper
 In the following sections we categorise object-based languages based on their
 features starting from simple objects to structure to dynamics. We will give an
 overview and focus on languages that combine objects with dynamics since Chromar
@@ -264,10 +264,18 @@ Petri Nets (PNs). At the description level PNs represent discrete objects with
 types (species) where the dynamics are given as reactions that state how
 different species interact to change the number of objects of the corresponding
 species in the state of the system. The state of the system is an unstructured
-collection (multiset) of copies (molecules) of each species.
+collection (multiset) of copies (molecules) of each species. Qualitatively,
+applying a reaction to a state (multiset) means removing from the state the
+elements that appear in the lhs of the reaction and adding the elements that
+appear on ths rhs of the reaction.
 
-%should say how we view rules in general, lhs like a condition that selects
-%parts of the state and the rhs as the replacement
+There is an equivalent graphical representation where the system is given as a
+bipartite graph representing species as places (round nodes) and reactions as
+transitions (rectangular nodes). Each place has an associated marking,
+represented as tokens inside the node, that represents the multiplicity of that
+species in the state. Applying a transition amounts to moving tokens between
+places.
+
 \begin{center}
     \includegraphics{figures/pns.eps}
 \end{center}
@@ -290,12 +298,13 @@ l(\rho) + r(\rho)$, which we write as $\rho \bullet s$.
 
 %semantics
 Petri Nets can be given a stochastic intepretation as Continuous Time Markov
-Chains (CTMCs). A CTMC is a triple $(S, Q, I)$ with a $S$ a set of states, $Q: S
-\times S \rightarrow \mathbb{R}$ that gives the transition rate between any two states, and $I$
-the initial state. For each reaction apart from the base rate given by $k$ we
-need to know how many times it can be applied in a give state $s$ (how many
-times its left-hand side appears in the state). The multiplicity of a multiset
-$m$ in another multiset $m'$ is given by:
+Chains (CTMCs). A CTMC is a triple $(S, Q, I)$ with a $S$ a set of states,
+$Q: S \times S \rightarrow \mathbb{R}$ that gives the transition rate between
+any two states, and $I$ the initial state. For each reaction apart from the base
+rate given by $k$ we need to know how many times it can be applied in a give
+state $s$ (\ie how many times its left-hand side appears in the state). This is
+also called a \emph{match}. The multiplicity of a multiset $m$ in another
+multiset $m'$ (number of matches) is given by:
 $$
 \mu(m, m') = \prod_{a \in m}  \binom{m'(a)}{m(a)}
 $$
@@ -304,7 +313,10 @@ Given a PN $(\Sigma, R)$ and an initial state we can get a CTMC:
   S & = M[\Sigma] \\
   Q(s, s') &= \sum {k(\rho) \cdot \mu(l(\rho), s) | \rho \in R, r \bullet s = s'}
 \end{align*}
-%Gillespie to get trajectories?
+% Have to say how that defines a master equation for the probabilities of the states
+% doing anything with that is impossible but
+% Gillespie to get trajectories?
+%practically this means calculating the above.
 
 %examples
 PNs have been used widely for describing chemical reactions and other simple
@@ -354,12 +366,14 @@ compartment organisation inside a cell. Following this cell organisation,
 languages usually distinguish two kinds of objects -- simple ones that cannot be
 nested and more complex ones that can. P-systems is a language for membrane
 computing and while it initially considered only simple objects enclosed in a
-static (potentially multilevel) membrane structure, in later extensions
-membranes become first class and are equipped with dynamics. SMMR also makes
-this distinction between simple objects (species) and complex objects that can
-be nested (agents). The Calculus of Wrapped Compartments also considers nesting
-but it also adds notational features for expressing computations that happen on
-the membrane. A later extension adds names to compartments and they can then be
+static (potentially multilevel) membrane structure \citep{puaun2000computing},
+in later extensions membranes become first class and are equipped with dynamics
+\citep{puaun2001p}. SMMR~\citep{oury_multi-level_2013} also makes this
+distinction between simple objects (species) and complex objects that can be
+nested (agents). The Calculus of Wrapped Compartments \citep{coppo_stochastic}
+also considers nesting but it also adds notational features for expressing
+computations that happen on the membrane. A later extension
+\citep{coppo_hybrid_2010} adds names to compartments and they can then be
 thought of as the agents of SMMR or the membranes of P-systems. The allowed
 dynamics of these systems reflect the interpretation of the hierarchical
 relation over collections objects as compartmental organisation inside
@@ -375,11 +389,15 @@ The nesting relation can also take other interpretations, for example as a
 `part-of' relation. At a static level this might be reasonable but some of the
 allowed dynamics might not be sensible any more as they only make sense for a
 particular cell-inspired interpretation of the relation (see discussion in
-\citet{artale_part-whole_1996}). Semantics are given, much like the normal PN,
-with similar interpretations as CTMCs.
+\citet{artale_part-whole_1996}).
 
-% Explain the CTMC intepretation
-Going to our examples it looks possible to represent parts of the root
+Semantics are given, much like the normal PN, with similar interpretations as
+CTMCs. As states become more complex, however, practically drawing trajectories
+from the stochastic process becomes harder as finding the number of matches from
+the lhs of a rule to the state is more complex than simple multiplication of the
+multiset multiplicities of the lhs elements.
+
+Going to our examples, it looks possible to represent parts of the root
 development + auxin dynamics. For example, we could have a $\mathrm{Cell_i}$
 species per cell to represent root cells and $\mathrm{A}$ species to represent auxin
 molecules. Using nested parentheses to represent the nesting relation we could
@@ -392,11 +410,16 @@ This description has the same problems as the simple PN description in that it i
 not compact and the creation of new cells requires the creation of new
 species. If we interpet the nesting relation as the 'next-to' relation we
 can use a single $\mathrm{Cell}$ species and creation of new cells would not
-require creating new species. Then we would not be able to use the given nesting
-relation for the actual containment of the auxin molecules though. The problem
-here is that there are two relations, the 'next-to' relation over cells that we
-need since the communication is only defined for neighbouring cells and a
-nesting relation between cells and auxin molecules. 
+require creating new species:
+\begin{align*}
+  \text{State (4 cells): } & \mathrm{Cell(Cell(Cell(Cell)))} \\
+  \text{Division: } & \mathrm{Cell}(x) \rightarrow \mathrm{Cell}(\mathrm{Cell}(x))                                                                                                                                                     
+\end{align*}
+Then, however, we would not be able to use the given nesting relation for the
+actual containment of the auxin molecules. The problem here is that there are
+two relations, the 'next-to' relation over cells that we need since the
+communication is only defined for neighbouring cells and a nesting relation
+between cells and auxin molecules.
 
 The same problems discussed above regarding abstraction of object attributes via
 quantifiable properties (\eg cell size), abstractions over parts of the whole
@@ -406,25 +429,45 @@ environment also appear here.
 \subsubsection*{Links}
 Another organisational principle sometimes considered explicitly is that of
 complexation inspired by protein complexes. Kappa \citep{danos_formal_2004}
-considers the state of the system as a graph, for example.
-\todo{figure to show kappa site graphs for the root cells}
-% semantics
-% can always give semantics as CTMCs, the problem becomes the simulation, counting
+considers the state of the system as a graph, for example:
+\begin{center}
+    \includegraphics{figures/kappaG.eps}
+  \end{center}
+% semantics  
+Reaction (or rules) have the usual qualitative interpetation: anything that
+'matches` the lhs in the state can be replaced by the rhs. Kappa
+also has a stochastic intepretation as a CTMC where the states are
+site-graphs. Practically, again, the problem is finding and counting the matches
+of lhs's of rules into the state, which is even harder in the case of
+graphs. There are, however, certain properties of Kappa graphs that
+allow for a more efficient simulation that does not require recomputing the
+matches after every rule application \citep{danos_scalable_2007}.
+  
+% examples
+Using this site-graph approach we can represent the 1-D arangement of cells from
+our example:
+\begin{center}
+    \includegraphics{figures/kappaCell.eps}
+\end{center}
+We, again, have the same problem we noted above regarding properties that cannot
+easily be represented by discrete objects, like cell properties, observables
+over states, and time. We note though that the simulator of Kappa, KaSim
+\citep{KaSimManual2014}, has facilities for observation of states, which can
+be used inside rules.
+
 Other formalisms allow for more than one relation, for example bigraphs
 \citep{milner1999communicating} and the more biologically relevant stochastic
 bigraphs, which have a stochastic intepretation as CTMCs
 \citep{krivine_stochastic_2008}. Using this we could represent both the
 neighbour relation between cells and the nesting of auxin molecules inside
-cells. The rest of the limitations we noted persist however, since it is an
+cells. The rest of the limitations we noted persist, however, since it is an
 object-only language.
 
 \subsection{Combining structure and dynamics}
 Going beyond the object world, other extensions to these rule-based languages
 try to combine traditional features of object-based formalisms with dynamical
 features to represent more abstract quantifiable properties of the objects.
-
-It
-is interesting to note that adding attributes allows one to implicitly represent
+It is interesting to note that adding attributes allows one to implicitly represent
 relations based on attribute selections on the left-hand side of rules.
 
 \subsubsection*{Coloured Petri Nets}
@@ -441,12 +484,11 @@ array).
 %semantics
 A stochastic version of this CPN formulation has also been used for biological
 modelling before, for example for describing planar cell polarity in Drosophila
-wings~\cite{gao2013multiscale} (and
-see~\cite{runge2004application,gilbert2013colouring} for other examples). In
-these examples where the stochastic version was used, its semantics are just
-given as a translation to the corresponding simple Petri Net. CPNs are
-used in their graphical format and most tools therefore use a graphical
-interface.
+wings~\citep{gao_multiscale_2013} (and see~\citet{runge_application_2004,
+gilbert_colouring_2013} for other examples). In these examples where the
+stochastic version was used, its semantics are just given as a translation to
+the corresponding simple Petri Net. CPNs are used in their graphical format and
+most tools therefore use a graphical interface.
 
 % examples
 Points:
@@ -469,7 +511,7 @@ Graphical is simply not practical for larger systems
 + no time
 
 
-\todo{figure of rules as CPN transitons}
+\todo{figure of rules as CPN transitions}
 
 
 \subsubsection*{Coloured Stochastic Multilevel Multiset Rewriting (CSMMR)}
@@ -492,7 +534,7 @@ Limitations:
 Other formalisms have a
 truly hybrid approach where the quantifiable properties of objects are defined
 by differential equations as in dynamical systems theory, for example Dynamical
-Grammars of \citep{}.
+Grammars of \citet{mjolsness2006stochastic}.
 
 %Limitations, very few
 - No observational abstraction to relate properties to other more concrete
@@ -521,7 +563,6 @@ Introduce richer types
 % which is the main interaction primitive in process calculi. Like the rule-based
 % camp these language have seen extensions starting from the simple stochastic
 % pi-calculus of \citet{}. The extensions are similarly inspired by the 
-
 \subsection{Plant development: L-systems}
 Another line of work started in the plant development tradition.
 They followed roughly the same evolution of starting and then adding parameters
@@ -538,12 +579,11 @@ it a distinction (and possible a limitaiton)
 \section{Dynamics to structure}
 \subsection{Simile}
 %Can we have a simpler way to view Simile graphically. I really don't want to
-%opent the Simile editor
+%open the Simile editor
 
 
-\section{Other approaches?}
+\todo{Other approaches? SBML? }
 
-\subsection{SBML}
 
 \singlespace
 
