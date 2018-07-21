@@ -60,7 +60,7 @@
 \begin{document}
 
 \chapter{Background and Related Work}
-\label{chp:oc}
+\label{chp:relWork}
 Formal models of physical systems serve two roles (i) documentation and
 communication of our understanding and (ii) formal analysis (simulation). The
 most common language for describing the natural world is dynamical systems
@@ -116,8 +116,6 @@ especially one where development is plastic and happens throughout its life
 history, we need to be able to describe dynamics of discrete objects. At the
 same time we also have the need for abstraction through quantifiable properties
 since the complexity of the task is large. 
-% see Andrews email to Robert, Vincent after or during his sabbatical. I think
-% there was something relevant there
 
 There are languages in both the dynamics and structure space that combine aspects
 of both worlds. The language we describe and that is a big part of this thesis
@@ -186,15 +184,27 @@ abstract version of the shoot. This model is indicative of the kind of
 comprehensive models that are the focus of this thesis. Here, for example, a
 more detailed root model is placed in the context of the whole plant (more
 abstract model) and the surrounding environment.
-\todo{make figure}
-More precisely we will consider the following dynamics (Figure~\ref{fig:rootDev}):
+
+\begin{figure}
+\centering
+\includegraphics[width=0.7\linewidth]{figures/rootDev.eps}
+\caption{Flows of auxin through the root.}
+\label{fig:rootDev}
+\end{figure}
+
+More precisely we will consider the following dynamics
+(Figure~\ref{fig:rootDev}):
 \begin{itemize}
-\item Auxin flow from the shoot
-\item Auxin degradation
-\item Auxin diffusion
-\item Auxin active transport
-\item Cell division and growth
-\item Shoot growth
+\item Auxin flow from the shoot. Since we're only considering an abstract shoot
+we can think of auxin flow from the shoot as auxin being produced in the first
+cell of the root.
+\item Auxin degradation through cell expansion.
+\item Auxin diffusion as passive transport between cells driven by concentration
+differences across the array.
+\item Auxin active transport by the PIN transporter proteins.
+\item Cell division.
+\item Shoot growth, which depends on the water uptake through the root. The
+uptake depends on the length of the root.
 \end{itemize}
 
 
@@ -217,7 +227,23 @@ to the FM, in our model all the molecular processes in our model reside in a
 central plant `cell' which allows us to keep the leaves as carbon sinks and
 track their growth, while avoiding the per-leaf molecular processes and their
 communication (see Figure~\ref{fig:fm}).
-\todo{make figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.7\linewidth]{figures/fms.eps}
+\caption{ A Our simple plant development model. All the interactions, that in
+  this case are transfer of carbon, happen between the central Cell that
+  represents the molecular state of the entire plant and the leaves, which act
+  as carbon sinks. The carbon that goes to the leaves is either used for growth,
+  in which case it is transformed into new material (increase of mass), or to
+  maintain the already existing Leaf by fuelling its life sustaining
+  processes. New leaves are also created, forming new sinks and increasing
+  competition for carbon between the leaves, but also increasing the production
+  of carbon by providing new green areas for photosynthesis. B The simple plant
+  model embedded in a 2-D field.}
+\label{fig:fm}
+\end{figure}
+
 The processes that affect growth are as follows: we think of \textit{carbon
 assimilation} per leaf as increasing the carbon concentration of the central
 Cell depending on the photosynthesis level of a leaf (which will depend on its
@@ -391,7 +417,7 @@ allowed dynamics might not be sensible any more as they only make sense for a
 particular cell-inspired interpretation of the relation (see discussion in
 \citet{artale_part-whole_1996}).
 
-Semantics are given, much like the normal PN, with similar interpretations as
+Semantics are given, like PNs, with similar interpretations as
 CTMCs. As states become more complex, however, practically drawing trajectories
 from the stochastic process becomes harder as finding the number of matches from
 the lhs of a rule to the state is more complex than simple multiplication of the
