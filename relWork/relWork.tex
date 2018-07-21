@@ -51,6 +51,7 @@
 \renewcommand{\qedsymbol}{\ensuremath{\blacksquare}}
 \newcommand{\partialto}{\rightharpoonup}
 \newcommand{\id}{\vec{1}} % identity function
+\newcommand{\mr}[1]{\mathrm{#1}}
 
 % Other stuff
 \newcommand{\maybe}[1]{\textcolor{gray}{#1}}
@@ -323,7 +324,7 @@ applied to a state $s$ if $l(\rho) \preceq s$ giving a new state $s' = s -
 l(\rho) + r(\rho)$, which we write as $\rho \bullet s$.
 
 %semantics
-Petri Nets can be given a stochastic intepretation as Continuous Time Markov
+Petri Nets can be given a stochastic interpretation as Continuous Time Markov
 Chains (CTMCs). A CTMC is a triple $(S, Q, I)$ with a $S$ a set of states,
 $Q: S \times S \rightarrow \mathbb{R}$ that gives the transition rate between
 any two states, and $I$ the initial state. For each reaction apart from the base
@@ -434,7 +435,7 @@ $$
 $$
 This description has the same problems as the simple PN description in that it is
 not compact and the creation of new cells requires the creation of new
-species. If we interpet the nesting relation as the 'next-to' relation we
+species. If we interpret the nesting relation as the 'next-to' relation we
 can use a single $\mathrm{Cell}$ species and creation of new cells would not
 require creating new species:
 \begin{align*}
@@ -460,9 +461,9 @@ considers the state of the system as a graph, for example:
     \includegraphics{figures/kappaG.eps}
   \end{center}
 % semantics  
-Reaction (or rules) have the usual qualitative interpetation: anything that
+Reaction (or rules) have the usual qualitative interpretation: anything that
 'matches` the lhs in the state can be replaced by the rhs. Kappa
-also has a stochastic intepretation as a CTMC where the states are
+also has a stochastic interpretation as a CTMC where the states are
 site-graphs. Practically, again, the problem is finding and counting the matches
 of lhs's of rules into the state, which is even harder in the case of
 graphs. There are, however, certain properties of Kappa graphs that
@@ -470,7 +471,7 @@ allow for a more efficient simulation that does not require recomputing the
 matches after every rule application \citep{danos_scalable_2007}.
   
 % examples
-Using this site-graph approach we can represent the 1-D arangement of cells from
+Using this site-graph approach we can represent the 1-D arrangement of cells from
 our example:
 \begin{center}
     \includegraphics{figures/kappaCell.eps}
@@ -483,7 +484,7 @@ be used inside rules.
 
 Other formalisms allow for more than one relation, for example bigraphs
 \citep{milner1999communicating} and the more biologically relevant stochastic
-bigraphs, which have a stochastic intepretation as CTMCs
+bigraphs, which have a stochastic interpretation as CTMCs
 \citep{krivine_stochastic_2008}. Using this we could represent both the
 neighbour relation between cells and the nesting of auxin molecules inside
 cells. The rest of the limitations we noted persist, however, since it is an
@@ -504,8 +505,10 @@ by allowing them to have an associated data value adhering to the type (colour
 set) of their species~\citep{jensen_coloured_1987}. For example, for our root
 development system instead of having a simple $\mathrm{Cell}$ species we can
 have a $\mathrm{Cell}$ species with associated parameters (\eg position in the
-array).
-%qualitative semantics? Say that the dynamics are the same as normal PNs
+array). Qualitatively CPNs work in the same way as simple PNs. Applying a
+reaction moves tokens between places. Since we have more complex type of objects
+the transitions have inscriptions to bind object colour values to variables
+names so that they can be used in the lhs (out-arrows) of the transition.
 
 %semantics
 A stochastic version of this CPN formulation has also been used for biological
@@ -516,28 +519,53 @@ stochastic version was used, its semantics are just given as a translation to
 the corresponding simple Petri Net. CPNs are used in their graphical format and
 most tools therefore use a graphical interface.
 
-% examples
-Points:
-- Implicit representation of relations, relate also to above in structures. Not
-as nice as it places burden on user but can do whatever you want
-- Quantifiable properties can be expressed in a natural way. sometimes it's
-better to think in terms of these abstractions but other times it's better to
-think in terms of objects.
-- Richer type would go well with rich expression lang -- see ML for expressions
+Going to our root development example we can use colours to represent the
+`next-to' relation between cells, as well as the concentration of auxin and
+other abstract quantifiable properties like cell size. To represent\emph{diffusion} we
+employ the $\mr{Cell}$ colourset $\{\mr{id}: \mr{int}, \mr{l}:\mr{int},
+\mr{a}:\mr{int} \} $. Apart from the number of auxin molecules, $a$, we also have
+positional information. In order to determine the position of a cell in the
+array we use its identifier colour $\mr{id}$ and the identifiers of its left
+neighbour, $\mr{l}$ colour, and right neighbour $\mr{r}$ colour.
+\begin{center}
+    \includegraphics{figures/cpnDiff.eps}
+\end{center}
+This is an example of an implicit representation of a relation between objects
+where the relation information is stored in the objects themselves. This is in
+contrast to the explicit representation of relations that we have seen in the
+languages with representation of structure (hierachy and links, see
+previous sections). While it is more flexible it places more burden on the user
+to maintain this relation.
 
+To represent \emph{growth} we add another colour,
+$\mr{s}:\rm{real}$ to our $\mr{Cell}$ colourset and another colourset for the
+entire root ($\mr{Root}$) so that we can store its size ($\rm{s}$)
+\begin{center}
+    \includegraphics{figures/cpnGrowth.eps}
+\end{center}
+Growth also degrades auxin concentration in the cell. Here we have used an
+additional colourset to represent global information as the language does not
+offer the possibility of explicitly defining the functional correspondence
+between the size colours of the $\mr{Cell}$ tokens and the size of the entire
+root. This means that the user has to manually keep track of this function and
+update the global information.
 
-% limitations to consider
-semantics with unfolding work if parameters are passive properties of objects
-but not if they are used to represent whole pathways for example. Need richer
-types like reals, which means unfolding wont work.
+For both of the transitions we consider we used some colours with $\mr{real}$
+types. Since the semantics of CPNs are given via unfolding to their simple PNs,
+the problem here is that in many cases the unfolded simple Petri Net has an
+infinite number of reactions. This means that in order to do the unfolding at
+all, the types have to be finite sets, which further means that real values are
+not allowed. This is also reflected in the implementation of Coloured Petri Net
+tools where one can define a Stochastic Coloured Petri Net but the definition is
+unfolded before it is run~\citep{heiner_snoopyunifying_2012}.Petri Net tools
+further have a graphical interface for defining the models, although there is a
+hybrid approach that allows mixing the graphical definition with programming
+language constructs (ML language)~\cite{jensen_coloured_1987}. While graphical
+notations are intuitive for smaller models, we find that for larger models
+they become hard to read.
 
-Graphical is simply not practical for larger systems
-
-+ nothing for observational abstraction
-+ no time
-
-
-\todo{figure of rules as CPN transitions}
+Finally, following the root development example there is no way to easily
+represent the water availability in the surrounding soil.
 
 
 \subsubsection*{Coloured Stochastic Multilevel Multiset Rewriting (CSMMR)}
@@ -557,10 +585,9 @@ Limitations:
 \end{itemize}
 
 \subsubsection*{Dynamical Grammars}
-Other formalisms have a
-truly hybrid approach where the quantifiable properties of objects are defined
-by differential equations as in dynamical systems theory, for example Dynamical
-Grammars of \citet{mjolsness2006stochastic}.
+Dynamical Grammars of \citet{mjolsness2006stochastic} have a truly hybrid
+approach where the quantifiable properties of objects are defined by
+differential equations as in dynamical systems theory.
 
 %Limitations, very few
 - No observational abstraction to relate properties to other more concrete
@@ -568,27 +595,17 @@ representations of the same process.
 - Too complex for a lot of things? Especially full lang with modules etc. Not
 minimal
 
-In the comparison say something that parameters/properties/attributes/colours
-are usually taken to be either passive parameters or a way to distinguish
-between otherwise similar (or same type) objects.  However, when they are
-abstractions for whole pathways or bigger things at the lower level, then one
-might consider using higher level programming features for both the increased
-expressiveness but also for readability.  Say something about readability in the
-comparisons etc and how it relates to our requirements from models.
+% In the comparison say something that parameters/properties/attributes/colours
+% are usually taken to be either passive parameters or a way to distinguish
+% between otherwise similar (or same type) objects.  However, when they are
+% abstractions for whole pathways or bigger things at the lower level, then one
+% might consider using higher level programming features for both the increased
+% expressiveness but also for readability.  Say something about readability in the
+% comparisons etc and how it relates to our requirements from models.
 
-Richer behaviour = richer types = fits well with higher level programming features.
-Introduce richer types
+% Richer behaviour = richer types = fits well with higher level programming features.
+% Introduce richer types
 
-
-
-%\subsection{Process-calculi based}
-% Another camp in this line of work are the \emph{process-calculi based} languages
-% inspired by formalisms such as the pi-calculus of
-% \cite{milner1999communicating}. The main metaphor is objects (usually molecules
-% in biochemistry) as processes and their interactions as process synchronisation,
-% which is the main interaction primitive in process calculi. Like the rule-based
-% camp these language have seen extensions starting from the simple stochastic
-% pi-calculus of \citet{}. The extensions are similarly inspired by the 
 \subsection{Plant development: L-systems}
 Another line of work started in the plant development tradition.
 They followed roughly the same evolution of starting and then adding parameters
@@ -609,6 +626,8 @@ it a distinction (and possible a limitaiton)
 
 
 \todo{Other approaches? SBML? }
+
+
 
 
 \singlespace
