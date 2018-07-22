@@ -569,7 +569,8 @@ represent the water availability in the surrounding soil.
 
 
 \subsubsection*{Coloured Stochastic Multilevel Multiset Rewriting (CSMMR)}
-CSMMR is an extension to SMMR that adds parameters to agents. These
+CSMMR~\citep{oury_coloured_2011} is an extension to
+SMMR~\citep{oury_multi-level_2013} that adds parameters to agents. These
 parameters can then take part in rules either passively by influencing rates
 rules, conditions and so on but can also be actively changed in rules.
 
@@ -588,6 +589,10 @@ Limitations:
 Dynamical Grammars of \citet{mjolsness2006stochastic} have a truly hybrid
 approach where the quantifiable properties of objects are defined by
 differential equations as in dynamical systems theory.
+$$
+\{\tau_i[x_{i, 1}, \dots, x_{i, k[\tau_i]}] \} \rightarrow \{\tau_i[x_{i, 1}, \dots, x_i, k[\tau_i]]\} \, \,
+\text{ solving } \{\frac{dx_{i,j}}{dt}=f_{i, j}(t)\}
+$$
 
 %Limitations, very few
 - No observational abstraction to relate properties to other more concrete
@@ -595,28 +600,36 @@ representations of the same process.
 - Too complex for a lot of things? Especially full lang with modules etc. Not
 minimal
 
-% In the comparison say something that parameters/properties/attributes/colours
-% are usually taken to be either passive parameters or a way to distinguish
-% between otherwise similar (or same type) objects.  However, when they are
-% abstractions for whole pathways or bigger things at the lower level, then one
-% might consider using higher level programming features for both the increased
-% expressiveness but also for readability.  Say something about readability in the
-% comparisons etc and how it relates to our requirements from models.
-
-% Richer behaviour = richer types = fits well with higher level programming features.
-% Introduce richer types
-
 \subsection{Plant development: L-systems}
 Another line of work started in the plant development tradition.
-They followed roughly the same evolution of starting and then adding parameters
+They followed roughly the same evolution of starting with simple objects and
+then adding parameters for combining quantifiable properties with
+objects. Traditional object-only L-systems are a string-rewriting formalism
+where strings of characters (representing the objects) can be rewritten via
+rules that specify how characters can be replaced by other character (or
+sequences of characters). The lhs of the rules can be context-sensitive by
+specifying the character surrounding the character intended for replacement:
+$$
+a< b > c \rightarrow a < d > c
+$$
+For example, the above specifies that an object $b$ can be replaced by an object
+$d$ in the string state of the system in places where it is surrounded by $a$ on
+the left and $c$ on the right. Unlike the object languages we have seen before
+that rely on multisets, L-systems rely on strings, which are ordered. Adding
+parameters work in the same way as the transition from PNs to CPN, for example,
+and it was motivated by the same modelling requirements.
 
 %semantics
-Unlike the concurrency is not usually handled by mapping to continuous time
-processes and using race conditions based on exponential distributions. Might be
-incompatible with the usual CTMC interpetation we have seen so far so that gives
-it a distinction (and possible a limitaiton)
+Unlike the PN family, L-systems are not usually intepreted as CTMCs. They
+instead rely on discrete time and multiple parallel application of rules in
+cases where more than one is applicable.
 
-%examples - limitations
+% examples - limitations
+The ordered parametric L-systems 
+% by mapping to continuous time
+% processes and using race conditions based on exponential distributions. Might be
+% incompatible with the usual CTMC interpetation we have seen so far so that gives
+% it a distinction (and possible a limitation)
 
 
 \section{Dynamics to structure}
