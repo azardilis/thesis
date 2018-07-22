@@ -379,7 +379,7 @@ we would have no way of linking the cell objects with the auxin objects and we
 would have the same problems as above. We also have no way of representing
 quantifiable properties of these objects, like the size of the cell, for
 example, needed for an abstract description of growth. Furthermore properties of
-the bigger parts of the state, like the size of the entire root, needed for the
+bigger parts of the state, like the size of the entire root, needed for the
 water-dependent shoot growth cannot be expressed and neither can parts of the
 surrounding environment that we do not wish to model in detail like the water in
 the soil.
@@ -638,17 +638,17 @@ the root in an abstract (non-mechanistic) way.
   \text{ solving }\{\frac{dw}{dt}=f(w, t) \}
 \end{align*}
 However, if we are, as it is usually the case, taking the water values from a
-table then it might be hard to find a mathematical description to fit its
-description to the differential equation framework. Moreover mixing these two
-paradigms (object-based and differential equations for the dynamics) might in
-some cases put an extra mental burden on the user, especially if they are not
-familiar with dynamical systems theory. Rules on discrte objects where they
-operate on the objects or their properties correspond nicely to biological
-events and intuitive descriptions of biological processes.
+table then it might be hard to find a mathematical description that fits the the
+differential equation framework. Moreover mixing these two paradigms
+(object-based and differential equations for the dynamics) might in some cases
+put an extra mental burden on the user, especially if they are not familiar with
+dynamical systems theory. Rules on discrte objects, operating on the objects or
+their properties, correspond nicely to biological events and intuitive
+descriptions of biological processes.
 
 We note that there is no possibility for expresing observational abstractions
 over parts of the state and a similar scheme to the one we used in the CPN
-formulation, with an extra $\mr{Root}$ will have to be used.
+formulation, with an extra $\mr{Root}$ type object will have to be used.
 
 
 \subsection{Plant development: L-systems}
@@ -660,7 +660,7 @@ objects. Traditional object-only L-systems are a string-rewriting formalism
 where strings of characters (representing the objects) can be rewritten via
 rules that specify how characters can be replaced by other character (or
 sequences of characters). The lhs of the rules can be context-sensitive by
-specifying the character surrounding the character intended for replacement:
+specifying the characters surrounding the character intended for replacement:
 $$
 a< b > c \rightarrow a < d > c
 $$
@@ -687,9 +687,13 @@ $$
 $$
 
 L-systems might be not be as good in cases where the structure of the system is
-not linear or cannot (easily) be linearised as a string. For example,
+not linear or cannot (easily) be linearised as a string. Take, for example, the
+dynamics from our plant development example (Section~\ssec{plantDev}). The
+leaves in that case and the 'cell` are not linearly related. It would therefore
+be hard to write, for example, the rule for leaf growth that requires
+information from both the leaves and cell objects.
 
-Similar limitation regarding observational abstraction of parts of the state,
+Similar limitations regarding observational abstraction of parts of the state,
 time-dependent value representation also appear here.
 
 \section{Dynamics to structure}
@@ -698,37 +702,78 @@ In the previous section we focused on languages that are object-based and
 followed their evolution through adding features like adding extra structure on
 the objects and then adding features that are more traditionally from the
 dynamics world. Here, instead, we focus on languages that have dynamics at their
-heart but have some features for representing (dynamic) structure.
+heart but have some features for representing (dynamic) structure as well.
+
+\todo{at least mention others like Hydra, Modelica, etc.}
 
 \subsection{Simile}
 \label{subsec:simile}
+%description
 Simile is another graphical language that has similarities to our approach
 \citep{muetzelfeldt_simile_2003}. Simile is used mainly in the domains of
 ecology and agricultural sciences but has also been used in systems biology (for
 the whole-plant model \citep{chew_multiscale_2014} that was the inspiration for
-our first example in Section~\ssec{plantDev}) to exactly solve the kind of
-problems we noted in the object-only based languages.External inputs are also
-supported, which is particularly important for adding weather data to crop
-models. In Simile there are two levels of definition of a model. At the first
-level we have continuous variables with rate equations and at the second level
-we have discrete objects with discrete dynamics -- adding/removing. The objects
-are grouped based on their types, and their behaviour is given at the population
-level. Object relations can also be encoded through conditions to restrict the
-dynamics to a subset of the object types, similarly to our conditional
-expressions.
-%Can we have a simpler way to view Simile graphically. I really don't want to
-%open the Simile editor
+our example in Section~\ssec{plantDev}) to exactly solve the kind of limitations
+we noted in the object-only based languages. External inputs are also supported,
+which is particularly important for adding weather data to crop models. In
+Simile there are two levels of definition of a model. At the first level we have
+continuous variables with rate equations and at the second level we have
+discrete objects with discrete dynamics -- adding/removing. The objects are
+grouped based on their types, and their behaviour is given at the population
+level. The dynamics of the two types of entities, continuous variables and objects, are
+not integrated as it is the case in CPNs and CSMMR, for example.
 
-The dynamics of the two types of entities, continuous variables and objects, are
-not integrated as it is the case in CPNs and CSMMR, for example. The main
-difference is that an execution of a Simile model ends up solving a system of
-ODEs where. Again, the graphical notation of Simile becomes, in our experience,
+%semantics?
+There is an obvious interpretation of the first-level continuous variables as a
+systems of differential equations but there is no obvious intepretation as a
+formal mathematical object for the entirety of the Simile features including the
+object-level dynamics. At the implementation level a model generates a system of
+Ordinary Differential Equations (ODEs) and then keeps track of the objects. Any
+time there is a structural change to the model, the system of ODEs is
+recalculated and integrated numerically until the next point of structural
+change (\eg new object in population).
+
+%limitations through examples
+In order to illustrate how Simile features capture the modelling requirements from our
+examples, let us start with the plant development example (Section~\ssec{plantDev}),
+\begin{center}
+  \includegraphics[scale=0.5]{figures/simileGrowth.eps}
+\end{center}
+We have a population of Leaf objects and a single Cell object representing
+what we called $\mathrm{Cell}$ in our rules. Each Leaf in the population has a
+mass that grows as a continuous variable. In order to define the use of carbon
+for growth from the carbon variable in the Cell object we have to work at the
+population level by summing the contribution of each Leaf. The population of
+Leaf objects also grows (see creation box). The description is at the level of
+objects instead of at the level of events, like in rule-based languages, which
+means that the dynamics are distributed across the model. Having the dynamics at
+the rules sometimes seems more natural as they correspond more naturally to the
+conceptual view of systems.
+
+Object relations can also be encoded through conditions to restrict the dynamics
+to a subset of the object types, similarly to conditional expressions available
+in CPNs and CSMMR. For example, the diffusion dynamics that happen only between
+neighbouring cells can be encoded.
+\begin{center}
+  \includegraphics[scale=0.5]{figures/simileRoot.eps}
+\end{center}
+Here the diffusion dynamics are restricted to neighbouring cells through the
+association submodel, assoc, and a relevant condition (see `next-to' box).
+
+Representing cell division is more challenging as the dynamics of objects can
+only be represented at the population level. In the case of cell division the object
+`creation' is not identical for all cells since the position matters for keeping
+the next-to relation information (identifiers) updated.
+
+%general meta-level limitations
+Finally, again, like CPNs, the graphical notation of Simile becomes, in our experience,
 problematic for models with more than a few variables, thereby requiring further
-visualisation tools. Even more serious than CPNs since even variables are
-graphical elements not just types (species) and transitions.
+visualisation tools. While CPNs have graphical elements for species and
+transitions, Simile represents all variables and interactions graphically
+further adding to the complexity of the representation.
 
 
-\todo{Other approaches? SBML? }
+%Other approaches? SBML?
 
 
 \singlespace
@@ -736,7 +781,7 @@ graphical elements not just types (species) and transitions.
 
 \printbibliography[heading=bibintoc]
 
-%% ... that's all, folks!
+
 \end{document}
 
 %%% Local Variables:
