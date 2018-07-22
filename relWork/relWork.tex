@@ -17,6 +17,7 @@
 \usepackage{hyperref}
 \usepackage{expl3}
 \usepackage{enumitem}
+\usepackage{booktabs}
 
 \frenchspacing
 
@@ -56,6 +57,12 @@
 % Other stuff
 \newcommand{\maybe}[1]{\textcolor{gray}{#1}}
 \newcommand{\todo}[1]{\textcolor{red}{TODO: #1}}
+
+\setlength{\tabcolsep}{8pt}
+\renewcommand{\arraystretch}{1.2}
+
+\def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
+\let\endchangemargin=\endlist 
 
 % Abstract
 \begin{document}
@@ -159,6 +166,7 @@ A good overview of the above dichotomy between dynamics and structure appears in
 \citet{fontana1996barrier}.
 In the next chapter  we introduce Chromar through the same examples so we can
 properly place it and its novel characteristics in the same feature space.
+
 
 
 \section{Examples}
@@ -445,7 +453,6 @@ can use a single $\mathrm{Cell}$ species and creation of new cells would not
 require creating new species:
 \begin{align*}
   \text{State (4 cells): } & \mathrm{Cell(Cell(Cell(Cell)))} \\
-  \text{Division: } & \mathrm{Cell}(x) \rightarrow \mathrm{Cell}(\mathrm{Cell}(x))                                                                                                                                                     
 \end{align*}
 Then, however, we would not be able to use the given nesting relation for the
 actual containment of the auxin molecules. The problem here is that there are
@@ -543,7 +550,7 @@ neighbour, $\mr{l}$ colour, and right neighbour $\mr{r}$ colour.
 This is an example of an implicit representation of a relation between objects
 where the relation information is stored in the objects themselves. This is in
 contrast to the explicit representation of relations that we have seen in the
-languages with representation of structure (hierachy and links, see
+languages with representation of structure (hierarchy and links, see
 previous sections). While it is more flexible it places more burden on the user
 to maintain this relation.
 
@@ -585,7 +592,7 @@ considered (subsections~\ssec{structLangs} and~\ssec{pns}). Parameters can take
 part in rules either passively by influencing rates rules, conditions and so on
 but can also be actively changed. The addition of parameters gives it a very
 similar flavour to CPNs. However, a CSMMR model, unlike a CPN model, is given
-stochastic intepretation direclty as a CTMC.
+stochastic interpretation directly as a CTMC.
 
 Using a CSMMR agent type similar to the CPN $\mr{Cell}$ colourset for the root
 development example (\ssec{rootDev}), we can write the following
@@ -638,15 +645,15 @@ the root in an abstract (non-mechanistic) way.
   \text{ solving }\{\frac{dw}{dt}=f(w, t) \}
 \end{align*}
 However, if we are, as it is usually the case, taking the water values from a
-table then it might be hard to find a mathematical description that fits the the
+table then it might be hard to find a mathematical description that fits the
 differential equation framework. Moreover mixing these two paradigms
 (object-based and differential equations for the dynamics) might in some cases
 put an extra mental burden on the user, especially if they are not familiar with
-dynamical systems theory. Rules on discrte objects, operating on the objects or
+dynamical systems theory. Rules on discrete objects, operating on the objects or
 their properties, correspond nicely to biological events and intuitive
 descriptions of biological processes.
 
-We note that there is no possibility for expresing observational abstractions
+We note that there is no possibility for expressing observational abstractions
 over parts of the state and a similar scheme to the one we used in the CPN
 formulation, with an extra $\mr{Root}$ type object will have to be used.
 
@@ -673,7 +680,7 @@ and it was motivated by the same modelling requirements.
 
 %semantics
 Unlike the PN family from the Biochemistry tradition, L-systems are not usually
-intepreted as CTMCs. They instead rely on discrete time and multiple parallel
+interpreted as CTMCs. They instead rely on discrete time and multiple parallel
 application of rules in cases where more than one is applicable.
 
 % examples - limitations
@@ -721,11 +728,11 @@ continuous variables with rate equations and at the second level we have
 discrete objects with discrete dynamics -- adding/removing. The objects are
 grouped based on their types, and their behaviour is given at the population
 level. The dynamics of the two types of entities, continuous variables and objects, are
-not integrated as it is the case in CPNs and CSMMR, for example.
+not integrated as is the case in CPNs and CSMMR.
 
 %semantics?
 There is an obvious interpretation of the first-level continuous variables as a
-systems of differential equations but there is no obvious intepretation as a
+systems of differential equations but there is no obvious interpretation as a
 formal mathematical object for the entirety of the Simile features including the
 object-level dynamics. At the implementation level a model generates a system of
 Ordinary Differential Equations (ODEs) and then keeps track of the objects. Any
@@ -737,7 +744,7 @@ change (\eg new object in population).
 In order to illustrate how Simile features capture the modelling requirements from our
 examples, let us start with the plant development example (Section~\ssec{plantDev}),
 \begin{center}
-  \includegraphics[scale=0.5]{figures/simileGrowth.eps}
+  \includegraphics[scale=0.6]{figures/simileGrowth.eps}
 \end{center}
 We have a population of Leaf objects and a single Cell object representing
 what we called $\mathrm{Cell}$ in our rules. Each Leaf in the population has a
@@ -755,7 +762,7 @@ to a subset of the object types, similarly to conditional expressions available
 in CPNs and CSMMR. For example, the diffusion dynamics that happen only between
 neighbouring cells can be encoded.
 \begin{center}
-  \includegraphics[scale=0.5]{figures/simileRoot.eps}
+  \includegraphics[scale=0.6]{figures/simileRoot.eps}
 \end{center}
 Here the diffusion dynamics are restricted to neighbouring cells through the
 association submodel, assoc, and a relevant condition (see `next-to' box).
@@ -766,7 +773,7 @@ only be represented at the population level. In the case of cell division the ob
 the next-to relation information (identifiers) updated.
 
 %general meta-level limitations
-Finally, again, like CPNs, the graphical notation of Simile becomes, in our experience,
+Finally, like CPNs, the graphical notation of Simile becomes, in our experience,
 problematic for models with more than a few variables, thereby requiring further
 visualisation tools. While CPNs have graphical elements for species and
 transitions, Simile represents all variables and interactions graphically
@@ -774,7 +781,43 @@ further adding to the complexity of the representation.
 
 
 %Other approaches? SBML?
+\section{Conclusion}
+Summary of the features of each formalism.
 
+\begin{center}
+  \begin{tabular}{p{0.15\linewidth}p{0.15\linewidth}p{0.15\linewidth}p{0.15\linewidth}p{0.15\linewidth}p{0.15\linewidth}}
+    \toprule
+          & PN &  SMMR & CPN & DG & Simile\\
+  \midrule
+Objects \newline (dynamics) & Yes \newline (rule) & Yes \newline (rule) & Yes \newline (rule) & Yes \newline
+                                                                                                (rule)
+                                  & Yes \newline (population) \\
+  \addlinespace[0.2cm]
+Relations \newline (explicit) & No & Yes \newline (hierarchy) & No \newline (implicit via
+                                                                attrs) & No \newline
+                                                                         (implicit
+                                                                         via
+                                                                         attrs &
+                                                                                 No \newline
+                                                                                 (implicit
+                                                                                 via
+                                                                                 attrs)
+  \\
+  \addlinespace[0.2cm]
+  Properties \newline (dynamics)
+          & No & No & Yes \newline (transitions) & Yes \newline (transitions or ODEs) &
+                                                                               Yes
+                                                                               \newline
+                                                                               (ODEs)
+  \\
+  \addlinespace[0.2cm]
+  State \newline abstraction & No & No & No & No & Yes \\
+  \addlinespace[0.2cm]
+  Time & No & No & No & Yes \newline (via ODEs) & Yes \\
+  Notes & & & & & \\
+\bottomrule
+\end{tabular}
+\end{center}
 
 \singlespace
 
