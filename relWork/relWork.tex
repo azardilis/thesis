@@ -31,7 +31,7 @@
 % Referencing
 \newcommand{\chp}[1]{\S\ref{chp:#1}}
 \newcommand{\sct}[1]{\S\ref{sec:#1}}
-\newcommand{\subsct}[1]{\S\ref{subsec:#1}}
+\newcommand{\ssec}[1]{\S\ref{subsec:#1}}
 \newcommand{\eqn}[1]{Eq.~\ref{eq:#1}}
 \newcommand{\eqns}[2]{Eq. \ref{eq:#1} and \ref{eq:#2}}
 \newcommand{\lem}[1]{Lemma~\ref{lemma:#1}}
@@ -162,12 +162,13 @@ properly place it and its novel characteristics in the same feature space.
 
 
 \section{Examples}
+\label{sec:examples}
 In this section we will introduce two examples that we will use throughout our
 language space overview to illustrate their limitations and the motivation
 for their extensions with new features.
 
 \subsection{Root apical meristem and whole-plant effects}
-\label{sec:rootDev}
+\label{subsec:rootDev}
 Plant development happens at sites of meristematic activity. In the root this
 site is at root cap and it is called Root Apical Meristem (RAM). In root
 development this raises the question about the mechanism through which this gives
@@ -210,6 +211,7 @@ uptake depends on the length of the root.
 
 
 \subsection{Plant development in a field}
+\label{subsec:plantDev}
 The example considers a very abstract view of plant development, but has
 nevertheless enough details to demonstrate the main features of our
 notation. Our model is inspired by the Framework Model (FM) of
@@ -262,6 +264,7 @@ and weeds in the field \citep{rajcan_understanding_2001}.
 
 
 \section{Object-based languages}
+\label{sec:objectLangs}
 A significant line of work in languages from the discrete (object-based)
 tradition has stemmed from the world of Biochemistry. A further distinction in
 this camp is between \emph{rule-based} languages and \emph{process-calculi
@@ -285,6 +288,7 @@ is situated in this space too. Throughout this text we will use the above
 examples to illustrate the features and limitations of the languages.
 
 \subsection{Unstructured: Petri Nets}
+\label{subsec:pns}
 %description
 The simplest language for unstructured collections of simple objects is that of
 Petri Nets (PNs). At the description level PNs represent discrete objects with
@@ -381,6 +385,7 @@ surrounding environment that we do not wish to model in detail like the water in
 the soil.
 
 \subsection{Structured}
+\label{subsec:structLangs}
 Extensions to simple reactions add support for adding organisation to the
 unstructured multisets of objects in PNs. Organisation can be thought of as
 explicitly adding relations over the collections of objects. There are many
@@ -491,6 +496,7 @@ cells. The rest of the limitations we noted persist, however, since it is an
 object-only language.
 
 \subsection{Combining structure and dynamics}
+\label{subsec:structDynLangs}
 Going beyond the object world, other extensions to these rule-based languages
 try to combine traditional features of object-based formalisms with dynamical
 features to represent more abstract quantifiable properties of the objects.
@@ -508,7 +514,11 @@ have a $\mathrm{Cell}$ species with associated parameters (\eg position in the
 array). Qualitatively CPNs work in the same way as simple PNs. Applying a
 reaction moves tokens between places. Since we have more complex type of objects
 the transitions have inscriptions to bind object colour values to variables
-names so that they can be used in the lhs (out-arrows) of the transition.
+names so that they can be used in the lhs (out-arrows) of the transition. Note
+that the same dynamical description is used for the dynamics of objects and
+their attributes. In the case of object-based dynamics (adding, removing
+objects) conceptually things are the same as before. For changing attributes we
+simply remove an object and replace with its attribute changed.
 
 %semantics
 A stochastic version of this CPN formulation has also been used for biological
@@ -567,40 +577,82 @@ they become hard to read.
 Finally, following the root development example there is no way to easily
 represent the water availability in the surrounding soil.
 
-
 \subsubsection*{Coloured Stochastic Multilevel Multiset Rewriting (CSMMR)}
 CSMMR~\citep{oury_coloured_2011} is an extension to
-SMMR~\citep{oury_multi-level_2013} that adds parameters to agents. These
-parameters can then take part in rules either passively by influencing rates
-rules, conditions and so on but can also be actively changed in rules.
+SMMR~\citep{oury_multi-level_2013} that adds parameters to agents, motivated by
+the limitations we have noted in the object-only languages that we have
+considered (subsections~\ssec{structLangs} and~\ssec{pns}). Parameters can take
+part in rules either passively by influencing rates rules, conditions and so on
+but can also be actively changed. The addition of parameters gives it a very
+similar flavour to CPNs. However, a CSMMR model, unlike a CPN model, is given
+stochastic intepretation direclty as a CTMC.
 
-Intepretation as CTMCs, explain how the species work. Now each particular
-version is a species, which makes even an enumeration of the species
-impossible. However, for making samples trajectories that's okay.
+Using a CSMMR agent type similar to the CPN $\mr{Cell}$ colourset for the root
+development example (\ssec{rootDev}), we can write the following
+for the diffusion (to the right) of auxin along the root:
+$$
+\mr{Cell}_{\mr{id}=i, \mr{a}=a}, \mr{Cell}_{r=k, a=a'} \xrightarrow{}
+\mr{Cell}_{\mr{id}=i, \mr{a}=a+D(a'-a)}, \mr{Cell}_{r=k, a=a+D(a-a')} \, \,
+[i=k]
+$$
+This is very similar to the CPN transition of the same dynamics but written in a
+completely textual form.
 
-%examples
-Limitations:
-\begin{itemize}
-\item Same as above, I guess regarding observational abstraction, time etc.
-\item Richer type would go well with rich expression lang
-\end{itemize}
+Similar limitations to the CPNs (discussed above) regarding time dependent
+values (\eg for representing water in the soil) and observational abstraction
+over parts of the state (\eg size of the entire root) also appear here. The
+availability of richer types for parameters would also work well with a more
+expressive expression language perhaps utilising a general-purpose programming
+language, like CPN tools do with ML.
 
 \subsubsection*{Dynamical Grammars}
 Dynamical Grammars of \citet{mjolsness2006stochastic} have a truly hybrid
-approach where the quantifiable properties of objects are defined by
+approach where the quantifiable properties of objects can be defined by
 differential equations as in dynamical systems theory.
 $$
 \{\tau_i[x_{i, 1}, \dots, x_{i, k[\tau_i]}] \} \rightarrow \{\tau_i[x_{i, 1}, \dots, x_i, k[\tau_i]]\} \, \,
 \text{ solving } \{\frac{dx_{i,j}}{dt}=f_{i, j}(t)\}
 $$
+Everything else looks similar to other languages in this section, dynamics are
+given as rules where each side of the rule is a multiset of discrete objects
+with typed sequence of attributes. The interesting part comes from the
+$\mr{solving}$ clause that can be used to express the dynamics of the attributes
+as differential equations.
 
-%Limitations, very few
-- No observational abstraction to relate properties to other more concrete
-representations of the same process.
-- Too complex for a lot of things? Especially full lang with modules etc. Not
-minimal
+Going to our root development example, the diffusion can be expressed in a way
+that is more familiar to the traditional diffusion models,
+\begin{align*}
+\{c_i=\mr{Cell}(i, a_i), c_{i+1}=\mr{Cell}(r, a_{i+1})\} \rightarrow \{c_i,
+  c_{i+1}\} \\
+  \text{ solving }\{\frac{da_i}{dt}=D(a_{i+1}-a_i),
+  \frac{da_{i+1}}{dt}=D(a_i - a_{i+1} \}
+\end{align*}
+where we use the same $\mr{Cell}$ agent type as before.
+
+Having the differential equations means we can also express time-dependent
+values, for example to represent the change of moisture in the soil surrounding
+the root in an abstract (non-mechanistic) way.
+\begin{align*}
+\{\mr{Shoot(s)}, \mr{Env}(w), \mr{Root(s)} \rightarrow \{\mr{Shoot(g(s))}, \mr{Env}(w),
+  \mr{Root(s)} \} \\
+  \text{ solving }\{\frac{dw}{dt}=f(w, t) \}
+\end{align*}
+However, if we are, as it is usually the case, taking the water values from a
+table then it might be hard to find a mathematical description to fit its
+description to the differential equation framework. Moreover mixing these two
+paradigms (object-based and differential equations for the dynamics) might in
+some cases put an extra mental burden on the user, especially if they are not
+familiar with dynamical systems theory. Rules on discrte objects where they
+operate on the objects or their properties correspond nicely to biological
+events and intuitive descriptions of biological processes.
+
+We note that there is no possibility for expresing observational abstractions
+over parts of the state and a similar scheme to the one we used in the CPN
+formulation, with an extra $\mr{Root}$ will have to be used.
+
 
 \subsection{Plant development: L-systems}
+\label{subsec:lSystems}
 Another line of work started in the plant development tradition.
 They followed roughly the same evolution of starting with simple objects and
 then adding parameters for combining quantifiable properties with
@@ -620,27 +672,63 @@ parameters work in the same way as the transition from PNs to CPN, for example,
 and it was motivated by the same modelling requirements.
 
 %semantics
-Unlike the PN family, L-systems are not usually intepreted as CTMCs. They
-instead rely on discrete time and multiple parallel application of rules in
-cases where more than one is applicable.
+Unlike the PN family from the Biochemistry tradition, L-systems are not usually
+intepreted as CTMCs. They instead rely on discrete time and multiple parallel
+application of rules in cases where more than one is applicable.
 
 % examples - limitations
-The ordered parametric L-systems 
-% by mapping to continuous time
-% processes and using race conditions based on exponential distributions. Might be
-% incompatible with the usual CTMC interpetation we have seen so far so that gives
-% it a distinction (and possible a limitation)
+The ordered parametric L-systems seem to work well for our root development
+example since the cells along the root are ordered in an ordered sequence. The
+'next-to' relation then need no further machinery (implicit representation) to
+be represented. The diffusion rule will look like this, again using a
+$\mr{Cell}$ object with similar parameters as before:
+$$
+\mr{Cell}(a_i)< \mr{Cell}(a_{i+1}) > \rightarrow \mr{Cell}(a_i+D(a_{i+1}-a_i)< \mr{Cell}(a_{i+1}+D(a_i-a_{i+1}) >
+$$
 
+L-systems might be not be as good in cases where the structure of the system is
+not linear or cannot (easily) be linearised as a string. For example,
+
+Similar limitation regarding observational abstraction of parts of the state,
+time-dependent value representation also appear here.
 
 \section{Dynamics to structure}
+\label{sec:dyns}
+In the previous section we focused on languages that are object-based and
+followed their evolution through adding features like adding extra structure on
+the objects and then adding features that are more traditionally from the
+dynamics world. Here, instead, we focus on languages that have dynamics at their
+heart but have some features for representing (dynamic) structure.
+
 \subsection{Simile}
+\label{subsec:simile}
+Simile is another graphical language that has similarities to our approach
+\citep{muetzelfeldt_simile_2003}. Simile is used mainly in the domains of
+ecology and agricultural sciences but has also been used in systems biology (for
+the whole-plant model \citep{chew_multiscale_2014} that was the inspiration for
+our first example in Section~\ssec{plantDev}) to exactly solve the kind of
+problems we noted in the object-only based languages.External inputs are also
+supported, which is particularly important for adding weather data to crop
+models. In Simile there are two levels of definition of a model. At the first
+level we have continuous variables with rate equations and at the second level
+we have discrete objects with discrete dynamics -- adding/removing. The objects
+are grouped based on their types, and their behaviour is given at the population
+level. Object relations can also be encoded through conditions to restrict the
+dynamics to a subset of the object types, similarly to our conditional
+expressions.
 %Can we have a simpler way to view Simile graphically. I really don't want to
 %open the Simile editor
 
+The dynamics of the two types of entities, continuous variables and objects, are
+not integrated as it is the case in CPNs and CSMMR, for example. The main
+difference is that an execution of a Simile model ends up solving a system of
+ODEs where. Again, the graphical notation of Simile becomes, in our experience,
+problematic for models with more than a few variables, thereby requiring further
+visualisation tools. Even more serious than CPNs since even variables are
+graphical elements not just types (species) and transitions.
+
 
 \todo{Other approaches? SBML? }
-
-
 
 
 \singlespace
