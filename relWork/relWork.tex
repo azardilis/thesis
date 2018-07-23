@@ -61,9 +61,6 @@
 \setlength{\tabcolsep}{8pt}
 \renewcommand{\arraystretch}{1.2}
 
-\def\changemargin#1#2{\list{}{\rightmargin#2\leftmargin#1}\item[]}
-\let\endchangemargin=\endlist 
-
 % Abstract
 \begin{document}
 
@@ -72,21 +69,21 @@
 Formal models of physical systems serve two roles (i) documentation and
 communication of our understanding and (ii) formal analysis (simulation). The
 most common language for describing the natural world is dynamical systems
-theory. It has a long tradition in Physics starting from Newton, Poincare
-etc. It relies on a conceptual abstraction where instead of describing the
-objects that form the physical world, it describes quantifiable properties of
-such objects. For example, when explaining the movement of planets one does not
-talk about the moon but rather about the position of the moon. Then the
-evolution of the system in time (or space) is described by (partial)
-differential (or difference) equations that state the change in the numerical
-values of the quantifiable properties that form the system as they interact with
-each other. For example, one
-might write the equation of position of a particle or a molecule diffusing in a
-medium. This abstraction of avoiding dealing with the objects directly but
-rather with some numerical variables representing their properties has been at
-the core of the success of dynamical systems theory. A big ensemble of methods
-have been developed for the analysis of such systems, which one gets for free if
-they choose to describe a physical system of interest in these terms.
+theory. It has a long tradition in Physics starting from Newton and Poincare. It
+relies on a conceptual abstraction where instead of describing the objects that
+form the physical world, it describes quantifiable properties of such
+objects. For example, when explaining the movement of planets one does not talk
+about the moon but rather about the position of the moon. Then the evolution of
+the system in time (or space) is described by (partial) differential (or
+difference) equations that state the change in the numerical values of the
+quantifiable properties that form the system as they interact with each
+other. For example, one might write the equation of position of a particle or a
+molecule diffusing in a medium. This abstraction of avoiding dealing with the
+objects directly but rather with some numerical variables representing their
+properties has been at the core of the success of dynamical systems theory. A
+big ensemble of methods have been developed for the analysis of such systems,
+which one gets for free if they choose to describe a physical system of interest
+in these terms.
 
 Dynamical systems languages have not been as successful in scenarios where the
 structure of the  described system is not static. While one might be able to
@@ -147,33 +144,36 @@ some support for defining discrete organisation as well.
 
 Concretely, in this chapter we will do the following:
 \begin{itemize}
-\item An overview of languages coming from (i) the discrete world with an
-emphasis on languages from the biochemistry strand of work since Chromar is a
-direct product of these and (ii) the dynamics world that have some aspect of
-structural organisation. In order to place these languages and later be able to
-compare them we will place them all in a feature space. The features are related
-to their characteristics in regards to capturing complex organisation, dynamics,
-but also meta-features like readability.
-\item A comparison of representative languages from each family. While there are
-attempts for formal comparisons between languages
+
+\item Introduction of two modelling examples that have representation
+  requirements that are typical of the multi-scale comprehensive models that we
+  are interested in in this thesis.
+\item An overview and comparison of languages coming from (i) the discrete world
+  with an emphasis on languages from the biochemistry strand of work since
+  Chromar is a direct product of these and (ii) the dynamics world that have
+  some aspect of structural organisation. In order to place these languages and
+  later be able to compare them we will place them all in a feature space. The
+  features are related to their characteristics in regards to capturing complex
+  organisation, dynamics, but also meta-features like readability. The above
+  examples will serve to illustrate the features and limitations of each formalism.
+\end{itemize}
+While there are attempts for formal comparisons between languages
 \citep{felleisen1991expressive}, here the design space is so large that such an
 attempt is probably impossible. We instead will do our comparison informally
-through example where each example is meant to exemplify one of the interesting
-features from the overview.
-\end{itemize}
-% need more concrete statement of contributions
-A good overview of the above dichotomy between dynamics and structure appears in
-\citet{fontana1996barrier}.
-In the next chapter  we introduce Chromar through the same examples so we can
-properly place it and its novel characteristics in the same feature space.
+through the illustrative examples. We finally conclude with a summary of the
+comparison. In the next chapter we introduce Chromar through the same examples
+so we can properly place it and its novel characteristics in the same feature
+space.
 
-
+A more comprehensive overview of the above dichotomy between dynamics and
+structure appears in \citet{fontana1996barrier}.
 
 \section{Examples}
 \label{sec:examples}
 In this section we will introduce two examples that we will use throughout our
 language space overview to illustrate their limitations and the motivation
-for their extensions with new features.
+for their extensions with new features. We will not attempt a full
+representation of the models in each formalism
 
 \subsection{Root apical meristem and whole-plant effects}
 \label{subsec:rootDev}
@@ -453,6 +453,7 @@ can use a single $\mathrm{Cell}$ species and creation of new cells would not
 require creating new species:
 \begin{align*}
   \text{State (4 cells): } & \mathrm{Cell(Cell(Cell(Cell)))} \\
+  \text{Division: } & \mathrm{Cell}(x) \rightarrow \mathrm{Cell}(\mathrm{Cell}(x))
 \end{align*}
 Then, however, we would not be able to use the given nesting relation for the
 actual containment of the auxin molecules. The problem here is that there are
@@ -787,35 +788,25 @@ Summary of the features of each formalism.
 \begin{center}
   \begin{tabular}{p{0.15\linewidth}p{0.15\linewidth}p{0.15\linewidth}p{0.15\linewidth}p{0.15\linewidth}p{0.15\linewidth}}
     \toprule
-          & PN &  SMMR & CPN & DG & Simile\\
-  \midrule
-Objects \newline (dynamics) & Yes \newline (rule) & Yes \newline (rule) & Yes \newline (rule) & Yes \newline
-                                                                                                (rule)
-                                  & Yes \newline (population) \\
-  \addlinespace[0.2cm]
-Relations \newline (explicit) & No & Yes \newline (hierarchy) & No \newline (implicit via
-                                                                attrs) & No \newline
-                                                                         (implicit
-                                                                         via
-                                                                         attrs &
-                                                                                 No \newline
-                                                                                 (implicit
-                                                                                 via
-                                                                                 attrs)
-  \\
-  \addlinespace[0.2cm]
-  Properties \newline (dynamics)
-          & No & No & Yes \newline (transitions) & Yes \newline (transitions or ODEs) &
-                                                                               Yes
-                                                                               \newline
-                                                                               (ODEs)
-  \\
-  \addlinespace[0.2cm]
-  State \newline abstraction & No & No & No & No & Yes \\
-  \addlinespace[0.2cm]
-  Time & No & No & No & Yes \newline (via ODEs) & Yes \\
-  Notes & & & & & \\
-\bottomrule
+    & PN & SMMR & CPN & DG & Simile\\
+    \midrule
+Objects \newline (dynamics) & Yes \newline (rule) & Yes \newline (rule) & Yes
+                                                                          \newline
+                                                                          (rule)
+                      & Yes \newline(rule) & Yes \newline (population) \\
+    \addlinespace[0.2cm]
+Relations \newline (explicit) & No & Yes \newline (hierarchy) & No \newline
+                                                                (implicit via
+                                                                attrs) & No \newline (implicit via attrs & No \newline (implicit via attrs) \\
+    \addlinespace[0.2cm]
+    Properties \newline (dynamics) & No & No & Yes \newline
+(transitions) & Yes \newline (transitions or ODEs) & Yes \newline (ODEs) \\
+    \addlinespace[0.2cm]
+    State \newline abstraction & No & No & No & No & Yes \\
+    \addlinespace[0.2cm]
+    Time & No & No & No & Yes \newline (via ODEs) & Yes \\
+    Notes & & & & & \\
+    \bottomrule
 \end{tabular}
 \end{center}
 
