@@ -1,0 +1,344 @@
+\documentclass[phd]{infthesis}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[british]{babel}
+\usepackage{microtype}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage[english=british,autopunct=false]{csquotes}
+\usepackage[natbib=true,style=authoryear-comp,maxbibnames=6]{biblatex}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{wrapfig}
+\usepackage{xfrac}
+\usepackage{xspace}
+\usepackage{mathcommon}
+\usepackage[sc]{mathpazo}
+\usepackage{hyperref}
+\usepackage{expl3}
+\usepackage{enumitem}
+
+\frenchspacing
+
+% Bibliography
+\addbibresource{chromarEx.bib}
+\bibliography{chromarEx}
+
+% Text
+\newcommand{\ie}{i.e.\xspace}
+\newcommand{\eg}{e.g.\xspace}
+
+% Referencing
+\newcommand{\chp}[1]{\S\ref{chp:#1}}
+\newcommand{\sct}[1]{\S\ref{sec:#1}}
+\newcommand{\subsct}[1]{\S\ref{subsec:#1}}
+\newcommand{\eqn}[1]{Eq.~\ref{eq:#1}}
+\newcommand{\eqns}[2]{Eq. \ref{eq:#1} and \ref{eq:#2}}
+\newcommand{\lem}[1]{Lemma~\ref{lemma:#1}}
+\newcommand{\lems}[2]{Lemmas \ref{lemma:#1} and \ref{lemma:#2}}
+\newcommand{\thm}[1]{Th.~\ref{thm:#1}}
+\newcommand{\fig}[1]{Fig.~\ref{fig:#1}}
+\newcommand{\diagram}[1]{diagram~\ref{eq:#1}}
+\newcommand{\app}[1]{Appendix~\ref{app:#1}}
+\newcommand{\mcite}[1]{\textcolor{gray}{#1}} % missing cite
+\newcommand{\defn}[1]{Def.~\ref{def:#1}}
+\newcommand{\prop}[1]{Prop.~\ref{prop:#1}}
+
+% Math
+\renewcommand{\tuple}[1]{\left(#1\right)}
+\DeclareMathOperator*{\expn}{exp}
+\renewcommand*{\exp}[1]{e^{\,#1}} % \mathrm{e}^{#1}}
+\renewcommand{\qedsymbol}{\ensuremath{\blacksquare}}
+\newcommand{\partialto}{\rightharpoonup}
+\newcommand{\id}{\vec{1}} % identity function
+\newcommand{\mr}[1]{\mathrm{#1}}
+\newcommand{\m}[1]{\{\!| #1 |\!\}}
+
+% Other stuff
+\newcommand{\maybe}[1]{\textcolor{gray}{#1}}
+\newcommand{\todo}[1]{\textcolor{red}{TODO: #1}}
+
+% Abstract
+\begin{document}
+
+\chapter{Chromar by example}
+\label{chp:chromarEx}
+In this chapter we will introduce Chromar (formally introduced in the next
+chapter) by means of examples. The example serve two purposes: to introduce the
+features of the languages but also as a means of comparing Chromar to the related
+languages in the previous chapter by seeing how Chromar features handle the
+modelling requirements that they present.
+
+Chromar has the following properties, which we will explore in this chapter
+through the examples:
+\begin{itemize}
+\item \emph{basic Chromar} is a rule-based notation with stochastic semantics
+  yielding a Continuous Time Markov Chain (CTMC). It follows the object-based
+  tradition (see previous section) and makes use of discrete objects called
+  \emph{agents}. These have attributes that are defined at the type level, so
+  that every agent of that type has these attributes. For a version of our auxin
+  example a $\mr{Cell}$ agent type could be, similarly to other parametric
+  languages,
+  $\mathrm{Cell}(\mathrm{pos}:\mathrm{int}, \mathrm{a}: \mathrm{real})$ with
+  attribute $\mathrm{pos}$ for positional information and attribute $\mathrm{a}$
+  to keep its auxin concentration. Agents are instantiations of this type with
+  concrete values for the attributes like
+  $\mathrm{Cell}(\mathrm{pos}=1, \mathrm{a}=a_1)$ for the first cell,
+  $\mathrm{Cell}(\mathrm{pos}=2, \mathrm{a}=a_2)$ for the second cell and so
+  on. The states of the CTMC are multisets of agents. The rules describe how
+  agents are added to or removed from states at a more abstract level than
+  individual agents. This is done by using patterns on the rule left-hand sides
+  specifying the group of agents for which the dynamics are defined. As we have
+  seen, having parameters help us overcome some of the limitations of object-only
+  languages.
+\item \emph{extended Chromar} extends basic Chromar with two new features:
+  \begin{itemize}
+  \item[(i)] \textit{Fluents} --- the incorporation of deterministically
+    changing time-dependent values. These are important for modelling dynamics
+    in a changing environment, and
+  \item[(ii)] \textit{Observables} --- values calculated from a global view of
+    the system. These are important in cases where a coarse-grained view of the
+    system is needed. This may be because we cannot acquire atomistic data, or
+    because we do not wish to model everything at the same level of
+    detail. Observables also give us a flexible way to observe the state of the
+    system that can be used to report the results of model simulations, as we
+    often need time series of some observable on the state of the system rather
+    than time series of the state itself.
+\end{itemize}
+\item A concrete realisation of extended Chromar as an embedded Domain Specific
+  Language (DSL) inside Haskell, a functional programming language
+  \citep{gibbons_functional_2015}. The embedding means that we can use any valid
+  Haskell expression where expressions are expected, for example in the rate
+  expressions and in the right-hand sides of rules. Agent types and the outside
+  environment (defining rate, condition function etc.) are defined directly as
+  Haskell expressions but rules, fluents, and observables are defined using
+  abstract Chromar syntax via quotation \citep{mainland_why_2007}.
+\end{itemize}
+
+\section{Plant development in a field}
+
+\subsection{Single plant}
+Since agents are the main entities in our language, let us
+consider what types of agents we should have to model the above
+system, given the above discussion. We will need:
+\begin{itemize}
+\item a $\mathrm{Leaf}$ type with attributes for 
+appearance: $\mathrm{Leaf}(\mathrm{age}:\mathrm{int},
+\mathrm{mass}:\mathrm{real})$,
+\item a $\mathrm{Cell}$ type that represents our main plant `cell' with an
+attribute, $\mathrm{carbon}$, to keep the current carbon level:
+$\mathrm{Cell}(\mathrm{carbon}:\mathrm{real})$ (there will only be one agent
+\item a $\mathrm{Ros}$ type that represents the entire Rosette with an
+attribute, $\mathrm{n}$, to keep the current number of leaves:
+$\mathrm{Ros}(\mathrm{n}:\mathrm{int})$ (there will also only be one agent
+\end{itemize}
+We will use the current number of leaves relative to the index of
+a particular leaf as a proxy for the leaf's age: the larger the difference
+between the index of a leaf and the current number of leaves, the older that
+leaf is.
+
+For the \textit{carbon assimilation} from one particular leaf we need to
+increase the carbon concentration of the central Cell. The bigger the leaf the
+faster it contributes to the production of carbon:
+\[\mathrm{Leaf}(\mathrm{mass}=m), \: \mathrm{Cell}(\mathrm{carbon}=c) \:
+\xrightarrow{f(m)} \: \mathrm{Leaf}(\mathrm{mass}=m), \:
+\mathrm{Cell}(\mathrm{carbon}=c+1)\]
+We can read this rule as saying that for
+any two Leaf and Cell agents, the Leaf agent remains the same and the Cell agent
+increases its carbon content by one. Note that we assign the values of the
+attributes 
+the left-hand side of the rule to the variables $m$ and $c$, so that we can
+refer to them in the right-hand side of the rule and the rate expression. Since
+the $\mathrm{age}$ is not used in the rest of the rule, it can be omitted (see
+\textit{Missing attributes} syntactic extension, Section~\ref{}). If
+we were to write this in a traditional reaction notation we would have to write
+a reaction for every possible Leaf agent which leads to the compactness problem
+we have noted earlier (indeed, there would be infinitely many such
+possibilities). The implicit `for-all' in the pattern on the left-hand side
+allows the rule to be applied to new leaves when they are
+created. For example if the state of the system has two leaves, the central
+cell, and the rosette agent:
+\begin{align*}
+\m{ \mathrm{Leaf}(\mathrm{age}=1, \mathrm{mass}=10), \:
+\mathrm{Leaf}(\mathrm{age}=2, \mathrm{mass}=5),
+\mathrm{Cell}(\mathrm{carbon}=20), \mathrm{Ros}(\mathrm{n} =2)}
+\end{align*}
+then the rule is applicable to the two substates
+\begin{align*}
+& \m{\mathrm{Leaf}(\mathrm{age}=1, \mathrm{mass}=10),
+                 \mathrm{Cell}(\mathrm{carbon}=20)} \: \text{ and} \\
+&\m{\mathrm{Leaf}(\mathrm{age}=2,
+  \mathrm{mass}=5), \mathrm{Cell}(\mathrm{carbon}=20)}
+\end{align*}
+
+For \textit{maintenance respiration}, the central $\mathrm{Cell}$ agent gives
+some carbon to a $\mathrm{Leaf}$ agent, with the amount of carbon needed for
+maintenance depending on the size of the Leaf:
+%
+\begin{align*}
+&\mathrm{Leaf}(\mathrm{mass}=m),\: \mathrm{Cell}(\mathrm{carbon}=c) \:
+\xrightarrow{h(m)} \\ &\mathrm{Leaf}(\mathrm{mass}=m),\:
+\mathrm{Cell}(\mathrm{carbon}=c-g(m)) \; [c \geq g(m)]
+\end{align*}
+Note the use of the condition $c \geq g(m)$ to make sure that the
+carbon levels do not become negative. Also note that here we use both the rate
+($h(m)$) and the increment size ($g(m)$) to control the amount by which carbon
+is updated in a time unit. Since the rate controls the number of times the
+update will happen, the product of the rate and update functions is the expected
+amount that will be removed from the carbon pool in a time unit.
+
+Next, \textit{leaf growth} depends on the mass of the leaf, its age (there is a
+limit on how much a leaf can grow so older leaves stop growing at some point),
+and the amount of carbon available:
+%
+\begin{align*}
+  & \mathrm{Ros}(\mathrm{n}=n), \mathrm{Leaf}(\mathrm{age}=i,
+\mathrm{mass}=m),\: \mathrm{Cell}(\mathrm{carbon}=c) \: \xrightarrow{h(n-i, m,
+    c)}\: \\
+  & \mathrm{Ros}(\mathrm{n} =n), \mathrm{Leaf}(\mathrm{age}=i,
+\mathrm{mass}=m+1),\: \mathrm{Cell}(\mathrm{carbon}=c-1) \; [c \geq 1]
+\end{align*} The mass of the leaf is also needed in the calculation to make sure
+that the growth does not exceed observed physical constraints. The growth is
+capped to a fraction of the current mass of the leaf.
+
+Finally, for \textit{leaf creation} we have:
+\begin{equation*} \mathrm{Ros}(\mathrm{n}=n) \: \xrightarrow{k} \:
+\mathrm{Ros}(\mathrm{n}=n+1), \: \mathrm{Leaf}(\mathrm{age}=n+1,
+\mathrm{mass}=m_0)
+\end{equation*}
+
+\subsubsection*{Fluents and Observables}
+There are two problems with the above definition: 
+\begin{itemize}
+\item[(i)] There is no way to include the environment in the model, and so it is
+  assumed constant. This makes the model very detached from reality.  For
+  example, our plants photosynthesise all the time, whereas in reality they only
+  do so during daylight, but we have no direct way to switch between day and
+  night.
+\item[(ii)] We have two representations of the same process at two different
+  levels of abstraction that have to be kept consistent with each other by the
+  user.  Specifically, the $\mathrm{n}$ attribute in the $\mathrm{Ros}$ agent
+  keeps track of the total number of leaves in the plant. However, there is no
+  way in the language to specify the global information the attribute is
+  tracking, and check that its value is indeed what it should be.
+\end{itemize}
+
+We next introduce two new notational features
+to solve these problems.
+
+\textit{Fluents}
+
+To solve the first problem time-dependent values we call \textit{Fluents}. These
+can be constructed through a combination of a small set of primitives and
+general expressions, taken from Reactive Programming (FRP) constructs in
+\citep{wan_functional_2000} (our Fluents are usually called Behaviours in FRP). For
+example we could write a fluent for light, which is a function from time to the
+Booleans, and another one for temperature that depends on light:
+\begin{align*}
+& light = \mathbf{repeatEvery} \; 24.0 \; (\mathrm{True} \; \mathbf{when} \; (6 < \mathbf{time} < 18) \; \mathbf{else} \; \mathrm{False}) \\
+& temp = 21.0 \; \mathbf{when} \; light \; \mathbf{else} \; 16.0
+\end{align*}
+where the $\mathbf{when} \dotso \mathbf{else}$ construct denotes conditional
+behaviour and $\mathbf{repeatEvery}$ cycling behaviour. Cycling behaviour is
+achieved with the modulo operation so the value of $\mathbf{repeatEvery} \; t_o
+\; f$ at $t$ is the value of $f$ at $t \; mod \; t_0$.
+
+The assimilation rule can then be written as follows:
+\begin{align*}
+& \mathrm{Leaf}(\mathrm{age} \!= \!i, \mathrm{mass} \!= \!m), \: \mathrm{Cell}(\mathrm{carbon} \!= \!c) \: \xrightarrow{f(m, temp)}  \\
+&\mathrm{Leaf}(\mathrm{age} \!= \!i, \mathrm{mass} \!= \!m), \:
+  \mathrm{Cell}(\mathrm{carbon} \!= \!c+1) \; [light ]
+\end{align*}
+
+Very often in biology we have empirical relationships of various quantities with
+time. Fluents can be used to encode these as well. Such empirical relationships
+do not provide any mechanistic insight but they %are
+can be useful when we either do not have data or do not want to model more
+mechanistically using rules.
+
+\textit{Observables}
+
+To solve the second problem, we introduce functions of the state of the system
+called \textit{observables}. Observables are constructed using a combination of
+database-inspired $\mathbf{select}$ and $\mathbf{aggregate}$ operations: % we
+think of our state as a kind of database where we have a collection of agents
+rather than the more usual (and very similar) collection of records. The $
+\mathbf{select}$ operation selects agents of a particular type from %specifies a
+part of the state, producing a binding of each such agent's attribute values;
+the $\mathbf{aggregate}$ operation then folds the resulting collection of
+attribute value bindings into a single value, using a specified combining
+function and initial value.
+
+ For example, to calculate the total mass  of the leafs in a state, we could write:
+ \begin{align*}
+lm = \mathbf{select} \, \mathrm{Leaf}(\mathrm{age} = i, \mathrm{mass} = m) \mathbf{;} \; \mathbf{aggregate} \;
+ (total: \mathrm{int}.\, total + m) \; 0
+\end{align*}
+%
+where we first select every agent that matches a $\mathrm{Leaf}$ pattern,
+producing a binding of its $\mathrm{age}$ and $\mathrm{mass}$ attributes to $i$
+and $m$, respectively, and then, starting from $0$, calculate the result using a
+combining function that adds the value of $m$ in every such binding to the
+running total.
+ %
+If we further wished to calculate the average mass of all the leafs in a state,
+we could use the observable
+\begin{align*}
+nl = \mathbf{select} \, \mathrm{Leaf}(\mathrm{age} = i, \mathrm{mass} = m) \mathbf{;} \; \mathbf{aggregate} \;
+ (count: \mathrm{int}.\, count + 1) \; 0
+\end{align*}
+%
+to count the number of leafs in a state, and then divide $lm$ by $nl$.
+
+Whenever an observable is used, one obtains its `fresh' value, even when the
+underlying state has changed (\eg, by creating new leaves, in this case). For
+example our \textit{leaf growth} rule now becomes:
+%
+\begin{align*}
+&\mathrm{Leaf}(\mathrm{age} \!= \!i, \mathrm{mass} \!= \!m),\:
+  \mathrm{Cell}(\mathrm{carbon} \!= \!c) \xrightarrow{h(nl-i, m, c)}\:   \\
+  &
+ \mathrm{Leaf}(\mathrm{age} \!= \!i, \mathrm{mass} \!= \!m+1),\:
+    \mathrm{Cell}(\mathrm{carbon} \!= \!c-1) \; [c \geq  1]
+\end{align*}
+where we use our observable $nl$ directly in the rule rate. There is no need to
+use the $\mathrm{Ros}$ agent any more as its only purpose was to keep track of
+the number of leaves.
+
+Note that observables, like fluents, can be used to model parts of the system in
+cases where there is either not enough knowledge about a process, or else no
+desire to model at a more mechanistic level. In this case, for example, the
+leaves must have some mechanism for knowing their age. However this is not
+central to our model, so we instead use global knowledge via observables to
+abstract away from the details that would be involved in modelling that
+mechanism.
+
+\subsection{Field}
+
+
+\section{Root development}
+
+\section{Comparison to related work}
+Discuss here properties relating to general usability features that can be
+understood without the formal definitions. Comparison and discussion related to
+more technical parts is done at the point where these are introduced.
+
+\subsection{Basic Chromar}
+
+\subsection{Extended Chromar}
+
+\subsection{Haskell}
+
+
+\singlespace
+
+
+\printbibliography[heading=bibintoc]
+
+%% ... that's all, folks!
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

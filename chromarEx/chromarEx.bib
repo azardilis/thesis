@@ -1,0 +1,105 @@
+
+@incollection{gibbons_functional_2015,
+	series = {Lecture {Notes} in {Computer} {Science}},
+	title = {Functional {Programming} for {Domain}-{Specific} {Languages}},
+	copyright = {©2015 Springer International Publishing Switzerland},
+	isbn = {978-3-319-15939-3 978-3-319-15940-9},
+	url = {http://link.springer.com/chapter/10.1007/978-3-319-15940-9_1},
+	abstract = {Domain-specific languages are a popular application area for
+                  functional programming; and conversely, functional programming
+                  is a popular implementation vehicle for domain-specific
+                  languages—at least, for embedded ones. Why is this? The appeal
+                  of embedded domain-specific languages is greatly enhanced by
+                  the presence of convenient lightweight tools for defining,
+                  implementing, and optimising new languages; such tools
+                  represent one of functional programming’s strengths. In these
+                  lectures we discuss functional programming techniques for
+                  embedded domain-specific languages; we focus especially on
+                  algebraic datatypes and higher-order functions, and their
+                  influence on deep and shallow embeddings.},
+	language = {en},
+	number = {8606},
+	urldate = {2017-02-23},
+	booktitle = {Central {European} {Functional} {Programming} {School}},
+	publisher = {Springer International Publishing},
+	author = {Gibbons, Jeremy},
+	editor = {Zsók, Viktória and Horváth, Zoltán and Csató, Lehel},
+	year = {2015},
+	doi = {10.1007/978-3-319-15940-9_1},
+	keywords = {Compilers, Interpreters, Logics and Meanings of Programs,
+                  Programming Languages, Programming Techniques, Software
+                  Engineering},
+	pages = {1--28}
+}
+
+
+@inproceedings{mainland_why_2007,
+	address = {New York, NY, USA},
+	series = {Haskell '07},
+	title = {Why {It}'s {Nice} to {Be} {Quoted}: {Quasiquoting} for {Haskell}},
+	isbn = {978-1-59593-674-5},
+	shorttitle = {Why {It}'s {Nice} to {Be} {Quoted}},
+	url = {http://doi.acm.org/10.1145/1291201.1291211},
+	doi = {10.1145/1291201.1291211},
+	abstract = {Quasiquoting allows programmers to use domain specific
+                  syntax to construct program fragments. By providing concrete
+                  syntax for complex data types, programs become easier to read,
+                  easier to write, and easier to reason about and
+                  maintain. Haskell is an excellent host language for embedded
+                  domain specific languages, and quasiquoting ideally
+                  complements the language features that make Haskell perform so
+                  well in this area. Unfortunately, until now no Haskell
+                  compiler has provided support for quasiquoting. We present an
+                  implementation in GHC and demonstrate that by leveraging
+                  existing compiler capabilities, building a full quasiquoter
+                  requires little more work than writing a parser. Furthermore,
+                  we provide a compile-time guarantee that all quasiquoted data
+                  is type-correct.},
+	urldate = {2017-02-23},
+	booktitle = {Proceedings of the {ACM} {SIGPLAN} {Workshop} on {Haskell} {Workshop}},
+	publisher = {ACM},
+	author = {Mainland, Geoffrey},
+	year = {2007},
+	keywords = {meta programming, quasiquoting},
+	pages = {73--82},
+	annote = {bibtex: mainland\_why\_2007}
+}
+
+
+@inproceedings{wan_functional_2000,
+	address = {New York, NY, USA},
+	series = {{PLDI} '00},
+	title = {Functional {Reactive} {Programming} from {First} {Principles}},
+	isbn = {978-1-58113-199-4},
+	url = {http://doi.acm.org/10.1145/349299.349331},
+	doi = {10.1145/349299.349331},
+	abstract = {Functional Reactive Programming, or FRP, is a general
+                  framework for programming hybrid systems in a high-level,
+                  declarative manner. The key ideas in FRP are its notions of
+                  behaviors and events. Behaviors are time-varying, reactive
+                  values, while events are time-ordered sequences of
+                  discrete-time event occurrences. FRP is the essence of Fran, a
+                  domain-specific language embedded in Haskell for programming
+                  reactive animations, but FRP is now also being used in vision,
+                  robotics and other control systems applications. In this paper
+                  we explore the formal semantics of FRP and how it relates to
+                  an implementation based on streams that represent (and
+                  therefore only approximate) continuous behaviors. We show
+                  that, in the limit as the sampling interval goes to zero, the
+                  implementation is faithful to the formal, continuous
+                  semantics, but only when certain constraints on behaviors are
+                  observed. We explore the nature of these constraints, which
+                  vary amongst the FRP primitives. Our results show both the
+                  power and limitations of this approach to language design and
+                  implementation. As an example of a limitation, we show that
+                  streams are incapable of representing instantaneous predicate
+                  events over behaviors.},
+	urldate = {2017-01-25},
+	booktitle = {Proceedings of the {ACM} {SIGPLAN} 2000 {Conference} on
+                  {Programming} {Language} {Design} and {Implementation}},
+	publisher = {ACM},
+	author = {Wan, Zhanyong and Hudak, Paul},
+	year = {2000},
+	keywords = {frp, haskell},
+	pages = {242--252}
+}
