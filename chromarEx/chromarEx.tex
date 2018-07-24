@@ -1,5 +1,4 @@
 \documentclass[phd]{infthesis}
-
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[british]{babel}
@@ -17,6 +16,7 @@
 \usepackage{hyperref}
 \usepackage{expl3}
 \usepackage{enumitem}
+\usepackage{booktabs}
 
 \usepackage{listings}% http://ctan.org/pkg/listings
 \lstset{
@@ -67,6 +67,9 @@
 % rules
 \newcommand{\ar}[2]{\mr{#1} \! = \! {#2}}
 
+\setlength{\tabcolsep}{8pt}
+\renewcommand{\arraystretch}{1.2}
+
 % Abstract
 \begin{document}
 
@@ -78,7 +81,7 @@ features of the languages but also as a means of comparing Chromar to the relate
 languages in the previous chapter by seeing how Chromar features handle the
 modelling requirements that they present.
 
-Chromar has the following properties, which we will explore in this chapter
+Chromar has the following main ideas, which we will explore in this chapter
 through the examples:
 \begin{itemize}
 \item \emph{basic Chromar} is a rule-based notation with stochastic semantics
@@ -125,11 +128,12 @@ through the examples:
 \end{itemize}
 
 The examples from the previous section are extensions to the examples that
-appear in the papers describing Chromar \citet{honorato-zimmer_chromar_2017,
+appear in the papers describing Chromar \citep{honorato-zimmer_chromar_2017,
   honorato-zimmer_chromar_2018}. Therefore the following text is also in part
 comes from the same sources.
 
 \section{Plant development in a field}
+\label{sec:plantDev}
 
 \subsection{Single plant}
 Since agents are the main entities in our language, let us
@@ -173,9 +177,9 @@ allows the rule to be applied to new leaves when they are
 created. For example if the state of the system has two leaves, the central
 cell, and the rosette agent:
 \begin{align*}
-\m{ \mathrm{Leaf}(\mathrm{age}=1, \mathrm{mass}=10), \:
-\mathrm{Leaf}(\mathrm{age}=2, \mathrm{mass}=5),
-\mathrm{Cell}(\mathrm{carbon}=20), \mathrm{Ros}(\mathrm{n} =2)}
+\m{ \mathrm{Leaf}(\ar{age}{1}, \ar{mass}{10}), \:
+\mathrm{Leaf}(\ar{age}{2}, \ar{mass}{5}),
+\mathrm{Cell}(\ar{carbon}{20}), \mr{Ros}(\ar{n}{2})}
 \end{align*}
 then the rule is applicable to the two substates
 \begin{align*}
@@ -390,6 +394,7 @@ definition the assimilation rules will change to:
 \end{align*}
 
 \section{Root development}
+\label{sec:rootDev}
 For the root example, we again assume we are in our Haskell implementation and
 we therefore have Haskell types and expressions in our disposal for the
 definition of the model. We define the following agent types:
@@ -479,10 +484,12 @@ concnetration in the cell.
 For the cell cycle we need to switch the mode of the cell, $\mr{m}$, from
 growing to idle.
 \begin{align*}
-& \mr{Cell}(\ar{m}{1}, \ar{s}{s}) \xrightarrow{\rho(s)} \mr{Cell}(\ar{m}{2}) \,
-  \text{with} \\
-&  \rho(s) = \frac{1}{1 + e^{- \frac{s-s_{\mr{min}}}{\mathbf{time}}}}
-\end{align*}
+  \mr{Cell}(\ar{m}{1}, \ar{s}{s}) \xrightarrow{\rho(s)} \mr{Cell}(\ar{m}{2})
+  \end{align*}
+  with
+  \begin{equation*}
+\rho(s) = \frac{1}{1 + e^{- \frac{s-s_{\mr{min}}}{\mathbf{time}}}}
+\end{equation*}
 
 For cell division, we create a new cell on the right of the dividing cell and
 split the concentrations of auxin and the dividing factor between the two cells:
@@ -544,38 +551,135 @@ Table~\ref{tab:comp} shows a summary of the discussion points and a comparison
 of the main features of Chromar and the languages from the previous chapter.
 
 \begin{center}
-  \begin{tabular}{p{0.15\linewidth}p{0.15\linewidth}p{0.15\linewidth}p{0.15\linewidth}p{0.15\linewidth}p{0.15\linewidth}}
+  \begin{tabular}{p{0.13\linewidth}p{0.13\linewidth}p{0.13\linewidth}p{0.13\linewidth}p{0.13\linewidth}p{0.13\linewidth}p{0.13\linewidth}}
     \toprule
-    & PN & SMMR & CPN & DG & Simile\\
+    & PN & SMMR & CPN & DG & Simile & Chromar\\
     \midrule
 Objects \newline (dynamics) & Yes \newline (rule) & Yes \newline (rule) & Yes
                                                                           \newline
                                                                           (rule)
-                      & Yes \newline(rule) & Yes \newline (population) \\
+                      & Yes \newline(rule) & Yes \newline (population) & Yes \newline (rule)\\
     \addlinespace[0.2cm]
 Relations \newline (explicit) & No & Yes \newline (hierarchy) & No \newline
                                                                 (implicit via
-                                                                attrs) & No \newline (implicit via attrs & No \newline (implicit via attrs) \\
+                                                                attrs) & No \newline (implicit via attrs & No \newline (implicit via attrs) & No \newline (implicit via attrs)\\
     \addlinespace[0.2cm]
     Properties \newline (dynamics) & No & No & Yes \newline
-(transitions) & Yes \newline (transitions or ODEs) & Yes \newline (ODEs) \\
+(transitions) & Yes \newline (transitions or ODEs) & Yes \newline (ODEs) & Yes \newline
+(transitions) \\
     \addlinespace[0.2cm]
-    State \newline abstraction & No & No & No & No & Yes \\
+    State \newline abstraction & No & No & No & No & Yes & Yes\\
     \addlinespace[0.2cm]
-    Time & No & No & No & Yes \newline (via ODEs) & Yes \\
-    Notes & & & & & \\
+    Time & No & No & No & Yes \newline (via ODEs) & Yes & Yes\\
+    Intepretation & CTMC& CTMC& CTMC& CTMC + \newline others & - & CTMC\\
     \bottomrule
-\end{tabular}
+    \label{tab:comp}
+  \end{tabular}
 \end{center}
 
 \subsection{Basic Chromar}
+The idea of extending simple objects with fields to represent some of their
+attributes has been used before, as we have seen, for example in Coloured Petri
+Nets \citep{jensen_coloured_1987}, in a rule-based setting, in CSMMR
+\citep{oury_coloured_2011} and Dynamical Grammars \citep{mjolsness2006stochastic},
+and in parametric L-systems. Our notation is inspired by these.
 
+The correspondence of CPNs to basic Chromar is straightforward, colour sets are
+our agent types (records with named attributes), tokens are our agents, and
+transitions are our rules. CPN transitions also have predicates that are the
+same as our conditions. One can think of it as a minimal rule-based (and
+textual) version of stochastic coloured petri nets, where the richer types are
+first class and not merely a means of translation to a non-coloured version; one
+can also think of it as a simpler version of CSMMR with only colours left. While
+graphical notations are intuitive for smaller models, we have found that for
+larger models they become hard to read whereas text-based approaches like our
+language produce much more readable representations.
+
+Like the development of other languages we have seen in the previous chapter,
+basic Chromar provides an extension to the representation of reactions, where
+the simple named species are upgraded to agents employing rich types, namely
+records with named typed attributes. Writing rules using these richer types
+yields a more compact representation than one would get by writing reactions on
+the simpler types in the traditional reaction setting. Moreover it sometimes
+helps with writing systems that are difficult to write otherwise as it permits
+the dynamic creation of agents and therefore their attributes. These are the
+limitations we noted for the simple reactions in PNs.
+
+Attributes can be used to encode relations like the `next-to' relation in the
+root development example.  However, whenever we use them to encode binding we
+would probably be better off using a language that represents these directly
+such as Kappa~\cite{danos2008} or BioNetGen~\cite{blinov2004bionetgen}.
+However, note that in the dividing cell and diffusion model of the previous
+section we use colours in other ways that can't be easily represented as
+binding.  In particular, the division of the contents of a cell would be hard to
+express in any of the object-only languages.
 
 
 \subsection{Extended Chromar}
+Our use of database inspired operations for the observables is also new and we
+have found it very useful in model building. The declarative nature of our
+multiset query primitives makes the definition of observables very
+intuitive. Similar database-inspired query operations on top of collections are
+used in LINQ~\citep{budiu_compiler_2013} although the collections are usually taken
+to be lists not multisets. Buneman's comprehension
+syntax~\citep{buneman_comprehension_1994}, a collection query language similar to
+practical database query languages, considers other types of collections,
+including multisets. These are, however, not used in the modelling world.
+
+Fluents allow the convenient expression of changing values, which is
+important as models become more comprehensive and start reaching outside their
+domain, for example traditional plant biology models reaching out to the outside
+world and to crop science.
+
+Fluents can be expressed, albeit in the ODE formulation, in Dynamical
+grammars. Simulators of some of the languages in the overview in the previous
+chapter also allow observables for result reporting. However, the lifting of
+fluents and observables to first-class entities and their combination with
+expression coming (potentially) from a general purpose programming language is
+new and makes for a very powerful extension to the language.
 
 \subsection{Haskell}
+Our embedding in a programming language increases expressive power, and fits
+with the availability of rich types.  There have been other languages that,
+while not giving the full power of a programming language, still allow for
+complex expressions to appear, e.g., inside rate expressions. For example in
+React(C) \citep{john_biochemical_2011} rate expressions can be build from a subset
+of a functional programming language with a reflection option to get access to
+the full state of the system. This allows conditions to be encoded inside rates
+by setting the rates to zero if they are not met. Simulators for other widely
+used languages like KaSim (the simulator for Kappa~\citep{danos2008}) and
+BioNetGen~\citep{blinov_bionetgen:_2004} also allow more sophisticated rate
+expressions than traditional mass-action kinetic rates.
 
+Our embedding in Haskell lifts some of the constraints of modelling languages
+and, we think, gets the best of both worlds: it naturally and succinctly
+captures some elements in our domain of interest but, at the same time, when
+greater expressive power is needed we can turn to the programming language. This
+increase in expressive power might come at the expense of the ability to do
+general analysis of models since we cannot say much about what is happening in
+the Haskell \texttt{exprs} inside the rules. There seems to be a trend, though,
+in the direction of mixing domain-specificity and general purpose programming
+languages, for example \citet{pedersen_high-level_2015} allow embedded F\#
+scripts inside LBS-$\kappa$, and in PySB \citep{lopez_programming_2013} Kappa
+models are defined inside Python. Embedding a domain-specific language inside a
+programming language, as we did, is in some cases better than doing the opposite
+-- embedding a programming language inside a domain-specific language -- because
+we have fewer constraints on our definitions and more generally full access to
+the language for structuring our model definitions. We also note, as we have
+seen, that there is a hybrid approach that allows mixing the graphical
+definition of CPNs with programming language constructs (ML
+language)~\citep{jensen_coloured_1987}.
+
+\subsection{Conclusion}
+In conclusion, extended Chromar and its concrete realisation in Haskell give a
+highly expressive language that is particularly good for the description of
+models with a simple structure, such as the Plant example in
+Section~\ref{sec:plantDev} and the root development example in
+Section~\ref{sec:rootDev}. The main ideas of Chromar --- two levels of dynamics
+(attribute and agent levels), a flexible system of observation, and a
+combination of domain-specific and general programming languages --- should
+carry to other frameworks or languages, for example ones with connection and
+nesting and perhaps other complex structure.
 
 \singlespace
 
