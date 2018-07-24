@@ -18,6 +18,12 @@
 \usepackage{expl3}
 \usepackage{enumitem}
 
+\usepackage{listings}% http://ctan.org/pkg/listings
+\lstset{
+  basicstyle=\ttfamily,
+  mathescape
+}
+
 \frenchspacing
 
 % Bibliography
@@ -31,7 +37,7 @@
 % Referencing
 \newcommand{\chp}[1]{\S\ref{chp:#1}}
 \newcommand{\sct}[1]{\S\ref{sec:#1}}
-\newcommand{\subsct}[1]{\S\ref{subsec:#1}}
+\newcommand{\ssec}[1]{\S\ref{subsec:#1}}
 \newcommand{\eqn}[1]{Eq.~\ref{eq:#1}}
 \newcommand{\eqns}[2]{Eq. \ref{eq:#1} and \ref{eq:#2}}
 \newcommand{\lem}[1]{Lemma~\ref{lemma:#1}}
@@ -57,6 +63,9 @@
 % Other stuff
 \newcommand{\maybe}[1]{\textcolor{gray}{#1}}
 \newcommand{\todo}[1]{\textcolor{red}{TODO: #1}}
+
+% rules
+\newcommand{\ar}[2]{\mr{#1} \! = \! {#2}}
 
 % Abstract
 \begin{document}
@@ -114,6 +123,11 @@ through the examples:
   Haskell expressions but rules, fluents, and observables are defined using
   abstract Chromar syntax via quotation \citep{mainland_why_2007}.
 \end{itemize}
+
+The examples from the previous section are extensions to the examples that
+appear in the papers describing Chromar \citet{honorato-zimmer_chromar_2017,
+  honorato-zimmer_chromar_2018}. Therefore the following text is also in part
+comes from the same sources.
 
 \section{Plant development in a field}
 
@@ -252,9 +266,8 @@ The assimilation rule can then be written as follows:
 
 Very often in biology we have empirical relationships of various quantities with
 time. Fluents can be used to encode these as well. Such empirical relationships
-do not provide any mechanistic insight but they %are
-can be useful when we either do not have data or do not want to model more
-mechanistically using rules.
+do not provide any mechanistic insight but they can be useful when we either do
+not have data or do not want to model more mechanistically using rules.
 
 \textit{Observables}
 
@@ -313,17 +326,251 @@ central to our model, so we instead use global knowledge via observables to
 abstract away from the details that would be involved in modelling that
 mechanism.
 
-\subsection{Field}
+The two features, fluents and observables, can be mixed arbitrarily along with
+ordinary expressions. We might for example have a fluent inside an observable or
+a fluent inside an observable and so on. For example we could write:
+\begin{equation*}
+f(m) \; \mathbf{when} \; nl > 10 \; \mathbf{else} \; f'(m)
+\end{equation*}
+where $nl$ is an observable for the number of leaves. This might be used to
+introduce the crowding effect on rosette leaves; crowding affects the
+assimilation rate as it reduces the photosynthetically active area.
 
+\subsection{Field}
+Going to the field where we have multiple plants we need some way of knowing
+first which agents belong to the same plant and second the location of the
+plant. We do not have an explicit way of representing these relations but we can
+again use our attributes to encode them. We will use one identifier for the plant
+and one for the patch. Every agent now has a further attribute to store this
+information. For example, the $\mr{Leaf}$ agent type becomes:
+$\mathrm{Leaf}(\mr{pos}:(\mr{int}, \mr{int}), \mathrm{age}:\mathrm{int},
+\mathrm{mass}:\mathrm{real})$. The first element of the $\mr{pos}$ tuple is the
+plant identifier and the second is the identifier of the patch it belongs to. We
+further assume that we are in a suitably powerful programming language (\eg our
+Haskell embedding) that we have (or can define) the functions $\mr{pid}$ to
+select the first element of the tuple (plant id) and $\mr{cid}$ to select the second
+element of the tuple (patch id).
+
+The metabolic rules stay the same but add a further condition that the
+agents on the lhs belong to the same plant. For example, maintenance respiration
+now becomes:
+\begin{align*}
+  &\mathrm{Leaf}(\mathrm{pos}=p, \mathrm{mass}=m),\:
+    \mathrm{Cell}(\mathrm{pos}=p', \mathrm{carbon}=c) \:
+    \xrightarrow{h(m)} \\ &\mathrm{Leaf}(\mathrm{mass}=m),\:
+                            \mathrm{Cell}(\mathrm{carbon}=c-g(m)) \; [c \geq g(m)
+                            \, \land pid \, p = pid \, p']
+\end{align*}
+
+We assume that competition between plant affects the amount of light they
+receive, which in turn affects the photosynthesis rate. The assimilation rule
+will therefore change so that the light fluent is modulated by a competition
+index, which will be an observable on the global state of an entire patch. Here
+we assume that we are in our Haskell embedding and we have access to the full
+power of the language. We define the following Haskell functions:
+\begin{align*}
+& \mr{comp} \: p = f (\mathbf{select} \; \mathrm{Leaf}(\mathrm{pos}=p' ,
+  \mathrm{mass} = m) \; ; \; \mathbf{aggregate} \; (c: \mathrm{real}. \,
+  \mr{sumComp}) \; 0 \\
+& \mr{light} \: p = \mathbf{repeatEvery} \; 24.0 \; (\mathrm{light_{max}
+                          } \cdot \mr{comp} \, p \; \mathbf{when} \; (6 < \mathbf{time} < 18) \; \mathbf{else} \; \mathrm{0})
+\end{align*}
+that take as input a $\mr{pos}$ tuple and return a relevant expression for that
+particular plant in that patch. The combining function $\mr{sumComp}$ is defined
+as: $\mr{sumComp} = \mathbf{if}\; cid \, p' = cid \, p \land pid \, p' \neq pid \, p
+\;\mathbf{then} \; c + m; \; \mathbf{else} \; c$ that sums the masses of all
+leaves in a patch except from the given plant. Then with the modulated light
+definition the assimilation rules will change to:
+\begin{align*}
+& \mathrm{Leaf}(\mathrm{pos} \!= \!p, \mathrm{age} \!= \!i, \mathrm{mass} \!= \!m), \:
+                 \mathrm{Cell}(\mathrm{carbon} \!= \!c) \: \xrightarrow{f(m,
+                 temp, light \, p)}  \\
+&\mathrm{Leaf}(\mathrm{age} \!= \!i, \mathrm{mass} \!= \!m), \:
+  \mathrm{Cell}(\mathrm{carbon} \!= \!c+1) \; [light \, p > 0]
+\end{align*}
 
 \section{Root development}
+For the root example, we again assume we are in our Haskell implementation and
+we therefore have Haskell types and expressions in our disposal for the
+definition of the model. We define the following agent types:
+\begin{itemize}
+\item a $\mr{Cell}$ type to represent the root cells in the array defined as:
+  \begin{align*}
+    \mr{Cell}(&\mr{id}: \mr{int}, \\
+              &\mr{l, r}: \mr{link}, \\
+              &\mr{s, a, d}: \mr{real}, \\
+              &\mr{m}:\mr{mode})
+    \end{align*}
+    The type label $\mr{link}$ is interpreted as the set
+    $\mathbb{N} \cup \{\epsilon\}$ and the relevant attributes ($\mr{l}$ for the
+    left and $\mr{r}$ for the right neighbour) represent either a bound state
+    (via an identifier) or a non-bound state ($\epsilon$). The type label
+    $\mr{mode}$ is intepreted as the set $\{ 1, 2 \}$ and it represents the
+    state of the cell, either growing (1) or idle (2). The other attributes
+    represent the size of the cell ($\mr{s}$) and its auxin ($\mr{a}$) and
+    division-factor ($\mr{d}$) concentrations (Figure~\ref{fig:rootDevChromar}).
+  \item a $\mr{Shoot}$ agent type to represent the entire shoot of the plant
+    defined as $\mr{Shoot}(\mr{s}: \mr{real})$ where the attribute $\mr{s}$
+    represents the size of the shoot.
+  \end{itemize}
+  
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\linewidth]{figures/rootChromar.eps}
+    \caption{Scheme for capturing the `next-to' relation between cells and the
+      division rule.}
+    \label{fig:rootDevChromar}
+  \end{figure}
+
+In order to be able to give fresh identifiers to cells created by division we
+also need to know the current number of cells in the array. We do this using
+an observable:
+\begin{align*}
+nc = \mathbf{select} \; \mathrm{Cell}()\mathbf{;} \;\mathbf{aggregate} \; (count: \mathrm{int}.\, count + 1) \; 0
+\end{align*}
+As with our plant example in the previous section, we use a $\mathrm{count}$
+expression that increases the running count by $1$ for each
+$\mathrm{Cell}$. Note that like rules we can omit attribute bindings when the
+values are not used in the subsequent definitions of the expression.
+
+Turning to the dynamics of the system, for the auxin flow from the shoot we can
+have the following rule:
+\begin{align*}
+\mr{Cell}(\mr{l} \!=\! \epsilon, a=a) \xrightarrow{} \mr{Cell}(\mr{a}=a + (a_{init} + \frac{0.17 \cdot \mathbf{time}}{t_{cc}}))
+\end{align*}
+where $t_{cc}$ is the time duration of the cell cycle. We represent auxin flow
+from the shoot as auxin being produced in the first cell in the array. We
+distinguish the first cell by requiring it to be unbound to the left. 
+
+For the auxin diffusion we can write the following:
+\begin{align*}
+\mr{Cell}(\ar{r}{i}, \ar{a}{a}), \mr{Cell}(\ar{id}{i}, \ar{a}{a'})
+  \xrightarrow{} \mr{Cell}(\ar{a}{a + D(a'-a)}), \mr{Cell}(\ar{a}{a' + D(a - a')})
+\end{align*}
+
+For the active transport of auxin in the cell by PIN proteins we have,
+\begin{align*}
+& \mr{Cell}(\ar{r}{i}, \ar{a}{a}), \mr{Cell}(\ar{id}{i}, \ar{a}{a'})
+                 \xrightarrow{} \\
+  &\mr{Cell}(\ar{a}{a - K_0 a PIN(a)}), \mr{Cell}(\ar{a}{a' + K_0
+  a PIN(a)})
+\end{align*}
+Note that instead of modelling $\mr{PIN}$ concentration and its effect on auxin
+directly, we do so implicitly through a function that modulates the
+amount of auxin being transported. Unlike diffusion, which is bidirectional,
+active transport takes place in the direction from root shoot to cap.
+
+The production of the division factor is affected by the difference in auxin
+concentration between neighbouring cells,
+\begin{align*}
+\mr{Cell}(\ar{id}{i}, \ar{a}{a'}), \mr{Cell}(\ar{l}{i}, \ar{a}{a}, \ar{d}{d})
+  \xrightarrow{} \mr{Cell}(), \mr{Cell}(\ar{d}{d+\sigma(a'-a)})
+\end{align*}
+
+For the growth of the cell and degradation of the concentrations of the division
+factor, $\mr{d}$, and auxin concentration, $\mr{a}$, we write:
+\begin{align*}
+\mr{Cell}(\ar{s}{s}, \ar{a}{a}, \ar{d}{d}) \xrightarrow{} \mr{Cell}(\ar{a}{a (1 - d +
+  \frac{v(s)}{s})}, d=d (1 - k(a) + \frac{v(s)}{s}), \ar{s}{v(s)})
+\end{align*}
+The degradation of the division factor, again, depends on the auxin
+concnetration in the cell.
+
+For the cell cycle we need to switch the mode of the cell, $\mr{m}$, from
+growing to idle.
+\begin{align*}
+& \mr{Cell}(\ar{m}{1}, \ar{s}{s}) \xrightarrow{\rho(s)} \mr{Cell}(\ar{m}{2}) \,
+  \text{with} \\
+&  \rho(s) = \frac{1}{1 + e^{- \frac{s-s_{\mr{min}}}{\mathbf{time}}}}
+\end{align*}
+
+For cell division, we create a new cell on the right of the dividing cell and
+split the concentrations of auxin and the dividing factor between the two cells:
+\begin{align*}
+  &\mr{Cell}(\ar{id}{i}, \ar{r}{k}, \ar{a}{a}, \ar{d}{d}, \ar{s}{s}, \ar{m}{2}),
+  \mr{Cell}(\ar{id}{k}, \ar{l}{i}) \xrightarrow{\rho(d)} \\
+  & \mr{Cell}(\ar{id}{i}, \ar{id}{nc}, \ar{a}{a/2}, \ar{d}{d/2}, \ar{s}{s/2},
+    m=1), \\
+  &  \mr{Cell}(\ar{id}{nc}, \ar{l}{i}, \ar{r}{k}, \ar{a}{a/2}, \ar{d}{d/2}, \ar{s}{s/2},
+    m=1), \\
+  &  \mr{Cell}(\ar{id}{k}, \ar{l}{nc})
+\end{align*}
+The cell divides only in the idle phase and the division sets the the mode back
+to growing while the rate of division depends on the concentration of the
+division factor. The dividing cell gets pushed to the left, keeping its id and
+changing its right-neighbour identifier to the identifier of the new cell. The
+new cell gets a fresh identifier from our cell counter observable $nc$ and a
+right-neighbour identifier from the old neighbour of its mother cell
+(Figure~\ref{fig:rootDevChromar}).
+
+Finally, cells die at the root cap:
+\begin{align*}
+\mr{Cell}(\ar{r}{\epsilon}) \xrightarrow{\rho_{\mr{death}}} \emptyset
+\end{align*}
+We distinguish the end of the root by requiring the cell to be unbound on the
+right.
+
+Finally, the growth of the shoot follows an abstract functional form:
+\begin{align*}
+\mr{Shoot}(\ar{s}{s}) \xrightarrow{} \mr{Shoot}(\ar{s}{f(w, \mathbf{time})})
+\end{align*}
+The growth function is a phenomenological function of time and more
+interestingly water uptake. Assuming that the water uptake depends on the root
+size, we model it as follows:
+\begin{align*}
+& rs  = \mathbf{select} \; \mathrm{Cell}(\ar{s}{s}) \mathbf{;} \; \mathbf{aggregate} \;
+                                                              (total:
+                                                              \mathrm{real}.\,
+                                                              total + s) \; 0 \\
+& w = f(\mathbf{time}) \; \mathbf{when} \; rs > s_0 \; \mathbf{else} \;
+f(\mathbf{time}) \cdot d                                       
+\end{align*}
+where $rs$ is an observable abstracting the size of the entire root from the
+size of the constituent cells and $w$ is a fluent that uses that size to compute
+the water uptake. The bigger the root the more water the plant takes. We use the
+fluent here to model a process that while relevant for our process we do not
+wish to model in detail and mechanistically via rules.
 
 \section{Comparison to related work}
-Discuss here properties relating to general usability features that can be
-understood without the formal definitions. Comparison and discussion related to
-more technical parts is done at the point where these are introduced.
+Havign seen the properties of Chromar in action in this chapter and of other
+languages in the same design space in the previous chapter, we can compare their
+features. Here we will discuss properties relating to general usability features
+that can be understood without the formal definitions. Comparison and discussion
+related to more technical parts is done at the point where these are introduced
+(see next Chapters for formal definition of Chromar and its embedding in
+Haskell).
+
+Table~\ref{tab:comp} shows a summary of the discussion points and a comparison
+of the main features of Chromar and the languages from the previous chapter.
+
+\begin{center}
+  \begin{tabular}{p{0.15\linewidth}p{0.15\linewidth}p{0.15\linewidth}p{0.15\linewidth}p{0.15\linewidth}p{0.15\linewidth}}
+    \toprule
+    & PN & SMMR & CPN & DG & Simile\\
+    \midrule
+Objects \newline (dynamics) & Yes \newline (rule) & Yes \newline (rule) & Yes
+                                                                          \newline
+                                                                          (rule)
+                      & Yes \newline(rule) & Yes \newline (population) \\
+    \addlinespace[0.2cm]
+Relations \newline (explicit) & No & Yes \newline (hierarchy) & No \newline
+                                                                (implicit via
+                                                                attrs) & No \newline (implicit via attrs & No \newline (implicit via attrs) \\
+    \addlinespace[0.2cm]
+    Properties \newline (dynamics) & No & No & Yes \newline
+(transitions) & Yes \newline (transitions or ODEs) & Yes \newline (ODEs) \\
+    \addlinespace[0.2cm]
+    State \newline abstraction & No & No & No & No & Yes \\
+    \addlinespace[0.2cm]
+    Time & No & No & No & Yes \newline (via ODEs) & Yes \\
+    Notes & & & & & \\
+    \bottomrule
+\end{tabular}
+\end{center}
 
 \subsection{Basic Chromar}
+
+
 
 \subsection{Extended Chromar}
 
