@@ -1,4 +1,3 @@
-\section{Introduction}
 Understanding the links between biological processes at multiple scales, from
 genomes and molecular regulation to populations and evolution along with their
 interactions with the environment, is a major challenge in understanding
@@ -10,29 +9,29 @@ environment to achieve particular traits of individual plants (e.g biomass) or
 populations of plants (climate control problem). While the automatic climate
 control problem has been studied before for greenhouses, the focus was more on
 minimising energy consumption and/or achieving certain predefined climate
-regimes and rarely on optimising crop traits \cite{Chalabi1996,
+regimes and rarely on optimising crop traits \citep{Chalabi1996,
 udinktenCate1983, Challa_1990, Aaslyng2003}. More insulated and sophisticated
 growth environments with more precise control are becoming available as part of
-the urban and controlled-environment agriculture movement \cite{mok_strawberry_2014, despommier_farming_2013}. There are many
+the urban and controlled-environment agriculture movement \citep{mok_strawberry_2014, despommier_farming_2013}. There are many
 commercial examples (\href{https://aerofarms.com/}{Aerofarms},
 \href{https://motorleaf.com/}{Motorleaf}) and others like Intelligent Growth
 Solutions (\href{https://www.intelligentgrowthsolutions.com/}{IGS}) that are based on
 novel technologies, for example, for reducing energy consumption and increasing
-control over the growth space (lightning patent \cite{aykroyd_novel_2016},
-automated growth tower patent \cite{aykroyd_automated_2018}). These more
+control over the growth space (lightning patent \citep{aykroyd_novel_2016},
+automated growth tower patent \citep{aykroyd_automated_2018}). These more
 sophisticated growth environment allow us to focus more on crop traits and even
 more precisely at specific quality standards (size, uniformity) that crops need
 to meet (see for example EU marketing standards on fruit and vegetables;
-\cite{eu-543-2011}).
+\citep{eu-543-2011}).
 
 In order to address the above, we present a formulation of the climate control
 problem for \textit{Arabidopsis thaliana} plants as an optimal control problem
-\cite{kirk_optimal_2012} where the control variables are climate conditions
+\citep{kirk_optimal_2012} where the control variables are climate conditions
 (temperature) and the performance criterion is a crop trait. It has already been
 proposed that more mechanistic models are needed when linking between multiple
 scales instead of the usually empirical models used in crop modelling
-\cite{yin_role_2004, yin_modelling_2010}. Here we use the Framework Model (FMv1;
-\cite{chew2014multiscale}) as a mathematical description of vegetative plant
+\citep{yin_role_2004, yin_modelling_2010}. Here we use the Framework Model (FMv1;
+\citep{chew2014multiscale}) as a mathematical description of vegetative plant
 growth of \textit{Arabidopsis thaliana} that provides mechanistic links from
 molecular regulation all the way to whole-plant traits, like biomass. In
 particular, our contributions in this work are:
@@ -57,7 +56,7 @@ optimisation since the control variables are discrete.
 
 \section{The model and main idea}
 For this work we use the Framework Model (FM) as described in
-\cite{chew2014multiscale}. For the next of this work we will use the FM as a
+\citep{chew2014multiscale}. For the next of this work we will use the FM as a
 black box that translates a temperature signal to a biomass signal (growth)
 over a time period. However since we are trying to control temperature to
 indirectly control growth, it is instructive to look at two particular metabolic
@@ -66,15 +65,43 @@ processes that are highly temperature dependent.
 \begin{figure}
 \centering
 \includegraphics[width=\linewidth]{figures/fmFig/agentFlows.eps}
-\caption{Metabolic processes as flows in the Framework Model (FM). A The FM keeps track of carbon movement in different pools, one for each organ (leaves and root) and two whole-plant reserves of sucrose carbon (c) and starch carbon (s). Maintenance respiration and assimilation (intake of carbon) are explicitly temperature dependent (indicated by red dots) B Photosynthesis and maintenance rate trends for a range of temperature values.}
+\caption{Metabolic processes as flows in the Framework Model (FM). A The FM
+  keeps track of carbon movement in different pools, one for each organ (leaves
+  and root) and two whole-plant reserves of sucrose carbon (c) and starch carbon
+  (s). Maintenance respiration and assimilation (intake of carbon) are
+  explicitly temperature dependent (indicated by red dots) B Photosynthesis and
+  maintenance rate trends for a range of temperature values.}
 \label{fig:fm}
 \end{figure}
 
-The main output of the FM is the growth rate of the plant given environmental inputs (CO2 level, temperature, light intensity, and temperature). All the metabolic processes keep track of the main building block of new mass, carbon, and are represented as flows between various pools representing the organs (root and leaves only at the vegetative stage) and whole plant reserves of carbon as sucrose (C) and starch (S) (Figure~\ref{fig:fm}A). The two metabolic processes that are temperature dependent are (i) assimilation, the intake of carbon from the environment represented as an in-flow into the central reservoir of sucrose carbon (C) and (ii) maintenance respiration, the use of carbon for maintaining the life-sustaining processes inside the plant represented as an out-flow from the main sucrose carbon reservoir. Figure~\ref{fig:fm}B shows the rates of these flows for a range of temperature while keeping the other environmental inputs constant (light intensity,120 $\mu \mathrm{mol} \cdot m^{-2} \cdot s^{-1}$, CO2=420ppm).
+The main output of the FM is the growth rate of the plant given environmental
+inputs (CO2 level, temperature, light intensity, and temperature). All the
+metabolic processes keep track of the main building block of new mass, carbon,
+and are represented as flows between various pools representing the organs (root
+and leaves only at the vegetative stage) and whole plant reserves of carbon as
+sucrose (C) and starch (S) (Figure~\ref{fig:fm}A). The two metabolic processes
+that are temperature dependent are (i) assimilation, the intake of carbon from
+the environment represented as an in-flow into the central reservoir of sucrose
+carbon (C) and (ii) maintenance respiration, the use of carbon for maintaining
+the life-sustaining processes inside the plant represented as an out-flow from
+the main sucrose carbon reservoir. Figure~\ref{fig:fm}B shows the rates of these
+flows for a range of temperature while keeping the other environmental inputs
+constant (light intensity,120 $\mu \mathrm{mol} \cdot m^{-2} \cdot s^{-1}$, CO2=420ppm).
 
-While temperature directly affects only two of the processes it also indirectly affects the other since all of them compete for the sucrose carbon in the main reservoir. Therefore and not surprisingly temperature is a major determinant of growth rate and final biomass. The \emph{main idea} of this work is to control temperature and therefore indirectly control growth to achieve a particular growth- related objective of interest using the FM as our ground truth to evaluate the growth of an \textit{Arabidopsis thaliana} plant at different temperature inputs.
+While temperature directly affects only two of the processes it also indirectly
+affects the other since all of them compete for the sucrose carbon in the main
+reservoir. Therefore and not surprisingly temperature is a major determinant of
+growth rate and final biomass. The \emph{main idea} of this work is to control
+temperature and therefore indirectly control growth to achieve a particular
+growth- related objective of interest using the FM as our ground truth to
+evaluate the growth of an \textit{Arabidopsis thaliana} plant at different
+temperature inputs.
 
-In the FM the growing plants starts as seeds and wait for a period of time (emergence period), that is a function of temperature, before they emerge and start vegetative growth. In the following we only control temperature in the vegetative growth phase and not in the emergence period. Therefore we assume that seeds are kept in a constant temperature of 22\textdegree C.
+In the FM the growing plants starts as seeds and wait for a period of time
+(emergence period), that is a function of temperature, before they emerge and
+start vegetative growth. In the following we only control temperature in the
+vegetative growth phase and not in the emergence period. Therefore we assume
+that seeds are kept in a constant temperature of 22\textdegree C.
 
 
 \section{Direct problem}
@@ -103,13 +130,17 @@ temperature is homogeneous inside the growth space.
 \begin{figure}
 \centering
 \includegraphics[scale=0.25]{figures/directPFig/ocProb}
-\caption{Direct problem of climate control. For the \emph{direct problem} we try to find a temperature function or sequence of temperature values in the optimisation formulation in order for the final biomass value as predicted by the FM (using this temperature function as input) to reach a specific predefined value, $m_0$.}
+\caption{Direct problem of climate control. For the \emph{direct problem} we try
+  to find a temperature function or sequence of temperature values in the
+  optimisation formulation in order for the final biomass value as predicted by
+  the FM (using this temperature function as input) to reach a specific
+  predefined value, $m_0$.}
 \label{fig:directP}
 \end{figure}
 
 We can convert the optimal control into a standard non-linear optimisation
 problem by discretising the time domain $[t_0, t_f]$ into $k$ intervals and
-assuming a constant temperature value inside each interval \cite{kraft_converting_1985}.
+assuming a constant temperature value inside each interval \citep{kraft_converting_1985}.
 \begin{definition}[biomass-only problem]
 The \emph{biomass-only problem} is the problem of finding a sequence of
 temperature values, $T_{1, k}=T_1, \dots, T_k$, that minimises the square of the
@@ -134,9 +165,16 @@ $$ \argmin_{T_1, \dots T_k} \; (m_{T_{1, k}}(t_f) - m_0)^2 \; + \; \frac{1}{k} \
 The bound constraints are the simple lower/upper bounds as before. 
 
 \subsection{Results}
-In this
-section we solve the two formulations of the optimisation problems (direct problem) using the \texttt{fmincon} function for constrained non-linear optimisation from the Matlab optimisation toolbox for
-some choices of $m_0$, $t_f$, and $k$. While we vary $m_0$ to explore different instances of the problem, we generally leave $t_f$ and $k$ constant ($t_f=512h$, $k=4$). There are methods that adapt $k$ that we could have used that are implemented in more sophisticated tools (mesh refinement, AMIGO tool; \cite{balsa-canto_amigo2_2016}). The final time is dictated by the bolting time of the plant under the range of temperatures that we consider since the FM only considers vegetative growth (before bolting). 
+In this section we solve the two formulations of the optimisation problems
+(direct problem) using the \texttt{fmincon} function for constrained non-linear
+optimisation from the Matlab optimisation toolbox for some choices of $m_0$,
+$t_f$, and $k$. While we vary $m_0$ to explore different instances of the
+problem, we generally leave $t_f$ and $k$ constant ($t_f=512h$, $k=4$). There
+are methods that adapt $k$ that we could have used that are implemented in more
+sophisticated tools (mesh refinement, AMIGO tool;
+\citep{balsa-canto_amigo2_2016}). The final time is dictated by the bolting time
+of the plant under the range of temperatures that we consider since the FM only
+considers vegetative growth (before bolting).
 
 We use a performance metric, $\mathrm{log}(\sqrt{L(T_{1, k}, t_f, m_0)} /
 m_0)$, to assess particular optimisations for different problem instances
@@ -178,12 +216,15 @@ close) final biomass (orange line, Figure~\ref{fig:directPRes}B).
 \begin{figure}
 \centering
 \includegraphics[width=\linewidth]{figures/directResFig/res}
-\caption{
-  Results for both biomass-only and biomass+control effort formulations of the
-  direct problems over a range of target biomasses with $k=4$ and $t_f=512$. A
-  The performance metric for the biomass-only problem formulation over a range
-  of target biomasses from 0.01 to 0.4. The other environmental inputs are constant: CO2, 420ppm; light intensity, 120$\mu\mathrm{mol} \cdot m^{-2} \cdot s^{-1}$; 12:12-h light/dark cycle. For the first 139 hours of simulations the plants are still seeds and are assumed to be kept in a constant temperature of 22\textdegree C. The controllable range is under the
-  dotted line $[0.03, 0.25]$. B Comparison between the
+\caption{ Results for both biomass-only and biomass+control effort formulations
+  of the direct problems over a range of target biomasses with $k=4$ and
+  $t_f=512$. A The performance metric for the biomass-only problem formulation
+  over a range of target biomasses from 0.01 to 0.4. The other environmental
+  inputs are constant: CO2, 420ppm; light intensity,
+  120$\mu\mathrm{mol} \cdot m^{-2} \cdot s^{-1}$; 12:12-h light/dark cycle. For
+  the first 139 hours of simulations the plants are still seeds and are assumed
+  to be kept in a constant temperature of 22\textdegree C. The controllable
+  range is under the dotted line $[0.03, 0.25]$. B Comparison between the
   solutions obtained with the optimisation and a naive exhaustive simulation
   with constant temperatures over the interval [10 \textdegree C, 30 \textdegree
   C]. For the optimisation solutions per $m_0$ we give the two most commonly
@@ -195,8 +236,7 @@ close) final biomass (orange line, Figure~\ref{fig:directPRes}B).
   problem formulation over a range of target biomasses from 0.01 to 0.4. The
   controllable region is $[0.03, 0.21]$ G Same as B but for the biomass+control
   effort problem formulation H, I, J Similar to C, D, E but for the
-  biomass+control effort formulation.
-}
+  biomass+control effort formulation.  }
 \label{fig:directPRes}
 \end{figure}
 
@@ -296,7 +336,11 @@ technical variability is expected to be minimal.
 \begin{figure}
 \centering
 \includegraphics[width=\linewidth]{figures/indirectPFig/indirectOC.eps}
-\caption{Indirect problem of climate control. In the \emph{indirect problem} we try to find a position function (map from time and plant id to position in a linear array) such that the final biomasses of the plants as predicted by the FM (using the position dependent temperature of the plants as input) to be as close to each other as possible (minimum Gini-index).}
+\caption{Indirect problem of climate control. In the \emph{indirect problem} we
+  try to find a position function (map from time and plant id to position in a
+  linear array) such that the final biomasses of the plants as predicted by the
+  FM (using the position dependent temperature of the plants as input) to be as
+  close to each other as possible (minimum Gini-index).}
 \label{fig:indirectP}
 \end{figure}
 
@@ -390,8 +434,8 @@ function.
 \subsection{Results} 
 In this section we explore solutions to the permutation-index problem defined in
 the previous section using combinatorial optimisation techniques. In particular
-we use a Matlab implementation (MEIGO tool; \cite{banga2014})of the Variable
-Neighbourhood Search algorithm (VNS; \cite{mladenovic1997variable}).
+we use a Matlab implementation (MEIGO tool; \citep{banga2014})of the Variable
+Neighbourhood Search algorithm (VNS; \citep{mladenovic1997variable}).
 
 \begin{figure}
 \centering
@@ -438,10 +482,10 @@ problem and solution after transforming it to an optimisation problem. Optimal
 control of climate in greenhouses has been studied for a long time but since
 greenhouses are not insulated to weather conditions, greater effort (and
 therefore energy) is needed for climate control. Optimal control studies have
-therefore mainly been focused on reducing energy consumption \cite{fisher1997,
-ramírezArias2012, delSagrado2016} with very few also taking into account plant
+therefore mainly been focused on reducing energy consumption \citep{fisher1997,
+ramirezArias2012, delSagrado2016} with very few also taking into account plant
 processes like photosynthesis for optimising growth as well as energy
-consumption\cite{harun2015, Aaslyng2003}. Here we assume that our growth space
+consumption\citep{harun2015, Aaslyng2003}. Here we assume that our growth space
 is more insulated so that more precise control is available at less effort. This
 allows us to focus on crop traits and even at more precise quality control
 standards like size and uniformity. We do, however, consider a control effort
@@ -487,7 +531,7 @@ as our ground truth to predict plant behaviour at different temperature input
 profiles. The FM starts with biochemical models that have been validated only in
 a narrow range of experimentally relevant temperatures so even in our seemingly
 conservative temperature range ([10\textdegree C, 30 \textdegree C]) there might
-be gaps in our understanding \cite{walker_temperature_2013}. This limits the
+be gaps in our understanding \citep{walker_temperature_2013}. This limits the
 predictive power of the model across the range that we consider. Moreover there
 might be other temperature effects on plant physiology that we do not
 consider. The FM is deterministic but often there is variability in growth,
@@ -509,10 +553,12 @@ implementation for Arabidopsis plants given the limitations of the model-only
 approach outlined above. Application of such techniques for more practically
 relevant crops will also be very attractive and there is a number of models to
 back such an application for commercial crops (potato models,
-\cite{fleisher2017potato}; tomato model, \cite{heuvelink1999evaluation}; wheat
-models, \cite{martre2015multimodel}). Finally, another possible application of,
+\citep{fleisher2017potato}; tomato model, \citep{heuvelink1999evaluation}; wheat
+models, \citep{martre2015multimodel}). Finally, another possible application of,
 for example, the indirect problem formulation might be in academic settings
 where technical variability is expected to be minimal and there is an increase
 in the use of automated phenotyping and growth platforms (PHENOPSIS
-\cite{granier_phenopsis_2006}; platforms in the European Plant Phenotyping
+\citep{granier_phenopsis_2006}; platforms in the European Plant Phenotyping
 Network, \url{https://eppn2020.plant-phenotyping.eu/}).
+
+
