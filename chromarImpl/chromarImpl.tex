@@ -1,0 +1,352 @@
+\documentclass[phd]{infthesis}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[british]{babel}
+\usepackage{microtype}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage[english=british,autopunct=false]{csquotes}
+\usepackage[natbib=true,style=authoryear-comp,maxbibnames=6]{biblatex}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{wrapfig}
+\usepackage{xfrac}
+\usepackage{xspace}
+\usepackage{mathcommon}
+\usepackage[sc]{mathpazo}
+\usepackage{hyperref}
+\usepackage{expl3}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{mathpartir}
+\usepackage{fancyvrb}
+\usepackage{inconsolata}
+
+\frenchspacing
+
+% Bibliography
+\addbibresource{chromarImpl.bib}
+\bibliography{chromarImpl}
+
+% Text
+\newcommand{\ie}{i.e.\xspace}
+\newcommand{\eg}{e.g.\xspace}
+
+% Referencing
+\newcommand{\chp}[1]{\S\ref{chp:#1}}
+\newcommand{\sct}[1]{\S\ref{sec:#1}}
+\newcommand{\ssec}[1]{\S\ref{subsec:#1}}
+\newcommand{\eqn}[1]{Eq.~\ref{eq:#1}}
+\newcommand{\eqns}[2]{Eq. \ref{eq:#1} and \ref{eq:#2}}
+\newcommand{\lem}[1]{Lemma~\ref{lemma:#1}}
+\newcommand{\lems}[2]{Lemmas \ref{lemma:#1} and \ref{lemma:#2}}
+\newcommand{\thm}[1]{Th.~\ref{thm:#1}}
+\newcommand{\fig}[1]{Fig.~\ref{fig:#1}}
+\newcommand{\diagram}[1]{diagram~\ref{eq:#1}}
+\newcommand{\app}[1]{Appendix~\ref{app:#1}}
+\newcommand{\mcite}[1]{\textcolor{gray}{#1}} % missing cite
+\newcommand{\defn}[1]{Def.~\ref{def:#1}}
+\newcommand{\prop}[1]{Prop.~\ref{prop:#1}}
+
+% Math
+\renewcommand{\tuple}[1]{\left(#1\right)}
+\DeclareMathOperator*{\expn}{exp}
+\renewcommand*{\exp}[1]{e^{\,#1}} % \mathrm{e}^{#1}}
+\renewcommand{\qedsymbol}{\ensuremath{\blacksquare}}
+\newcommand{\partialto}{\rightharpoonup}
+\newcommand{\id}{\vec{1}} % identity function
+\newcommand{\mr}[1]{\mathrm{#1}}
+
+\newcommand{\den}[1]{\llbracket #1 \rrbracket}
+\newcommand{\m}[1]{\{\!| #1 |\!\}}
+\newcommand{\M}[1]{\mathcal{#1}}
+\newcommand{\MS}[0]{\mathrm{M}}
+\newcommand{\SQ}[0]{\mathrm{S}}
+\newcommand{\s}[1]{\underline{#1}}
+\newcommand{\G}[0]{\Gamma}
+\newcommand{\D}[0]{\Delta}
+\newcommand{\mytt}{t\!t}
+\newcommand{\myff}{f\!\!f}
+
+\newcommand{\V}{\mathrm{V}}
+
+\newcommand{\sel}{\mathrm{sel}}
+\newcommand{\fold}{\mathrm{fold}}
+
+\newcommand{\ms}{\mathrm{ms}}
+
+
+\newtheorem{mydef}{Definition}
+\def\dotminus{\mathbin{\ooalign{\hss\raise1ex\hbox{.}\hss\cr
+  \mathsurround=0pt$-$}}}
+\setlength{\tabcolsep}{8pt}
+\renewcommand{\arraystretch}{1.0}
+
+\newcommand{\match}{m}
+\newcommand{\up}[1]{\uparrow\! #1}
+
+\newcommand{\n}{\mathrm{n}}
+
+% Other stuff
+\newcommand{\maybe}[1]{\textcolor{gray}{#1}}
+\newcommand{\todo}[1]{\textcolor{red}{TODO: #1}}
+
+% rules
+\newcommand{\ar}[2]{\mr{#1} \! = \! {#2}}
+
+\setlength{\tabcolsep}{8pt}
+\renewcommand{\arraystretch}{1.2}
+
+\begin{document}
+
+
+\chapter{Implemented Chromar}
+\section{Haskell embedding}
+\label{sec:impl}
+As we have seen, extended Chromar is abstract in that no choice is made of the
+expression language or its types. In this section we describe the implementation
+via embedding in Haskell of one concrete realisation of Chromar where we fix the
+expression language $E$ and set of types $T$ to Haskell expressions and types
+respectively.
+
+Embedding a domain-specific language inside a host general purpose programming
+languages has the advantage that it allows the reuse of the functionality of the
+host language for the implementation therefore relieving some of the effort
+involved in creating the infrastructure for a new language. From the
+programmer's point of view it also allows the possibility of mixing features of
+the host language with features of the hosted language thus getting a more
+expressive result. There are two basic ways of embedding a language: (i) shallow
+embedding where the domain-specific constructs are directly expressed in host
+language terms (usually through a library) and (ii) deep embedding where
+embedded language terms are built in some representation in the host language
+and are then given meaning via interpretation \citep{hudak_modular_1998}. There
+are advantages and disadvantages to both approaches. Here we choose a middle
+ground where we use shallow embedding for expressing agent types, initial state,
+and outside value environment (for the definitions of constants, functions and
+so on) and deep embedding (via quasiquotations) using domain-specific syntax for
+rules and enriched expressions. Such a mixed-level embedding in Haskell has been
+explored before for another modelling language, Hydra, in the context of
+non-causal, hybrid modelling \citep{giorgidze_mixed-level_2010}.
+
+We next go through the different entities in extended Chromar and see how they
+are represented in Haskell. We will use \texttt{typeface} font for Haskell code
+to distinguish it from the abstract Chromar syntax.
+
+
+\subsection{Agents}
+Agent type declarations of the form $\mathbf{agent} \; n_a = (\s{n_f : b})$
+become Haskell types with $n_a$ as the name of the type constructor and a
+sequence of named, typed fields (records). Sequences of agent declarations,
+$\s{a_d}$, can be collected in a union type. For example our $\mathrm{Leaf}$ and
+$\mathrm{Cell}$ agent declarations from Section~\ref{sec:overview} are written
+thus:
+\begin{center}
+\begin{BVerbatim}
+data Agent
+    = Leaf { age :: Int
+           , mass :: Double }
+    | Cell { carbon :: Double }
+\end{BVerbatim}
+\end{center}
+where the \texttt{data} keyword introduces a new datatype.  Agents are values of
+the \texttt{Agent} type, for example \texttt{Leaf\{age=1, mass=1.5\}} and
+\texttt{Cell\{carbon=1.2\}}.  To construct multisets of Agents, we introduce the
+parametric type \texttt{Multiset a = [(a, Int)]}.  Then the concrete type
+\texttt{Multiset Agent} maps agents to their counts.
+Given a function \texttt{mset} that constructs a multiset from a list (analogous to our function $\ms$ from Section~\ref{sec:semantics}),
+our initial state definition becomes:
+\begin{center}
+\begin{BVerbatim}
+init = mset [ Leaf{age=1,mass=0.2}, 
+              Leaf{age=2, mass=0.1}, 
+              Cell{carbon=0.5} ]
+\end{BVerbatim}
+\end{center}
+
+
+\subsection{Rules (via Quasiquotation)}
+\label{sec:ruleQQ}
+We use a deeper embedding of rules where we allow the expression of rules
+directly in domain-specific syntax using Quasi-quotes. Quasi-quotes is a Haskell
+language extension that allows the use of special syntax (i.e., non standard
+Haskell syntax) inside \texttt{[\$quoter| ... |]} brackets along with the name
+of a quoter function (\texttt{\$quoter}) that is a function that takes the
+string inside the brackets and produces Haskell abstract syntax. The produced
+abstract syntax is injected by the Haskell compiler in place of the quotes.
+
+The implementation here provides the \texttt{rule} quoter function that takes
+the string inside the quotes and produces a reaction generation function (or
+rather the abstract syntax of such a function) that given a state and time
+produces a multiset of reactions. We therefore take the rule to be a reaction
+generating function of type: \texttt{Time -> Multiset a -> [Reaction a]} where a
+reaction is naturally defined as a record type parameterised on an agent type:
+\begin{center}
+\begin{BVerbatim}
+data Reaction a = Reaction
+    { lhs :: Multiset a
+    , rhs :: Multiset a
+    , rate :: Double
+    }
+\end{BVerbatim}
+\end{center}
+Our quoted rules have the following syntax that is almost the same as the one we presented earlier:
+$$\mathrm{r_q} ::= \; \s{n_a\{\s{n_f \mathbf{=} id}\}} \; \rightarrow \; \s{n_a'\{\s{n'_f \mathbf{=} e}\}} \; @\,e_r \; {[} e_c {]} $$                         
+For example our growth rule from the plant model example becomes:
+\begin{center}
+\begin{BVerbatim}
+growth = [rule| Leaf{mass=m}, Cell{carbon=c} -->
+                Leaf{mass=m}, Cell{carbon=c-1} @g m [c >= 1] |]
+\end{BVerbatim}
+\end{center}
+This looks very close to our abstract syntax, but with some minor syntactic
+differences such as the placement of the rate expression at the end of the rule
+preceded by the \texttt{@} symbol. Crucially, being inside a programming
+language means that we can use any valid Haskell expression in the places where
+expressions are expected, i.e., in the values of fields in the right-hand side
+of rules, rates, and conditions. A very wide range of expressions are therefore
+supported, without further effort. We next look at the rule quoter function in
+more detail.
+
+\subsubsection*{Rule quoter function}
+The \texttt{rule} quoter function takes a quoted rule expression, $r_q$, and
+produces a Haskell function of type \texttt{Time -> Multiset a -> [Reaction a]}
+where \texttt{[Reaction a]} is a list of reactions and \texttt{Time} is a
+synonym for \texttt{Double}. The rule function needs to find all matches
+(according to the rule lhs) and then generate a concrete reaction for each.
+This leads to the two parts of the rule functions we need to construct: the
+query part --- for finding the matches --- and the reaction generation part. For
+the query part we use list comprehensions and pattern matching for binding the
+variables in the rule lhs. This structure follows the definition of the
+reactions denoted by a rule we have seen before (see $\mathcal{R}$,
+Section~\ref{sec:ruleSem}).
+
+The following example illustrates the translation from quoted rule expression to
+rule functions. Consider the agent declaration
+$\mathbf{agent} \; \mathrm{A}(\mathrm{a}:\mathrm{int})$ and rule
+$\mathrm{A}(\mathrm{a}=x), \mathrm{A}(\mathrm{a}=y) \xrightarrow{f(x)}
+\mathrm{A}(\mathrm{a}=x) \; [x > y]$. For the query part we make one
+comprehension generator statement for each agent on the left-hand side. The
+statement for the first agent becomes: \texttt{(A\{a=x\}, \_) <- s} for some state
+$s$ of type \texttt{Multiset Agent}. Pattern matching ensures that we only look
+at $A$'s in the state and that we also bind the \texttt{x} variable. Note that
+we ignore the count of each agent-count pair since we later calculate the
+multiplicity of the entire lhs inside the state in the reaction generation part
+of the comprehension.  For each such successful match of the first statement we
+continue to the second statement with \texttt{x} bound. The statement for the
+second element of the rule lhs is similarly \texttt{(A\{a=y\}, \_) <- s}.  With
+\texttt{x} and \texttt{y} bound we have our match $m$ (as defined in
+Section~\ref{sec:ruleSem}) and we produce a reaction if the condition is true in
+the environment extended with $m$. The full comprehension statement is thus:
+\begin{center}
+\begin{BVerbatim}
+r :: Multiset Agent -> Time -> [Reaction Agent]
+r s t =
+     [ Reaction
+      { lhs = mset [A{a = x}, A{a = y}]
+      , rhs = mset [A{a = x}]
+      , rate = rr
+      }
+     | (A {a = x}, _) <- s
+     , (A {a = y}, _) <- s
+     , x > y
+     , let rr = (f x) * m (mset [A{a = x}, A{a = y}]) s
+     , rr > 0 ]
+\end{BVerbatim}
+\end{center}
+Each rule generates a multiset of reactions, as noted earlier, since the same
+reaction can occur from two different matches. The multiset is given as a list
+where the order is not important. Function \texttt{m} is the $\mu$ function that
+calculates the multiplicity of the match (defined in
+Section~\ref{sec:stoch}). The multiplicity also makes sure that the two patterns
+do not match the same agent in the state. The comprehension allows that, which
+means we create some spurious reactions, but the rate of those will be 0. The
+rate function, \texttt{f}, is provided by the outside Haskell environment. This
+is an example where we leverage the strength of the host language.
+
+
+\subsection{Fluent and Observable features (enriched expressions)}
+Enriched expressions are also embedded using Quasi-quotes that allows the direct
+use of their syntax. The implementation provides a quoter function, \texttt{er},
+for the translation of the surface syntax to its interpretation. The
+interpretation of an enriched expression is a function from states and time to
+values in $V$, exactly like our formal definition in
+Section~\ref{sec:extSem}. In Haskell we use the following type:
+\begin{center}
+  \texttt{data Er a b = Er \{ at :: Multiset a -> Time -> b\}}
+\end{center} 
+parameterised by the agent type (\texttt{a}) and the return type (\texttt{b}).
+
+The surface syntax for enriched expressions is the same as the abstract one with
+the exception of the $\mathrm{where}$ construct. The most common use-case of the
+$\mathrm{where}$ construct is to mix expressions from the provided language $E$
+with fluents and observables. For example being able to write $nl + 1$ for some
+observable $nl$. In the current implementation we only cover this particular
+sub-case where variables referring to enriched expressions are embedded inside
+Haskell expressions. Instead of being `tagged' with the $\mathrm{where}$ clause,
+we surround them with \texttt{\$..\$} symbols. This resolves the problem of
+mixing simple and functional values. The functional values (inside
+\texttt{\$..\$}) will be interpreted to their simple value at current state and
+time. Other local definitions of enriched expressions can be done using the
+restricted scope declaration mechanisms of the host language (\texttt{let} and
+\texttt{where} in Haskell). All other forms of enriched expressions remain the
+same as in the grammar provided in Section~\ref{sec:extSyntax}.
+
+We omit a formal translation from surface syntax to the Haskell \texttt{Er}'s
+but go through an example to illustrate the \texttt{er} quoter
+function. Consider for instance our enriched expression example from
+Section~\ref{sec:extChromar}, giving alternative rate functions depending on the
+current number of leaves in the plant:
+$$
+f \; \mathbf{when} \; nl  > 10 \; \mathbf{else} \; f'
+$$
+where $nl$ is an observable for the number of leaves. This will be written as:
+\begin{center}
+\begin{BVerbatim}
+rateF = [er| f when $nl$ > 10 else f'|]
+  where
+    nl = [er| select Leaf{age=i,mass=m}; aggregate (count. count + 1) 0 |]
+\end{BVerbatim}
+\end{center}
+Note that the \texttt{\$nl\$ > 10} to embed an enriched expression inside a
+normal Haskell expression instead of the
+$\mathrm{n} \; \mathbf{where} \; n \; \mathbf{is} \; \mathrm{nl}$ construct from
+our abstract syntax. The number of leaves observable ($nl$) is given using
+Haskell's \texttt{where} clause. The \texttt{f} and \texttt{f'} functions come
+from the outside Haskell environment. The above \texttt{rateF} quote will be
+translated to:
+\begin{center}
+\begin{BVerbatim}
+[er| f when $nl$ > 10 else f'|] = Er {
+  at = \s t -> if at [er|$nl$ > 10|] s t
+                 then at [er|f|] s t
+                 else at [er|f'|] s t }
+               
+[er|$nl$ > 10|] = Er { at = \s t -> at nl s t > 10 }
+[er|f|] = Er { at = \s t -> f }
+[er|f'|] = Er { at = \s t -> f' }
+\end{BVerbatim}
+\end{center}
+The first equality is an implementation of the semantics of conditional
+expressions in Section~\ref{sec:extSem}.  The rest follow the semantics of
+ordinary expressions.  Note how we unfold the enriched expression,
+$\mathrm{nl}$, to its evaluation (\texttt{at nl s t}) to achieve the same effect
+as evaluating the expression in an extended environment (as defined in the
+semantics of the $\mathrm{where}$ construct, Section~\ref{sec:extSem}).  The
+interpretation of observables will depend on the ordering imposed by our list
+representation of multisets.  While this is not consistent with the semantics,
+we do not see any problems arising from that as the difference only occurs for
+non-commutative fold functions, which, in any case, the programmer should not
+employ (see \textit{Semantics of enriched expressions},
+Section~\ref{sec:extSem}, for a discussion of the validity of the folding
+function when using linearised multisets).  The translation for other types of
+enriched expressions similarly follows the semantics given in
+Section~\ref{sec:extSem}.
+
+
+\singlespace
+
+
+\printbibliography[heading=bibintoc]
+
+%% ... that's all, folks!
+\end{document}

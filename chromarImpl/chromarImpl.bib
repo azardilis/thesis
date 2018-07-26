@@ -1,0 +1,122 @@
+@inproceedings{wan_functional_2000,
+	address = {New York, NY, USA},
+	series = {{PLDI} '00},
+	title = {Functional {Reactive} {Programming} from {First} {Principles}},
+	isbn = {978-1-58113-199-4},
+	url = {http://doi.acm.org/10.1145/349299.349331},
+	doi = {10.1145/349299.349331},
+	abstract = {Functional Reactive Programming, or FRP, is a general
+                  framework for programming hybrid systems in a high-level,
+                  declarative manner. The key ideas in FRP are its notions of
+                  behaviors and events. Behaviors are time-varying, reactive
+                  values, while events are time-ordered sequences of
+                  discrete-time event occurrences. FRP is the essence of Fran, a
+                  domain-specific language embedded in Haskell for programming
+                  reactive animations, but FRP is now also being used in vision,
+                  robotics and other control systems applications. In this paper
+                  we explore the formal semantics of FRP and how it relates to
+                  an implementation based on streams that represent (and
+                  therefore only approximate) continuous behaviors. We show
+                  that, in the limit as the sampling interval goes to zero, the
+                  implementation is faithful to the formal, continuous
+                  semantics, but only when certain constraints on behaviors are
+                  observed. We explore the nature of these constraints, which
+                  vary amongst the FRP primitives. Our results show both the
+                  power and limitations of this approach to language design and
+                  implementation. As an example of a limitation, we show that
+                  streams are incapable of representing instantaneous predicate
+                  events over behaviors.},
+	urldate = {2017-01-25},
+	booktitle = {Proceedings of the {ACM} {SIGPLAN} 2000 {Conference} on
+                  {Programming} {Language} {Design} and {Implementation}},
+	publisher = {ACM},
+	author = {Wan, Zhanyong and Hudak, Paul},
+	year = {2000},
+	keywords = {frp, haskell},
+	pages = {242--252}
+}
+
+@inproceedings{giorgidze_mixed-level_2010,
+	series = {Lecture {Notes} in {Computer} {Science}},
+	title = {Mixed-{Level} {Embedding} and {JIT} {Compilation} for an
+                  {Iteratively} {Staged} {DSL}},
+	isbn = {978-3-642-20774-7 978-3-642-20775-4},
+	url = {https://link.springer.com/chapter/10.1007/978-3-642-20775-4_3},
+	doi = {10.1007/978-3-642-20775-4_3},
+	abstract = {This paper explores how to implement an iteratively staged
+                  domain-specific language (DSL) by embedding into a functional
+                  language. The domain is modelling and simulation of physical
+                  systems where models are expressed in terms of non-causal
+                  differential-algebraic equations; i.e., sets of constraints
+                  solved through numerical simulation. What distinguishes our
+                  language is that the equational constraints are first class
+                  entities allowing for an evolving model structure
+                  characterised by repeated generation of updated
+                  constraints. Hence iteratively staged. Our DSL can thus be
+                  seen as a combined functional and constraint programming
+                  language, albeit a two-level one, with the functional language
+                  chiefly serving as a meta language. However, the two levels do
+                  interact throughout the simulation. The embedding strategy we
+                  pursue is a mixture of deep and shallow, with the deep
+                  embedding enabling just-in-time (JIT) compilation of the
+                  constraints as they are generated for efficiency, while the
+                  shallow embedding is used for the remainder for maximum
+                  leverage of the host language. The paper is organised around a
+                  specific DSL, but our implementation strategy should be
+                  applicable for iteratively staged languages in general. Our
+                  DSL itself is further a novel variation of a declarative
+                  constraint programming language.},
+	language = {en},
+	urldate = {2018-07-26},
+	booktitle = {Functional and {Constraint} {Logic} {Programming}},
+	publisher = {Springer, Berlin, Heidelberg},
+	author = {Giorgidze, George and Nilsson, Henrik},
+	month = jan,
+	year = {2010},
+	pages = {48--65},
+	file = {Full Text PDF:/Users/s1437009/Zotero/storage/CFTBRU3J/Giorgidze
+                  and Nilsson - 2010 - Mixed-Level Embedding and JIT Compilation
+                  for an
+                  I.pdf:application/pdf;Snapshot:/Users/s1437009/Zotero/storage/BLH6KA6X/10.html:text/html}
+}
+
+
+@inproceedings{hudak_modular_1998,
+	title = {Modular domain specific languages and tools},
+	doi = {10.1109/ICSR.1998.685738},
+	abstract = {A domain specific language (DSL) allows one to develop
+                  software for a particular application domain quickly and
+                  effectively, yielding programs that are easy to understand,
+                  reason about, and maintain. On the other hand, there may be a
+                  significant overhead in creating the infrastructure needed to
+                  support a DSL. To solve this problem, a methodology is
+                  described for building domain specific embedded languages
+                  (DSELs), in which a DSL is designed within an existing,
+                  higher-order and typed, programming language such as Haskell
+                  or ML. In addition, techniques are described for building
+                  modular interpreters and tools for DSELs. The resulting
+                  methodology facilitates reuse of syntax semantics,
+                  implementation code, software tools, as well as
+                  look-and-feel},
+	booktitle = {Proceedings. {Fifth} {International} {Conference} on
+                  {Software} {Reuse} ({Cat}. {No}.98TB100203)},
+	author = {Hudak, P.},
+	month = jun,
+	year = {1998},
+	keywords = {Application software, Buildings, Computer languages,
+                  Computer science, Costs, domain specific embedded languages,
+                  Domain specific languages, DSL, functional languages,
+                  Hardware, Haskell, higher-order typed programming language,
+                  implementation code, methodology, ML, modular domain specific
+                  languages, modular interpreters, program interpreters, program
+                  understanding, Programming, semantics, software maintenance,
+                  Software maintenance, software reusability, software reuse,
+                  software tools, syntax},
+	pages = {134--142},
+	file = {IEEE Xplore Abstract
+                  Record:/Users/s1437009/Zotero/storage/GNHCGIBR/685738.html:text/html;IEEE
+                  Xplore Full Text
+                  PDF:/Users/s1437009/Zotero/storage/JJK6LQVU/Hudak - 1998 -
+                  Modular domain specific languages and
+                  tools.pdf:application/pdf}
+}
