@@ -1,6 +1,4 @@
-\documentclass[phd, logo]{infthesis}
-% \documentclass[phd,lfcs,twoside]{infthesis}
-% \documentclass{report}
+\documentclass[phd]{infthesis}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -19,11 +17,16 @@
 \usepackage{hyperref}
 \usepackage{expl3}
 \usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{mathpartir}
+\usepackage{fancyvrb}
 
 \frenchspacing
 
 % Bibliography
 \addbibresource{thesis.bib}
+\bibliography{thesis}
 
 % Text
 \newcommand{\ie}{i.e.\xspace}
@@ -32,7 +35,7 @@
 % Referencing
 \newcommand{\chp}[1]{\S\ref{chp:#1}}
 \newcommand{\sct}[1]{\S\ref{sec:#1}}
-\newcommand{\subsct}[1]{\S\ref{subsec:#1}}
+\newcommand{\ssec}[1]{\S\ref{subsec:#1}}
 \newcommand{\eqn}[1]{Eq.~\ref{eq:#1}}
 \newcommand{\eqns}[2]{Eq. \ref{eq:#1} and \ref{eq:#2}}
 \newcommand{\lem}[1]{Lemma~\ref{lemma:#1}}
@@ -52,10 +55,49 @@
 \renewcommand{\qedsymbol}{\ensuremath{\blacksquare}}
 \newcommand{\partialto}{\rightharpoonup}
 \newcommand{\id}{\vec{1}} % identity function
+\newcommand{\mr}[1]{\mathrm{#1}}
+
+\newcommand{\den}[1]{\llbracket #1 \rrbracket}
+\newcommand{\m}[1]{\{\!| #1 |\!\}}
+\newcommand{\M}[1]{\mathcal{#1}}
+\newcommand{\MS}[0]{\mathrm{M}}
+\newcommand{\SQ}[0]{\mathrm{S}}
+\newcommand{\s}[1]{\underline{#1}}
+\newcommand{\G}[0]{\Gamma}
+\newcommand{\D}[0]{\Delta}
+\newcommand{\mytt}{t\!t}
+\newcommand{\myff}{f\!\!f}
+
+\newcommand{\V}{\mathrm{V}}
+
+\newcommand{\sel}{\mathrm{sel}}
+\newcommand{\fold}{\mathrm{fold}}
+
+\newcommand{\ms}{\mathrm{ms}}
+
+
+\newtheorem{mydef}{Definition}
+\def\dotminus{\mathbin{\ooalign{\hss\raise1ex\hbox{.}\hss\cr
+  \mathsurround=0pt$-$}}}
+\setlength{\tabcolsep}{8pt}
+\renewcommand{\arraystretch}{1.0}
+
+\newcommand{\match}{m}
+\newcommand{\up}[1]{\uparrow\! #1}
+
+\newcommand{\n}{\mathrm{n}}
+
 
 % Other stuff
 \newcommand{\maybe}[1]{\textcolor{gray}{#1}}
 \newcommand{\todo}[1]{\textcolor{red}{TODO: #1}}
+
+% rules
+\newcommand{\ar}[2]{\mr{#1} \! = \! {#2}}
+
+\setlength{\tabcolsep}{8pt}
+\renewcommand{\arraystretch}{1.2}
+
 
 % Header
 \title{A modelling language for biology and applications}
@@ -85,6 +127,22 @@
 % \listoftables
 
 \end{preliminary}
+
+\chapter{Background and Related Work}
+\label{chp:relWork}
+\input{relWork}
+
+\chapter{Chromar by example}
+\label{chp:chromarEx}
+\input{chromarEx}
+
+\chapter{Chromar: formal definition}
+\label{chp:chromarForm}
+\input{chromarForm}
+
+\chapter{Implemented Chromar}
+\label{chp:chromarImpl}
+\input{chromarImpl}
 
 \chapter{Optimal control}
 \label{chp:oc}
