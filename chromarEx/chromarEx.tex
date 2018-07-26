@@ -18,12 +18,6 @@
 \usepackage{enumitem}
 \usepackage{booktabs}
 
-\usepackage{listings}% http://ctan.org/pkg/listings
-\lstset{
-  basicstyle=\ttfamily,
-  mathescape
-}
-
 \frenchspacing
 
 % Bibliography
@@ -286,7 +280,7 @@ the $\mathbf{aggregate}$ operation then folds the resulting collection of
 attribute value bindings into a single value, using a specified combining
 function and initial value.
 
- For example, to calculate the total mass  of the leafs in a state, we could write:
+For example, to calculate the total mass  of the leafs in a state, we could write:
  \begin{align*}
 lm = \mathbf{select} \, \mathrm{Leaf}(\mathrm{age} = i, \mathrm{mass} = m) \mathbf{;} \; \mathbf{aggregate} \;
  (total: \mathrm{int}.\, total + m) \; 0
@@ -551,6 +545,7 @@ Table~\ref{tab:comp} shows a summary of the discussion points and a comparison
 of the main features of Chromar and the languages from the previous chapter.
 
 \begin{center}
+  \resizebox {0.95\textwidth }{!}{%
   \begin{tabular}{p{0.13\linewidth}p{0.13\linewidth}p{0.13\linewidth}p{0.13\linewidth}p{0.13\linewidth}p{0.13\linewidth}p{0.13\linewidth}}
     \toprule
     & PN & SMMR & CPN & DG & Simile & Chromar\\
@@ -562,7 +557,7 @@ Objects \newline (dynamics) & Yes \newline (rule) & Yes \newline (rule) & Yes
     \addlinespace[0.2cm]
 Relations \newline (explicit) & No & Yes \newline (hierarchy) & No \newline
                                                                 (implicit via
-                                                                attrs) & No \newline (implicit via attrs & No \newline (implicit via attrs) & No \newline (implicit via attrs)\\
+                                                                attrs) & No \newline (implicit via attrs) & No \newline (implicit via attrs) & No \newline (implicit via attrs)\\
     \addlinespace[0.2cm]
     Properties \newline (dynamics) & No & No & Yes \newline
 (transitions) & Yes \newline (transitions or ODEs) & Yes \newline (ODEs) & Yes \newline
@@ -574,7 +569,7 @@ Relations \newline (explicit) & No & Yes \newline (hierarchy) & No \newline
     Intepretation & CTMC& CTMC& CTMC& CTMC + \newline others & - & CTMC\\
     \bottomrule
     \label{tab:comp}
-  \end{tabular}
+  \end{tabular}}
 \end{center}
 
 \subsection{Basic Chromar}
