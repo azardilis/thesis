@@ -269,19 +269,34 @@ a correspondence between left and right-hand sides of rules as follows:
 For example, given an agent type $\mathrm{A}(\mathrm{a}: \mathrm{int}, \mathrm{b} : \mathrm{int})$, the incomplete left agent expression $\mathrm{A}(\mathrm{a}=x)$ becomes $\mathrm{A}(\mathrm{a}=x, \mathrm{b}= y)$, where $y$ is a fresh variable %identifier 
 (i.e., one not occurring anywhere else in the lhs). 
 
-\item Then, for every $\s{a_l}.i$ in the left-hand side we establish a positional correspondence with an $\s{a_r}.j$ in the right-hand side, if it exists,
-%. Then after the left-hand side agent expressions are completed, we
-and complete the corresponding right agent expressions with the same fresh name bindings, if needed.
-Any right agent expressions that do not have a corresponding left agent expression need to be fully defined. Continuing with our example, the rule  $\mathrm{A}(\mathrm{a}=x) \rightarrow \mathrm{A}(\mathrm{a}=x+1)$ is completed to $\mathrm{A}(\mathrm{a}=x, \mathrm{b}= y) \rightarrow \mathrm{A}(\mathrm{a}=x + 1, \mathrm{b}= y)$.
+\item Then, for every $\s{a_l}.i$ in the left-hand side we establish a
+  positional correspondence with an $\s{a_r}.j$ in the right-hand side, if it
+  exists, and complete the corresponding right agent expressions with the same
+  fresh name bindings, if needed.  Any right agent expressions that do not have
+  a corresponding left agent expression need to be fully defined. Continuing
+  with our example, the rule
+  $\mathrm{A}(\mathrm{a}=x) \rightarrow \mathrm{A}(\mathrm{a}=x+1)$ is completed
+  to
+  $\mathrm{A}(\mathrm{a}=x, \mathrm{b}= y) \rightarrow \mathrm{A}(\mathrm{a}=x +
+  1, \mathrm{b}= y)$.
 \end{itemize}
 \subsubsection*{Attribute conditional expressions} 
-Condition expressions restrict the applicability of rules by establishing a relation between agents. These relations are often functional dependencies. In such cases, rules can be made easier to read and write by using expressions --- not just variables ---  inside  left agent expressions. 
+Condition expressions restrict the applicability of rules by establishing a
+relation between agents. These relations are often functional dependencies. In
+such cases, rules can be made easier to read and write by using expressions ---
+not just variables --- inside left agent expressions.
 
-For example, consider an agent type $\mathrm{A}(\mathrm{a}:\mathrm{int})$. If we want a rule $\mathrm{A}(\dots), \mathrm{A}(\dots) \rightarrow \dots$ to be applicable to only a subset of the $(\mathrm{A}(\dots), \mathrm{A}(\dots))$ pairs in the state,  we might use the condition expression $y = f(x)$ to encode a functional dependency of $y$ on $x$, as in, say, a rule of the form 
+For example, consider an agent type $\mathrm{A}(\mathrm{a}:\mathrm{int})$. If we
+want a rule $\mathrm{A}(\dots), \mathrm{A}(\dots) \rightarrow \dots$ to be applicable to only a subset
+of the $(\mathrm{A}(\dots), \mathrm{A}(\dots))$ pairs in the state, we might use the
+condition expression $y = f(x)$ to encode a functional dependency of $y$ on $x$,
+as in, say, a rule of the form
 %
 \[\mathrm{A}(\mathrm{a}=x), \mathrm{A}(\mathrm{a}=y) \rightarrow \dots \; [y = f(x)]\]
 %
-However,  instead of binding to $y$ in the second left agent expression and then putting the condition $y = f(x)$ at the end, we can write the expression $f(x)$ directly in the left agent expression, obtaining the rule
+However, instead of binding to $y$ in the second left agent expression and then
+putting the condition $y = f(x)$ at the end, we can write the expression $f(x)$
+directly in the left agent expression, obtaining the rule
 %
 \[\mathrm{A}(\mathrm{a}=x), \mathrm{A}(\mathrm{a}=f(x)) \rightarrow \dots\]
 
@@ -293,186 +308,130 @@ rewritten as a binding to a fresh variable, and a corresponding equality
 condition on this variable is added to the conditional expression of the rule.
 
 \section{Semantics of basic Chromar}\label{sec:semantics}
-
-
-First, regarding notation, we write $\{ a_1 \mapsto b_1, a_2 \mapsto b_2, \dots \}$ for finite partial maps, from $A$ to $B$, with $a_1, a_2, \dots$ distinct elements of  $A$ and $b_1, b_2, \dots$ in $B$. For two such functions $\sigma$ and $\sigma'$ we write $\sigma[\sigma']$ for the partial function produced by using $\sigma'$ to extend or overwrite the values produced by $\sigma$. 
+First, regarding notation, we write
+$\{ a_1 \mapsto b_1, a_2 \mapsto b_2, \dots \}$ for finite partial maps, from
+$A$ to $B$, with $a_1, a_2, \dots$ distinct elements of $A$ and
+$b_1, b_2, \dots$ in $B$. For two such functions $\sigma$ and $\sigma'$ we write
+$\sigma[\sigma']$ for the partial function produced by using $\sigma'$ to extend or overwrite
+the values produced by $\sigma$.
 %
-We write $\m{a_1, \dots, a_n}$ for the (finite) multiset of elements of a set $A$ whose elements, counting repetitions, are  $a_i, \ldots, a_n$, and take such multisets to be functions from $A$ to $\mathbb{N}$ counting multiplicities; note that such a function $m$ is zero for all but finitely many arguments, and that $a$ is an element of $m$, written $a \in m$, exactly when $m(a) \neq 0$. We write $\ms(\s{a})$ for the multiset corresponding to the sequence $\s{a}$. We write $m \preceq m'$ for the submultiset relation; this takes multiplicities into account and is defined pointwise. Finally, we  write $\MS[A]$ for the set of all finite multisets over a set $A$ and we write $\SQ[A]$ for the set of all finite sequences over $A$.
+We write $\m{a_1, \dots, a_n}$ for the (finite) multiset of elements of a set
+$A$ whose elements, counting repetitions, are $a_i, \ldots, a_n$, and take such
+multisets to be functions from $A$ to $\mathbb{N}$ counting multiplicities; note
+that such a function $m$ is zero for all but finitely many arguments, and that
+$a$ is an element of $m$, written $a \in m$, exactly when $m(a) \neq 0$. We write
+$\ms(\s{a})$ for the multiset corresponding to the sequence $\s{a}$. We write
+$m \preceq m'$ for the submultiset relation; this takes multiplicities into account
+and is defined pointwise. Finally, we write $\MS[A]$ for the set of all finite
+multisets over a set $A$ and we write $\SQ[A]$ for the set of all finite
+sequences over $A$.
 
 
-For each basic type $b \in B$ we assume we have an associated set of values $\V_b$, including 
-$\V_{\mathrm{bool}} = \{\mytt, \myff\} $ for $\mathrm{bool}$ and $\V_{\mathrm{real}} = \mathbb{R}$ for $\mathrm{real}$. We have $\V=\bigcup_{b \in B} \V_b$ the union of these sets of values ranged over by $v$. A \emph{value environment} $\sigma =  id_1: v_1, \dots, id_n: v_n$ with $v_1, \dots, v_n \in \V$ is a sequence of variable value bindings, where the variables are required to be distinct.
-%The `comma' operator extends a value environment by adding new bindings to the right. 
-%GDPto be unique so 
-We will sometimes treat value environments as functions with finite domain; for example to get the value of $id_i$ in $\sigma$ we may write $\sigma(id_i)$. We say that $\sigma= id_1:v_1, \dots, id_n:v_n$ is a $\G$-environment for a base type environment $\G= id_1:b_1, \dots, id_n:b_n$ if  each $id_i:v_i$ in $\sigma$ has an entry for that $id_i$ in $\G$ of the correct type, i.e., $\sigma(id_i) \in \V_{b_i}$. 
+For each basic type $b \in B$ we assume we have an associated set of values
+$\V_b$, including $\V_{\mathrm{bool}} = \{\mytt, \myff\} $ for $\mathrm{bool}$
+and $\V_{\mathrm{real}} = \mathbb{R}$ for $\mathrm{real}$. We have
+$\V=\bigcup_{b \in B} \V_b$ the union of these sets of values ranged over by
+$v$. A \emph{value environment} $\sigma = id_1: v_1, \dots, id_n: v_n$ with
+$v_1, \dots, v_n \in \V$ is a sequence of variable value bindings, where the
+variables are required to be distinct.  We will sometimes treat value
+environments as functions with finite domain; for example to get the value of
+$id_i$ in $\sigma$ we may write $\sigma(id_i)$. We say that
+$\sigma= id_1:v_1, \dots, id_n:v_n$ is a $\G$-environment for a base type environment
+$\G= id_1:b_1, \dots, id_n:b_n$ if each $id_i:v_i$ in $\sigma$ has an entry for that
+$id_i$ in $\G$ of the correct type, i.e., $\sigma(id_i) \in \V_{b_i}$.
 
-Regarding the semantics of expressions, we assume that for each $\G$-environment $\sigma$, base type $b$, and expression $e$ such that $\G\vdash e:b$, the expression has an evaluation $\den{e}_{\G}(\sigma) \in \V_b$ (below, we often omit the environment subscripts on evaluation functions). In particular, for typings  $\G\vdash id:b$ of variables $id$, we assume that $\den{id}_{\G}(\sigma)  = \sigma(id)$.
+Regarding the semantics of expressions, we assume that for each $\G$-environment
+$\sigma$, base type $b$, and expression $e$ such that $\G\vdash e:b$, the expression has an
+evaluation $\den{e}_{\G}(\sigma) \in \V_b$ (below, we often omit the environment
+subscripts on evaluation functions). In particular, for typings $\G\vdash id:b$ of
+variables $id$, we assume that $\den{id}_{\G}(\sigma) = \sigma(id)$.
 
+We next give the semantics of the other syntactic constructs of basic Chromar:
+agent expressions, rules, and models.
 
- We next give the semantics of the other  syntactic constructs of basic Chromar: agent expressions, rules, and models.
 \subsubsection*{Agents}
-\textit{Agents} are modelled as structures with a name and a finite partial map from attribute names to base values, $ (n_a, \{ n_f \mapsto v \})$. We  write  $\mathrm{Av}$ for the set of such agents, ranged over by $av$. We define the set of \emph{states}, ranged over by $s$, to be $\MS[\mathrm{Av}]$, the set of all finite multisets of agents. 
+\textit{Agents} are modelled as structures with a name and a finite partial map
+from attribute names to base values, $ (n_a, \{ n_f \mapsto v \})$. We write
+$\mathrm{Av}$ for the set of such agents, ranged over by $av$. We define the set
+of \emph{states}, ranged over by $s$, to be $\MS[\mathrm{Av}]$, the set of all
+finite multisets of agents.
 %
-When writing agents in examples, we use left agent expressions, but with constants in place of variables. %identifiers. 
-So for example,
-we  write  
-$ \mathrm{Leaf}(\mathrm{age}=1, \mathrm{mass}=10)$
-for the agent
-$(\mathrm{Leaf},\{\mathrm{age} \mapsto 1, \mathrm{mass} \mapsto 10\}) $.
+When writing agents in examples, we use left agent expressions, but with
+constants in place of variables. %identifiers.
+So for example, we write $ \mathrm{Leaf}(\mathrm{age}=1, \mathrm{mass}=10)$ for
+the agent $(\mathrm{Leaf},\{\mathrm{age} \mapsto 1, \mathrm{mass} \mapsto 10\}) $.
 
-%For the semantics of basic Chromar, 
-We %need to be able to 
-evaluate sequences of left and right agent expressions as states. 
-%For the semantics of extended Chromar we also need to be able to evaluate left agent expressions as agents.
-%
-%To evaluate a left agent expression as an agent, %multisets of agents, 
-%suppose we have a typing $\D \vdash n_a(\s{n_f=id}) : \G$ of a left agent expression. Then $\G$ is determined by $\D$, and gives basic 
-%types for  the variables in the  left agent expression, and so, for any $\G$-environment, %$\G'$-environment $\sigma$, where $\G$ 
-%extends $\G$, 
-%we may define the  evaluation 
-%$\den{n_a(\s{n_f = id})}_{\D}(\sigma) \in \MS[\mathrm{Av}]$  of the sequence as follows:
-%\begin{align*}
-%\den{n_a(\s{n_f = id})}_{\D}(\sigma) = n_a(\s{n_f =  \sigma(id))}
-%\end{align*}
-%
-%To evaluate 
-For %sequences of 
-left agent expressions, %as states, %multisets of agents, 
-suppose we have a typing $\D \vdash \s{n_a(\s{n_f=id})} : \G$ of a sequence of left agent expressions. Then $\G$ is determined by $\D$, and gives basic types for the variables in the various  left agent expressions (and no more). So, for any $\G$-environment $\sigma$ we may define the  evaluation $\den{\s{n_a(\s{n_f = id})}}_{\D}(\sigma) \in \MS[\mathrm{Av}]$  of the sequence as follows:
-%GDPan evaluation function $\den{\;}_{\G}(\sigma) : \SQ[\mathrm{A_l}] \rightarrow \MS[\mathrm{Av}]$ as follows:
+We evaluate sequences of left and right agent expressions as states.  For left
+agent expressions, %as states, %multisets of agents,
+suppose we have a typing $\D \vdash \s{n_a(\s{n_f=id})} : \G$ of a sequence of left
+agent expressions. Then $\G$ is determined by $\D$, and gives basic types for
+the variables in the various left agent expressions (and no more). So, for any
+$\G$-environment $\sigma$ we may define the evaluation
+$\den{\s{n_a(\s{n_f = id})}}_{\D}(\sigma) \in \MS[\mathrm{Av}]$ of the sequence
+as follows:
 \begin{align*}
 \den{\s{n_a(\s{n_f = id})}}_{\D}(\sigma) = \ms(\s{n_a(\s{n_f =  \sigma(id)})} 
 \end{align*}
 
-
-%GDP note above change For any $\G$-environment $\sigma$ and $\D$-environment $\sigma'$ we define an evaluation function $\den{\;}(\sigma, \sigma') : \SQ[\mathrm{A_l}] \rightarrow 
-%\MS[\mathrm{Av}]$ as follows:
-%\begin{align*}
-%\den{\s{n_a(\s{n_f = id})}}(\sigma, \sigma') = MS(\s{n_a(\s{n_f = \sigma, \sigma'(id)})} 
-%\end{align*}
-
-
-%Similarly to evaluate 
-For %sequences of 
-right agent expressions, %as states, %to multisets of agents, 
-suppose that we have a typing $\G \,|\, \D \vdash \s{n_a(\s{n_f = e})}$ of a sequence of right agent expressions. Then for any $\G$-environment $\sigma$ we define the evaluation  $\den{\s{n_a(\s{n_f = e})}}_{\G,\D}(\sigma) \in \MS[\mathrm{Av}]$ of the sequence as follows:
-%GDP function $\den{\;}_{\G}(\sigma): \SQ[\mathrm{A_r}] \rightarrow \MS[\mathrm{Av}]$ as follows:
+For right agent expressions, suppose that we have a typing
+$\G \,|\, \D \vdash \s{n_a(\s{n_f = e})}$ of a sequence of right agent expressions. Then
+for any $\G$-environment $\sigma$ we define the evaluation
+$\den{\s{n_a(\s{n_f = e})}}_{\G,\D}(\sigma) \in \MS[\mathrm{Av}]$ of the sequence as
+follows:
 \begin{align*}
 \den{\s{n_a(\s{n_f = e})}}_{\G,\D}(\sigma) = \ms(\s{n_a(\s{n_f = \den{e}_{\G}(\sigma)})}
 \end{align*}
 
 \subsubsection*{Rules}
 \label{sec:ruleSem}
-Rules induce  (stochastic) reactions, and we discuss those first. A \emph{reaction} is a structure $\rho \, = \, l \xrightarrow{k} r$ with $l, r$ states and $k$ a positive real number. We will assume that these names also act as accessors for the parts of the reaction structure, so for a reaction $\rho$, $l(\rho)$ returns its left-hand side and so on. We can apply the  reaction $\rho$ to a state $s$ if $l(\rho) \preceq s$, when we obtain a new state  $s - l(\rho) + r(\rho) $, which we write as $\rho \bullet s$.
+Rules induce (stochastic) reactions, and we discuss those first. A
+\emph{reaction} is a structure $\rho \, = \, l \xrightarrow{k} r$ with $l, r$
+states and $k$ a positive real number. We will assume that these names also act
+as accessors for the parts of the reaction structure, so for a reaction $\rho$,
+$l(\rho)$ returns its left-hand side and so on. We can apply the reaction $\rho$ to a
+state $s$ if $l(\rho) \preceq s$, when we obtain a new state
+$s - l(\rho) + r(\rho) $, which we write as $\rho \bullet s$.
 
-%Reactions give rise to \emph{stochastic matrices}  on $\ms[\mathrm{Av}]$. 
-A \emph{stochastic matrix} (aka \emph{rate function})  over a set of states $S$ is a function $Q: S \times S \rightarrow \mathbb{R}_+$ with $Q$ %is required to be non-negative off the diagonal, 
-zero on all but finitely many entries of any row. %, and  with the sum of its entries on any row required to be zero. 
-Note that the sum of two stochastic matrices is also a stochastic matrix, as is the zero matrix.  
-We will use  stochastic matrices over $\MS[\mathrm{Av}]$ to encode the rate at which reactions occur in different states.  
+A \emph{stochastic matrix} (aka \emph{rate function}) over a set of states $S$
+is a function $Q: S \times S \rightarrow \mathbb{R}_+$ with $Q$ zero on all but finitely many
+entries of any row.  Note that the sum of two stochastic matrices is also a
+stochastic matrix, as is the zero matrix.  We will use stochastic matrices over
+$\MS[\mathrm{Av}]$ to encode the rate at which reactions occur in different
+states.
 
-The rate at which a  reaction $\rho$ occurs in a state $s$ depends on the number of ways in which $l(\rho)$ occurs in $s$.
-For any set $A$, we define the \emph{multiplicity} of a submultiset $m \in \MS[A]$ of another  multiset $m' \in \MS[A]$ as the number of distinct times $m$ appears as a submultiset of $m'$, 
-%. If we take a multiset $m : X \rightarrow \mathbb{N}$ to be a function from an underlying set $X$ to the natural numbers then the multiplicity of $m$ in $m'$ written as $\mu(m, m')$ is 
-defined as:
+The rate at which a reaction $\rho$ occurs in a state $s$ depends on the number of
+ways in which $l(\rho)$ occurs in $s$.  For any set $A$, we define the
+\emph{multiplicity} of a submultiset $m \in \MS[A]$ of another multiset
+$m' \in \MS[A]$ as the number of distinct times $m$ appears as a submultiset of
+$m'$, defined as:
 %
 $$
 \mu(m, m') = \prod_{a \in m}  \binom{m'(a)}{m(a)}
 $$
-%$$
-%\mu(m, m') = \prod_{x \in X} (m'(x))_{m(x)}
-%$$
-%where $(n)_k = n \cdot (n-1) \cdot (n-2) \dots (n-k+1)$ is the falling factorial (taken to be 1 when k = 0). 
-Consider for example multisets
-% (given as their sequence of elements)
- $m = \m{a, a, b}$ and $m'= \m{a_1, a_2, a_3, b}$ where we label the $a$'s in $m'$ to distinguish them. 
- %
- The multiplicity of $m$ in $m'$ is three as $m$ appears as a submultiset of $m'$ in three distinct ways:
+Consider for example multisets $m = \m{a, a, b}$ and $m'= \m{a_1, a_2, a_3, b}$
+where we label the $a$'s in $m'$ to distinguish them.  The multiplicity of $m$
+in $m'$ is three as $m$ appears as a submultiset of $m'$ in three distinct ways:
 $$
-\mu(m, m') = |\{ \m{a_1, a_2, b}, \m{a_1, a_3, b}, \m{a_2, a_3, b} \}|$$
-%The multiplicity of $m$ in $m'$ is 6 as $m$ appears as a submultiset of $m'$ in 6 distinct ways:
-%$$
-%\mu(m, m') = |\{ \m{a_1, a_2, b}, \m{a_1, a_3, b}, \m{a_2, a_3, b}, \m{a_2, a_1, b}, \m{a_3, a_1, b}, \m{a_3, a_2, b} \}|$$
+\mu(m, m') = |\{ \m{a_1, a_2, b}, \m{a_1, a_3, b}, \m{a_2, a_3, b} \}|$$ With these
+preliminaries out of the way, we can define the semantics of rules as stochastic
+matrices on $\MS[\mathrm{Av}]$, given suitable environments.  Suppose that we
+are given a rule typing
+$\G\,|\, \D \vdash \s{a_l} \xrightarrow{e_r} \s{a_r} \; [e_c]$. Then we further
+have $\D \vdash \s{a_l} : \G'$ for a unique $\G'$.  We also have
+$\overline{\G} \vdash e_r : \mathrm{real}$, $ \overline{\G}|\D \vdash \s{a_r}$, and
+$ \overline{\G} \vdash e_c : \mathrm{bool}$, where $\overline{\G} = \G[\G']$.
 
-
-
-%We can now define the stochastic matrix  $Q_{\rho}$ associated to a reaction $\rho = l \xrightarrow{k} r$ by stipulating that we have
-%%
-%$$Q_{\rho}(s, s') = \left \{ \begin{array}{ll}
-%k \cdot \mu(l, s)  & (l \preceq s, s' = \rho \bullet s) \\
-%0 & (\mbox{otherwise})\end{array}\right .$$
-%%
-% off the diagonal.
-
-
-
-%Applying reaction $\rho$ to a multiset of agents $s$ gives a new multiset $s' = s \dotminus l(\rho) + r(\rho) $. Note that we write $\dotminus$ for the %point-wise difference between the multiplicities of elements in two multisets; this is not the usual difference operation on multisets. We  write  $\rho \bullet s$ %for the multiset resulting from the application of a reaction $\rho$ to a multiset $s$.
-
-%GDP This did not make sense to me?? Rules abstract over a possibly infinite multiset of reactions. 
-With these preliminaries out of the way, we can define the semantics of rules as stochastic matrices on  $\MS[\mathrm{Av}]$, given suitable environments.  
-%Given a declarationof values to the variables occurring in a rule,  it can be instantiated to a particular concrete reaction. To evaluate rules to reactions, 
-Suppose that we are given a rule typing  %valid in an environment $\G$: 
-$\G\,|\, \D \vdash \s{a_l} \xrightarrow{e_r} \s{a_r} \; [e_c]$. Then we further have $\D \vdash \s{a_l} : \G'$ for a unique $\G'$. 
-We also have
-$\overline{\G} \vdash e_r : \mathrm{real}$, $ \overline{\G}|\D \vdash \s{a_r}$, and $ \overline{\G} \vdash e_c : \mathrm{bool}$, where $\overline{\G} =   \G[\G']$.
-
-%Then for any $\G$-environment $\sigma$ %and $\D$-environment $\sigma'$ 
-%we set:
-% that takes as from rules to reactions as follows:
-%GDPan evaluation function $\den{\;}(\sigma, \sigma'): R \rightarrow \mathcal{R}$ that takes as from rules to reactions as follows:
-%\[
-%\den{\s{a_l} \xrightarrow{e_r} \s{a_r} \, [e_c]}(\sigma) = 
-%%
-%\sum \{Q_{\den{a_l}(\sigma') \xrightarrow{\den{e_r}(\sigma[\sigma'])} \den{a_r}(\sigma[\sigma']) } \mid \sigma' \mbox{ a } \D\mbox{-environment}, 
-%\den{e_r}(\sigma[\sigma']) \geq 0, \den{e_c}(\sigma[\sigma']) = \mytt\}
-%%
-%\]
-
-%\[\begin{array}{lcl}
-%	\den{\s{a_l} \xrightarrow{e_r} \s{a_r} \, [e_c]}_{\G,\D}(\sigma)  & =  &  
-%%
-%\sum \{Q_{\den{a_l}_{\D}(\sigma') \xrightarrow{\den{e_r}_{\overline{\G}}(\overline{\sigma})} \den{a_r}_{\overline{\G},\D}(\overline{\sigma}) } \mid \sigma' 
-%\mbox{ a } \G'\mbox{-environment}, \overline{\sigma} = \sigma[\sigma'], \\&& 
-%                                                                                       \qquad  \qquad  \qquad   \qquad  \qquad  \quad \;\; \;\den{e_r}_{\overline{\G}}(\overline{\sigma}) > 0, 
-%\den{e_c}_{\overline{\G}}(\overline{\sigma}) = \mytt\}
-%%
-%\end{array}
-%\]
-
-%\[
-%\den{\s{a_l} \xrightarrow{e_r} \s{a_r} \, [e_c]}(\sigma, \sigma') \simeq \left\{ 
-%\begin{array}{ll}
-%\den{a_l}(\sigma, \sigma') \xrightarrow{\den{e_r}(\sigma')} \den{a_r}(\sigma[\sigma'])  &  (\den{e_c} (\sigma[\sigma']) = \mytt)\\
-%\text{undefined } & (\text{otherwise})
-%\end{array}
-%\right .
-%\]
-%GDP\begin{align*}
-%\den{\s{a_l} \xrightarrow{e_r} \s{a_r} \, [e_c]}(\sigma, \sigma') = \den{a_l}(\sigma, \sigma') \xrightarrow{\den{e_r}(\sigma, \sigma')} \den{a_r}
-%(\sigma, \sigma') \, , \, \text{if } \, \den{e_c} (\sigma, \sigma')
-%\end{align*}
-
-%We can explain this stochastic matrix in terms of the set of reactions generated by the rule, given a $\G$-environment $\sigma$. Set
+In order to define the stochastic matrix over $\MS[\mathrm{Av}]$ associated to
+the rule $ \s{a_l} \xrightarrow{e_r} \s{a_r} \; [e_c]$, we first need to explain
+when it matches a state and to define the reaction it denotes.
 %
-
+For the first, we say that a $\G'$-environment $\match$ is a \emph{match} for the
+rule in a state $s= \m{av_1, \dots, av_n}$ if $\den{a_l}_{\D}( \match)$ is a
+submultiset of $s$. Note that there are only finitely many possible such rule
+matches.
 %
-%\[\begin{array}{lcl}\mathcal{R}\den{
-%{\s{a_l} \xrightarrow{e_r} \s{a_r} \, [e_c]}}_{\G,\D}(\sigma) & =  &
-%\{\den{a_l}_{\D}(\sigma') \xrightarrow{\den{e_r}_{\overline{\G}}(\overline{\sigma})} \den{a_r}_{\overline{\G},\D}(\overline{\sigma}) 
-%                                    \mid  \sigma' \mbox{ a } \G'\mbox{-environment}, \overline{\sigma} = \sigma[\sigma'],\\
-%                                                            &&             \qquad \qquad \qquad \qquad     \qquad \qquad    \qquad       \den{e_r}_{\overline{\G}}(\overline{\sigma}) > 
-%0, \den{e_c}_{\overline{\G}}(\overline{\sigma}) = \mytt\}
-%\end{array}\]
-
-
-
-
-In order to define the stochastic matrix over $\MS[\mathrm{Av}]$ associated to the rule $ \s{a_l} \xrightarrow{e_r} \s{a_r} \; [e_c]$, we first need to explain when it matches a state and to define the reaction it denotes.
-%
-For the first, we say  that a $\G'$-environment $\match$ is a \emph{match} for the rule in a state  $s= \m{av_1, \dots,  av_n}$ if
-$\den{a_l}_{\D}( \match)$ is a submultiset of $s$. Note that there are only finitely many possible such rule matches.
-%
-For the second, suppose we are given a $\G$-environment $\sigma$ and a $\G'$-environment $\sigma'$, then we set\hspace{-2pt}
+For the second, suppose we are given a $\G$-environment $\sigma$ and a
+$\G'$-environment $\sigma'$, then we set\hspace{-2pt}
 %
 \footnote{We use Kleene equality in this definition: for any two, possibly undefined, mathematical expressions $e$ and $e'$, $e \simeq e'$ holds if (i) $e$ is defined if, and only if, $e'$ is defined, and (ii) they are equal if they are both defined.}
 %
@@ -513,7 +472,8 @@ Next, consider the rule
 %
 \[r \;=\; \mathrm{A}(\mathrm{a}=x),\mathrm{A}(\mathrm{a}=y) \xrightarrow{f(x, y)} \mathrm{A}(\mathrm{a}=x+y), \mathrm{A}(\mathrm{a}=y-1) \: [g(x,y)]\]
 %
-assumed well-typed given the agent type  environment $A: (a: \mathrm{int})$ and empty base type  environment.
+assumed well-typed given the agent type environment $A: (a: \mathrm{int})$ and
+empty base type environment.
 %
 Then, assuming, for example, that $f(x,y)$ denotes 3 in $\match_1$ and the
 condition $g(x,y)$ holds there, $\match_1$ yields a reaction from our rule $r$,
@@ -539,10 +499,18 @@ multiset rewriting~\citep{anderson_continuous_2011, barbuti_intermediate_2009}; 
 latter approach is used in the rule-based kappa system~\cite[Section
 4.2.3]{danos_rule-based_2008}.
 %
-In the case of the usual chemical reactions, the two approaches are the same up to a multiplicative change in the reaction rate. However this is not the case for rule-based systems. Consider, for example, a rule with left-hand side $\mathrm{A}(\mathrm{a}=x),\mathrm{A}(\mathrm{a}=y)$, and the state $\m{ \mathrm{A}(\mathrm{a} =1), \mathrm{A}(\mathrm{a} =1), \mathrm{A}(\mathrm{a} = 2)}$.  The two ways of counting multiplicities of the match 
-$\{x \mapsto 1,y \mapsto 1\}$, give 1 and 2, whereas for the match  $\{x \mapsto 1,y \mapsto 2\}$ they both give 2. 
+In the case of the usual chemical reactions, the two approaches are the same up
+to a multiplicative change in the reaction rate. However this is not the case
+for rule-based systems. Consider, for example, a rule with left-hand side
+$\mathrm{A}(\mathrm{a}=x),\mathrm{A}(\mathrm{a}=y)$, and the state
+$\m{ \mathrm{A}(\mathrm{a} =1), \mathrm{A}(\mathrm{a} =1), \mathrm{A}(\mathrm{a}
+  = 2)}$.  The two ways of counting multiplicities of the match
+$\{x \mapsto 1,y \mapsto 1\}$, give 1 and 2, whereas for the match
+$\{x \mapsto 1,y \mapsto 2\}$ they both give 2.
  %
-Nonetheless, a more complex translation between the two approaches is possible, assuming available a sufficiently rich stock of conditional expressions for rate expressions to distinguish the various possible cases.
+Nonetheless, a more complex translation between the two approaches is possible,
+assuming available a sufficiently rich stock of conditional expressions for rate
+expressions to distinguish the various possible cases.
 
 \subsubsection*{Stochastic semantics of models}
 \label{sec:stoch}
@@ -580,15 +548,18 @@ model and an environment $\sigma$, as above. The algorithm keeps a state $s$ and
 time $t$, starting with state $s_0 = \den{\s{a_r}}_{\G,\D}(\sigma)$ and an initial time
 $0$, then iterates the following sequence of steps as many times as desired.
 \begin{enumerate}
-\item For current state  $s$,
- generate the multiset of all possible reactions for every rule: 
+\item For current state $s$, generate the multiset of all possible reactions for
+  every rule:
 $$R  = \m{ \mathcal{R}\den{\s{r}.i}(\sigma, m) \; | \; i = 1,\ldots, |\s{r}|, \, m \mbox{ is a proper match of rule $\s{r}.i$ in $s$, given $\sigma$}}$$ 
-
-\item Calculate the total rate $k_T = \sum_{\rho \in R} R(\rho)\cdot (\mu(l(\rho), s)\cdot  k(\rho))$. Halt if this is zero.
-\item Pick the waiting time $t_w$ for the next reaction event
-from the exponential distribution with cumulative distribution function $F(t) = 1- e^{-k_T t}$.
-\item Pick exactly one of the reactions, choosing reaction $\rho \in R$ with probability $\frac{R(\rho)\cdot \mu(l(\rho), s) \cdot k(\rho)}{k_T}$.
-\item If reaction $\rho$ is picked then update the state to $s' = \rho \bullet s$, and the time to $t + t_w$.
+\item Calculate the total rate
+  $k_T = \sum_{\rho \in R} R(\rho)\cdot (\mu(l(\rho), s)\cdot k(\rho))$. Halt if this is zero.
+\item Pick the waiting time $t_w$ for the next reaction event from the
+  exponential distribution with cumulative distribution function
+  $F(t) = 1- e^{-k_T t}$.
+\item Pick exactly one of the reactions, choosing reaction $\rho \in R$ with
+  probability $\frac{R(\rho)\cdot \mu(l(\rho), s) \cdot k(\rho)}{k_T}$.
+\item If reaction $\rho$ is picked then update the state to
+  $s' = \rho \bullet s$, and the time to $t + t_w$.
 \end{enumerate}
 
 Note that we take account of the multiplicity of reactions here: the same
@@ -638,13 +609,21 @@ expressions to be used in models.
  Any ordinary expression $e \in E$
  is an enriched expression (\textsf{ord-expr}, Figure~\ref{fig:extSyntax}). 
 %
-%\subsubsection*{Where expressions} 
-\item[-] Any variable in an enriched expression can refer to (the value of) another enriched  expression  using the \textsf{where} expression. 
-%Any expression $e \in E$ can contain another enriched expression, for example a fluent, as long as it is declared as such using the where construct. 
-For example we can write $t > 5 \; \mathbf{where} \; t : \mathrm{real} \; \mathbf{is} \; \mathrm{temp}$ to use the $\mathrm{temp}$ fluent inside, in this case,  an ordinary expression. %, in this case coming from the original expression language. 
-These expressions %$e$ 
-are typed  inside a type environment extended using the type of the enriched expression in the where clause (\textsc{T-Where}, Figure~\ref{fig:extSyntax}). In our examples we generally proceed informally, omitting the where clause and instead using the where clause expression directly; % inside the language expressions, 
-for example we might write $\mathrm{temp} > 5$, although that is not officially an enriched expression. 
+\item[-] Any variable in an enriched expression can refer to (the value of)
+  another enriched expression using the \textsf{where} expression.
+
+  For example we can write
+  $t > 5 \; \mathbf{where} \; t : \mathrm{real} \; \mathbf{is} \; \mathrm{temp}$
+  to use the $\mathrm{temp}$ fluent inside, in this case, an ordinary
+  expression. %, in this case coming from the original expression language.
+  These expressions %$e$
+  are typed inside a type environment extended using the type of the enriched
+  expression in the where clause (\textsc{T-Where},
+  Figure~\ref{fig:extSyntax}). In our examples we generally proceed informally,
+  omitting the where clause and instead using the where clause expression
+  directly; % inside the language expressions,
+  for example we might write $\mathrm{temp} > 5$, although that is not
+  officially an enriched expression.
 
 \item[-] %\subsubsection*{Fluents}
   The \textsf{time}, \textsf{condition}, and \textsf{repeat} expressions are
@@ -708,8 +687,6 @@ Enriched expressions can appear in the same places where expressions can be expe
   allow enriched expressions to appear in places where expressions are expected:
   in right agent expressions, rates, and conditions.
 
-
-
 \item[-] Variables can be bound to the values of enriched expressions so that
   they can be referred to later (\textsf{declare}, Figure~\ref{fig:extSyntax}).
   A declaration $e_d$ produces an environment in which the type of the enriched
@@ -751,7 +728,6 @@ declaration sequence to be used later in it.
 \addlinespace[0.25cm]
 & \emph{\textsf{Syntax}} & & \emph{\textsf{Typing rules}} \\
 & & & \\
-%$e_r ::=$ & & \textsf{rich expr:} & \\
 %Ordinary expressions
 $e_r ::=$  & $e\quad (e \in E)$ & \textsf{ord-expr} & $\inferrule*[Right=(T-OrdExpr)]{\G  \vdash e: b }{\G | \D\vdash e : b}$
 %& $id$ & \textsf{ref} & $\inferrule*[Right=(T-Ref)]{ \G | \D(id) = b}{ \G | \D  \D \vdash id : b}$ \\
@@ -853,8 +829,9 @@ we define a `selection function'
 %
 \[\sel_{\D,a_l}:{\MS[\mathrm{Av}] \rightarrow \MS[\V_{\G}]}\]
 %
-that takes a state and returns a multiset of bindings ($\G$-environments). This multiset has a binding for each matching agent in the state with multiplicity that of the matching agent.
-The selection function is defined by:
+that takes a state and returns a multiset of bindings ($\G$-environments). This
+multiset has a binding for each matching agent in the state with multiplicity
+that of the matching agent.  The selection function is defined by:
 %
 %\[\sel_{\D, a_l}(s)  = \m{\, \sigma \in \V_{\G}\mid \den{a_l}_{\D}(\sigma) \in s }\]
 %
@@ -872,24 +849,9 @@ The selection function is defined by:
 recalling that we treat finite multisets as functions that have value 0 except at finitely many arguments. In this respect, note that, as required,  $\sel_{\D, a_l}(s)$ is 0 except for finitely many arguments as $s$ is, and the function 
 $\sigma \mapsto n_a(\s{n_f =  \sigma(id)})$ is 1-1.
 
-%the agent  $n_a(\s{n_f =  \sigma(id)})$ determines $\sigma$, and so  $\sel_{\D, 
-%a_l}(s)$ is 0 except for finitely many arguments as $s$ is, and is thus  a well-
-%defined finite multiset.
-
-%\[\sel_{\D, a_l}(s)(\sigma) =  \sum_{(n_a, \varphi) \in \mathrm{Av}} \{s(n_a, \varphi) \mid   \den{a_l}_{\D}(\sigma) = (n_a, \varphi)\}\]
-%
-%\[\sel_{\D, a_l}(s)(\sigma) =  \sum_{(n'_a, \varphi) \in \mathrm{Av}} \{s(n_a, \varphi) \mid n'_a =  n_a, \s{\varphi(n_f)} = 
-%\s{\sigma(id)}\}\]
-%
-%
-%\[\sel_{\D, a_l}(s)(\sigma) =  \sum_{{\tiny \begin{array}{l}(n_a, \varphi) \in \mathrm{Av}\\
-%                                                        \s{\varphi(n_f)} = \s{\sigma(id)}  \end{array}}} s(n_a, \varphi)\]
-
-
-
-
-
-We recall the list folding function (and see \cite{conf/icfp/Hutton98}). Identifying sequences and lists, for any sets $X$, $Y$, combining function $f: X \times Y \rightarrow Y$  and $y \in Y$, we define: 
+We recall the list folding function \citep[and
+see][]{hutton_fold_1998}. Identifying sequences and lists, for any sets $X$, $Y$,
+combining function $f: X \times Y \rightarrow Y$ and $y \in Y$, we define:
 %
 $\fold(u,f,y) \in Y$ by induction on the length of $u$ as follows:
 %
@@ -902,20 +864,21 @@ Under a natural condition on the combining function, we can use list folding to 
 %
 \[f(x,f(x',y)) =  f(x',f(x,y))\]
 %
-For such a function $f$, we can unambiguously define $\fold(m,f,y)$, for a finite multiset $m \in \MS[X]$, to be $\fold(u,f,y)$, choosing any $u \in \SQ[Y]$ such that $\ms(u) = m$. 
+For such a function $f$, we can unambiguously define $\fold(m,f,y)$, for a
+finite multiset $m \in \MS[X]$, to be $\fold(u,f,y)$, choosing any
+$u \in \SQ[Y]$ such that $\ms(u) = m$.
 
 Finally we assume available a `linearisation function'
 %
 \[\langle\!\langle - \rangle\!\rangle:\MS[\V_{\s{id:b}}] \longrightarrow \SQ[\V_{\s{id:b}}] \]
 %
-making such a choice for multisets of  $\s{id:b}$-environments. It puts the elements of a finite multiset of $\s{id:b}$-environments in some standard order, repeating them according to their multiplicity, so that $\ms(\langle\!\langle m \rangle\!\rangle) = m$ holds for any $m \in \MS[\V_{\s{id:b}}]$.
+making such a choice for multisets of $\s{id:b}$-environments. It puts the
+elements of a finite multiset of $\s{id:b}$-environments in some standard order,
+repeating them according to their multiplicity, so that
+$\ms(\langle\!\langle m \rangle\!\rangle) = m$ holds for any $m \in \MS[\V_{\s{id:b}}]$.
 
 
 \subsubsection*{Semantics of enriched expressions}
-
-%Whereas the semantics of  ordinary expressions $e$ with typing $ \G \vdash e:b$ depends only on $ \G$-environments, the semantics of enriched %expressions depends additionally on states and times. 
-
-
 As discussed above we take the values of enriched expressions to be functions of
 states and time.  So, suppose that we have a typing $\G|\D \vdash e_r$ of an enriched
 expression $e_r$. Then for any functional $\G$-environment $\sigma$, we define its
@@ -924,16 +887,9 @@ $\den{e_r}_{\G,\D}(\sigma): \MS[\mathrm{Av}] \times \mathbb{R} \rightarrow \V_b$
 divide the definition into cases according to the form of the enriched
 expression:
 
-%Enriched expressions denote functions from the state (multiset of agents) and time to base values in $V$. The semantics of enriched expressions, $
-%\den{e_r}(\sigma)$ take a simple base environment $\sigma=(id_1: v_1, \dots, id_n:v_n)$ containing bindings of identifiers to base values in $V$ and 
-%returns a function $\mathcal{M}[Av] \times \mathbb{R} \rightarrow V$ from the state and time to a base value. We write $s$ for states and $t$ for time. 
-
-
 \begin{align*}
 %ordinary expressions
 & \den{e}_{\G,\D}(\sigma ) (s, t) = \den{e}_{\G}(\sigma(s,t)) \\[0.2cm]\\
-%& \den{id}_{\G,\D}(\sigma ) (s, t) = \sigma_e(id ) (s, t) \\[0.2cm]
-%where 
 &\den{e'_r \; \mathbf{where} \; id:b \; \mathbf{is} \; e_r}_{\G,\D}(\sigma )  = \den{e'_r}_{\G,\D}(\sigma[x \mapsto \den{e_r}_{\G|\D}(\sigma )]) \\[0.2cm]\\
 %time
 & \den{\mathbf{time}}_{\G,\D}(\sigma ) (s, t) = t \\[0.2cm]
@@ -956,11 +912,9 @@ expression:
 &\hspace{50pt} f(\sigma',v) = \den{e_r}_{\G[\G'[ id:b]],\D}(\sigma[\sigma'[id:v]])(s,t) \quad (\sigma': \V_{\G'}, v : \V_{b})\\
 \end{align*}
 Here:
-
 \begin{itemize}
 
 \item[-] Ordinary expressions, $e \in E$, are evaluated using the provided evaluation function. 
-
 
 \item[-] Enriched expressions $e_r' \; \mathbf{where} \; id:b \; \mathbf{is} \; e_r$
 are evaluated by evaluating the first expression $e'_r$ in a functional environment in which $id$ is bound to the evaluation of the second expression $e_r$.
@@ -1109,7 +1063,6 @@ between reactions. In practice, however, this discrepancy is often not
 prohibitive and gives very similar results while avoiding the extra
 computational cost added by non-homogeneity (we discuss this further below).
 
-
 We therefore use an approximate simulation method where the fluents, and
 therefore all time-varying expressions in rules, are only evaluated at the times
 the usual SSA would choose for the next reaction. This is equivalent to keeping
@@ -1118,7 +1071,6 @@ change in our algorithm from that for basic Chromar is then in the reaction
 generation step (1) where the reaction generation happens at the current state
 and time in an environment extended with the evaluation of defined enriched
 expressions.
-
 
 So assume a model and an environment $\sigma$, as above, and set $\sigma'$ to be the
 functional $\G$-environment $\up{\sigma}[\den{e_d}_{\G,\D}(\up{\sigma})]$. As before, the
