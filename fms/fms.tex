@@ -21,6 +21,7 @@
 \usepackage{mathpartir}
 \usepackage{fancyvrb}
 \usepackage{inconsolata}
+\usepackage{multirow}
 
 \frenchspacing
 
@@ -190,9 +191,9 @@ expression evaluates to true.
 \label{the-component-models}
 
 The models presented here represent the full life cycle in three stages:
-seed dormancy (A, left panel, Figure 1), vegetative growth up to
-flowering (B, left panel, Figure 1), and the reproductive stage up to
-seed dispersal (C, left panel, Figure 1). Each model (A, B, C) includes
+seed dormancy (A, left panel, Figure~\ref{fig:overview}), vegetative growth up to
+flowering (B, left panel, Figure~\ref{fig:overview}), and the reproductive stage up to
+seed dispersal (C, left panel, Figure~\ref{fig:overview}). Each model (A, B, C) includes
 a phenology component that represents only timing
 (Section~\protect\hyperlink{phenology-models-in-chromar}{2.2}). The
 vegetative and reproductive stage models also represent biomass growth
@@ -205,6 +206,21 @@ probabilistically from a distribution as described (Burghardt \emph{et
 al.}, 2015). The three models were integrated in a whole life-cycle
 model of one plant (FM-life), and then extended to a population of such
 plants.
+
+\begin{figure}[tb]
+  \centering
+\includegraphics[width=0.9\textwidth]{figures/modelOverviewFig/modelOverview.eps}
+\caption{Overview of the FM-life and population models used in this
+study. Left Overview of the models used for the growth and timing
+components for the three developmental stages: seed dormancy (A),
+vegetative period (B), and reproductive period (C) and Right Sketch of
+the population level model. Inputs to the model are the distribution of
+values of the two genetic parameters (\(f_{i}\), \(\psi_{i}\)) and
+weather data from some location for a number of years. The output is
+some population measure of interest, an example might be the total
+number of plants after \(k\) years.}
+\label{fig:overview}
+\end{figure}
 
 \subsubsection{Seed dormancy model (A)}
 \label{seed-dormancy-model-a}
@@ -329,6 +345,47 @@ sucrose carbon pool (\(c\)), a starch carbon pool (\(s\)), and one pool for the
 biomass of the root and each of the rosette leaves (left panel, ­­­Figure 2). In
 Chromar we have the following agents to store the state (amount of carbon, or
 total biomass) of these pools:
+
+\begin{figure}[!ht]
+\centering
+\begin{tabularx}{0.95\textwidth}{c|ll} 
+\toprule
+\addlinespace[0.25cm]
+\textsf{\emph{Flows}} & & \textsf{\emph{Rules}} \\ 
+\multirow{10}[45]{*}{\includegraphics[scale=0.5]{figures/agentFlowsFig/agentFlows.pdf}} & \textsf{growth}&  $\mathrm{Leaf}(m=m, i=i), \mathrm{Cell}(c=c) \xrightarrow{d(i, t)}$ \\
+& & $\mathrm{Leaf}(m=m+g(m)), \mathrm{Cell}(c=c-g(m))$ \\ 
+& & $[c-g(m) > c_b]$ \\
+& & \\
+\addlinespace[-0.6em]
+& & similarly for other organs \\ 
+& & \\
+& \textsf{maint} & $\mathrm{Leaf}(m=m), \mathrm{Cell}(c=c) \xrightarrow{}$ \\
+& & $\mathrm{Leaf}(m=m), \mathrm{Cell}(c=c-f(m)) \; [c-f(m) > 0]$ \\
+& & \\
+\addlinespace[-0.6em]
+& & similarly for other organs \\ 
+& & \\
+& \textsf{mobl} & $\mathrm{Leaf}(m=m), \mathrm{Cell}(c=c) \xrightarrow{}$ \\
+& & $\mathrm{Leaf}(m=m-f(m)), \mathrm{Cell}(c=c+f(m)) \; [c \leq c_b]$ \\
+& & \\
+\addlinespace[-0.6em]
+& & similarly for other organs \\ 
+& & \\
+& \textsf{assim} & $\mathrm{Cell}(c=c, s=s) \xrightarrow{\phi(e(t))}$ \\
+& & $\mathrm{Cell}(c=c+k_c a_{\mathrm{ros}}, s=s+(1-k_c) a_{\mathrm{ros}}) $ \\
+& & $[c \leq c_b]$ \\
+& & \\
+& \textsf{sdegr} & $\mathrm{Cell}(c=c, s=s) \xrightarrow{}$ \\ 
+& & $\mathrm{Cell}(c=c+f(e(t)), s=s-f(e(t)) [\mathrm{night}]$ \\ 
+& & \\
+& \textsf{leaf cr} & $\mathrm{Plant}(), \mathrm{VAxis}(n=n) \xrightarrow{f(e(t))} $ \\ 
+& & $\mathrm{Plant}(), \mathrm{VAxis}(n=n+1), \mathrm{LAxis}(i=n+1), \mathrm{Leaf}(\dots)$ \\
+\addlinespace[0.25cm]
+\bottomrule
+\end{tabularx} %}
+\caption{An overview of the dynamics on FM-lite (growth component of vegetative stage). The dynamics take the form of flows between different reservoirs of carbon, here shown in a graphical way in the left panel with the corresponding Chromar rules on the right.  }
+\label{fig:fmv1}
+\end{figure}
 
 \begin{itemize}
 \item
