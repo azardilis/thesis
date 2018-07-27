@@ -45,12 +45,12 @@
 \newcommand{\fig}[1]{Fig.~\ref{fig:#1}}
 \newcommand{\diagram}[1]{diagram~\ref{eq:#1}}
 \newcommand{\app}[1]{Appendix~\ref{app:#1}}
-\newcommand{\mcite}[1]{\textcolor{gray}{#1}} % missing cite
+\newcommand{\mcite}[1]{\mrcolor{gray}{#1}} % missing cite
 \newcommand{\defn}[1]{Def.~\ref{def:#1}}
 \newcommand{\prop}[1]{Prop.~\ref{prop:#1}}
 
 % Math
-\renewcommand{\tuple}[1]{\left(#1\right)}
+\renewcommand{\tuple}[1]{(#1)}
 \DeclareMathOperator*{\expn}{exp}
 \renewcommand*{\exp}[1]{e^{\,#1}} % \mathrm{e}^{#1}}
 \renewcommand{\qedsymbol}{\ensuremath{\blacksquare}}
@@ -89,8 +89,8 @@
 \newcommand{\n}{\mathrm{n}}
 
 % Other stuff
-\newcommand{\maybe}[1]{\textcolor{gray}{#1}}
-\newcommand{\todo}[1]{\textcolor{red}{TODO: #1}}
+\newcommand{\maybe}[1]{\mrcolor{gray}{#1}}
+\newcommand{\todo}[1]{\mrcolor{red}{TODO: #1}}
 
 % rules
 \newcommand{\ar}[2]{\mr{#1} \! = \! {#2}}
@@ -160,42 +160,41 @@ model with contrasting environmental and genetic inputs shows that ecological
 questions can increasingly be informed by mechanistic understanding of growth
 processes \citep{millar_intracellular_2016, doebeli_towards_2017}.
 
-\subsection{Phenology models in Chromar}
+\section{Phenology models in Chromar}
 \label{phenology-models-in-chromar}
 In many phenology models, the simulated plant accumulates a conceptual
 development indicator in every time unit as a function of the
 contributing environmental factors, until a threshold is reached for
 transition to the next developmental stage. For example, in a seed type
-\(\text{Seed}(\text{dev}:\text{real})\), the dev attribute measures
+\(\mr{Seed}(\mr{dev}:\mr{real})\), the dev attribute measures
 development towards germination. A phenology rule for germination
 affected by temperature and moisture, starting from dev value \emph{d},
 could be:
 
-\[\text{Seed}\left( \text{dev} = d \right){}\text{Seed}(\text{dev} = d + f\left( temp,\ moist \right))\]
+\[\mr{Seed}(\ar{dev}{d}) \xrightarrow{} \mr{Seed}(\ar{dev}{d + f(temp,moist)}) \]
 
-On average once every time unit the \(\text{dev}\) attribute of a
+On average once every time unit the $\mr{dev}$ attribute of a
 particular seed will be increased from the present value, \(d\), by a
-function of the contributing factors \(\text{temp}\) and
-\(\text{moist}\). Further parameters might represent how sensitive the
+function of the contributing factors $temp$ and
+$moist$. Further parameters might represent how sensitive the
 seed is to the environmental factors. At the threshold
-\emph{D\textsubscript{t}}, the seed germinates to a plant and resets the
+$D_t$, the seed germinates to a plant and resets the
 development measure to 0:
 
-\[\text{Seed}\left( \text{dev} = d \right)\ \text{Plant}\left( \text{dev} = 0 \right)\ \ \lbrack d > D_{t}\rbrack\]
+\[\mr{Seed}(\ar{dev}{d}) \xrightarrow{} \mr{Plant}(\ar{dev}{0}) \, \lbrack d > D_{t}\rbrack \]
 
 where the expression inside the square brackets is used to indicate
 conditional activity of the rule. The rule is active only when the
 expression evaluates to true.
 
-\subsection{The component models}
-\label{the-component-models}
-
+\section{The component models}
+\label{sec:compModels}
 The models presented here represent the full life cycle in three stages:
 seed dormancy (A, left panel, Figure~\ref{fig:overview}), vegetative growth up to
 flowering (B, left panel, Figure~\ref{fig:overview}), and the reproductive stage up to
 seed dispersal (C, left panel, Figure~\ref{fig:overview}). Each model (A, B, C) includes
 a phenology component that represents only timing
-(Section~\protect\hyperlink{phenology-models-in-chromar}{2.2}). The
+(Section~\ref{phenology-models-in-chromar}). The
 vegetative and reproductive stage models also represent biomass growth
 at the organ level, based on the carbon budget of the plant. We varied
 genetic parameters that affect only the timing components of A (seed
@@ -229,25 +228,25 @@ The seed dormancy model is the Chromar version of the model of
 \citet{burghardt_modeling_2015}, which is based in turn on
 \citet{alvarado_hydrothermal_2002}. It represents the development of a
 newly-dispersed seed from \(dev = 0\) to a threshold value, \(D_{g}\), where the
-seed germinates. Above baseline levels of temperature \emph{T\textsubscript{b}}
+seed germinates. Above baseline levels of temperature $T_b$
 and of moisture (see below), increasing moisture and temperature speed the
 progress towards germination. The additional developmental units added
-(hydrothermal units, \(\text{htu}\)) at every time unit are described by:
+(hydrothermal units, \(\mr{htu}\)) at every time unit are described by:
 
-\[\text{htu}\left( t \right) = \ \left\{ \begin{matrix}
-\left( \Psi\left( t \right) - \Psi_{b}\left( t \right) \right) \cdot \left( T\left( t \right) - T_{b} \right) \\
-\ \left( \Psi\left( t \right) - \Psi_{b}\left( t \right) \right)\  \cdot \left( T_{o} - T_{b} \right) \\
+\[\mr{htu}( t ) = \ \left\{ \begin{matrix}
+( \Psi( t ) - \Psi_{b}( t ) ) \cdot ( T( t ) - T_{b} ) \\
+\ ( \Psi( t ) - \Psi_{b}( t ) )\  \cdot ( T_{o} - T_{b} ) \\
 0 \\
 \end{matrix} \right.\ \ \begin{matrix}
-\text{\ \ if\ \ }T_{b} < T\left( t \right) \leq T_{o}\ \text{and}\ \Psi_{b}\left( t \right) < \ \Psi(t) \\
-\text{if\ \ T}\left( t \right) > T_{o}\ \text{and}\ \Psi_{b}\left( t \right) < \ \Psi\left( t \right) \\
-\text{otherwise} \\
+\mr{\ \ if\ \ }T_{b} < T( t ) \leq T_{o}\ \mr{and}\ \Psi_{b}( t ) < \ \Psi(t) \\
+\mr{if\ \ T}( t ) > T_{o}\ \mr{and}\ \Psi_{b}( t ) < \ \Psi( t ) \\
+\mr{otherwise} \\
 \end{matrix}\]
 
 where \(\Psi(t)\) and \(T(t)\) give the moisture and temperature levels
 at time \(t\) respectively. The definition distinguishes between
 operating in suboptimal and supraoptimal temperatures (below or above
-\(T_{o}\ \text{respectively})\ \). The baseline moisture is used to
+\(T_{o}\ \mr{respectively})\ \). The baseline moisture is used to
 represent the dormancy level of the seed. If \(\Psi_{b}\) is high, the
 seed accumulates htu slowly for a given set of environment conditions,
 whereas if \(\Psi_{b}\) is low, development is faster in the same
@@ -258,30 +257,37 @@ temperature, and represents the observed process of after-ripening.
 \(\psi_{i}\) is also used to represent the genetic effect on dormancy,
 where high \(\psi_{i}\) represents stronger dormancy.
 
-In Chromar, the \(\text{Seed}\) type captures information about the seed
+In Chromar, the \(\mr{Seed}\) type captures information about the seed
 development process:
-\(\text{Seed}(\text{gntp}:(\text{real},\text{real}),\text{dev}:\text{real},r:real)\).
-The \(\text{gntp}\) attribute stores the genotype of the organism,
+\(\mr{Seed}(\mr{gntp}:(\mr{real},\mr{real}),\mr{dev}:\mr{real},r:real)\).
+The \(\mr{gntp}\) attribute stores the genotype of the organism,
 \(\psi_{i}\) (seed dormancy level) and \(f_{i}\) (floral repression
 level), which is passed on to the agents representing the later stages
 of development and transmitted unchanged to the next generation.
-\(\text{dev}\) stores the cumulative development indicator (sum of
-\(\text{htu}\) up to the current timepoint), and \(r\) stores the
+\(\mr{dev}\) stores the cumulative development indicator (sum of
+\(\mr{htu}\) up to the current timepoint), and \(r\) stores the
 after-ripening up to the current timepoint. The development rule is the
 following:
 
-\[{\text{Seed}\left( \text{gntp} = a,\ \text{dev} = d,\ r = r \right)\ 
-}{\text{Seed}(\text{dev} = d + htu\left( temp,\ moist,\ f(r,\ temp,\ moist),\ a.\psi_{i} \right),\ r = f\left( r,\ temp,\ moist \right))}\]
-
-where \(\text{temp}\) and \(\text{moist}\) are fluents describing
+\begin{equation*}
+\begin{split}
+& \mr{Seed}(\ar{gntp}{a}, \ar{dev}{d}, \ar{r}{r}) \xrightarrow{1.0} \\ 
+&\mr{Seed}(\ar{dev}{d + htu(temp, moist, f(r,temp,moist), a.\psi_i)}, 
+\ar{r}{f(r, temp, moist)})
+\end{split}
+\end{equation*}
+where \(\mr{temp}\) and \(\mr{moist}\) are fluents describing
 temperature and moisture. We use the 'dot' (\(.\)) operator for
-accessing the two genetic parameters of the \(\text{gntp}\) attribute.
+accessing the two genetic parameters of the \(\mr{gntp}\) attribute.
 The following rule represents germination, starting the vegetative
 stage:
-
-\[\text{Seed}\left( \text{gntp} = a,\text{\ dev} = d,\ r = r \right)\ \text{Plant}\left( \text{gntp} = a \right),\ \text{Root}\left( \ldots \right),\text{\ Leaf}\left( \ldots \right),\ \text{Leaf}\left( \ldots \right)\ \ \lbrack d > D_{g}\rbrack\]
-
-The abstract \(\text{Plant}\) agent represents the plant at the vegetative
+\begin{equation*}
+\begin{split}
+& \mr{Seed}(\ar{gntp}{a},\ar{dev}{d},\ar{r}{r} ) \xrightarrow{1.0} \\
+& \mr{Plant}(\ar{gntp}{a}), \mr{Root}(\ldots),\mr{Leaf}( \ldots ), \mr{Leaf}(\ldots) \, \, \lbrack d > D_{g}\rbrack
+\end{split}
+\end{equation*}
+The abstract \(\mr{Plant}\) agent represents the plant at the vegetative
 stage, along with agents for the root and the two cotyledon leaves. The initial
 configuration of the organs at germination is as introduced by
 \citet{chew_multiscale_2014}. Note that the genotype attribute is passed from
@@ -305,34 +311,35 @@ The timing component is the simpler flowering phenology model of
 \citet{salazar_prediction_2009}. Vegetative development extends from \(dev = 0\)
 to a threshold value, \(D_{f}\), where the plant flowers. The main contributing
 environmental factors are photoperiod, ambient temperature and vernalisation,
-giving the modified photothermal units, \(\text{mptu}\), at a time \(t\) as:
+giving the modified photothermal units, \(\mr{mptu}\), at a time \(t\) as:
 
-\[\text{mptu}(t) = \text{photoperiod}(t) \cdot \text{thermal}(t) \cdot \text{vernalisation}(t)\]
+\[\mr{mptu}(t) = \mr{photoperiod}(t) \cdot \mr{thermal}(t) \cdot \mr{vernalisation}(t)\]
 
-The \(\text{vernalisation}\) term accounts for both the observed requirement for
+The \(\mr{vernalisation}\) term accounts for both the observed requirement for
 a specific duration of exposure to cold and is also used to represent the
 genetic effect on the progress towards flowering, modelled as
-\(\text{vernalisation}(t) = f(wc,f_{i})\), where $wc$ is the exposure to
+\(\mr{vernalisation}(t) = f(wc,f_{i})\), where $wc$ is the exposure to
 cold accumulated up to \(t\) and \(f_{i}\) is the genetic parameter for the
 initial floral repression, as in \citet{wilczek_effects_2009}.
 
 In Chromar, the plant type:
-\(\text{Plant}(\text{gntp}:(\text{real},\text{real}),\text{dev}:\text{real},\text{wc}:\text{real})\)
+\(\mr{Plant}(\mr{gntp}:(\mr{real},\mr{real}),\mr{dev}:\mr{real},\mr{wc}:\mr{real})\)
 includes the genotype attributes as noted above, the development so far
 (\(dev)\), and finally the accumulated winter chilling (\(wc)\). The
 development rule is then:
 
-\[{\text{Plant}\left( \text{gntp} = a,\text{\ dev} = d,\ \text{wc} = w \right)\ 
-}{\text{Plant}(\text{dev} = d + mptu\left( temp,\ dl,\ a.f_{i},\ w \right),\ \text{wc} = f\left( w \right))}\]
-
-where \(\text{temp}\) and \(\text{dl}\) are fluents for temperature and day
-length respectively, and $w$ is the present value of $wc$. The transition to a
-flowering plant, \(\text{FPlant}\), follows:
-
-\[\text{Plant}\left( \text{gntp} = a,\ \text{dev} = d,\ \text{wc} = w
-  \right)\text{\ FPlant}\left( \text{gntp} = a \right)\text{\ \ }\left\lbrack d
-    > D_{f} \right\rbrack\]
-
+\begin{equation*}
+\begin{split}
+&\mr{Plant}(\ar{gntp}{a},\ar{dev}{d}, \ar{wc}{w}) \xrightarrow{1.0} \\ 
+&\mr{Plant}(\ar{dev}{d + mptu( temp, dl, a.f_{i}, w )},\ar{wc}{f(w)})
+\end{split}
+\end{equation*}
+where $temp$ and $dl$ are fluents for temperature and day
+length respectively, and $w$ is the present value of $\mr{wc}$. The transition to a
+flowering plant, \(\mr{FPlant}\), follows:
+$$
+\mr{Plant}(\ar{gntp}{a}, \ar{dev}{d}, \ar{wc}{w}) \xrightarrow{1.0} \mr{\ FPlant}(\ar{gntp}{a}) \, \, \lbrack d > D_{f} \rbrack
+$$
 \paragraph{Growth}
 \label{growth}
 
@@ -346,81 +353,89 @@ biomass of the root and each of the rosette leaves (left panel, ­­­Figure 2).
 Chromar we have the following agents to store the state (amount of carbon, or
 total biomass) of these pools:
 
-\begin{figure}[!ht]
+
+\begin{figure}[p]
 \centering
-\begin{tabularx}{0.95\textwidth}{c|ll} 
+\resizebox{\textwidth}{!}{
+\begin{tabularx}{1.1\textwidth}{c|ll} 
 \toprule
 \addlinespace[0.25cm]
 \textsf{\emph{Flows}} & & \textsf{\emph{Rules}} \\ 
-\multirow{10}[45]{*}{\includegraphics[scale=0.5]{figures/agentFlowsFig/agentFlows.pdf}} & \textsf{growth}&  $\mathrm{Leaf}(m=m, i=i), \mathrm{Cell}(c=c) \xrightarrow{d(i, t)}$ \\
-& & $\mathrm{Leaf}(m=m+g(m)), \mathrm{Cell}(c=c-g(m))$ \\ 
+\multirow{10}[50]{*}{\includegraphics[width=0.45\textwidth]{figures/agentFlowsFig/agentFlows.pdf}} & \textsf{growth}&  $\mathrm{Leaf}(\ar{m}{m},\ar{i}{i}), \mathrm{Cell}(\ar{c}{c}) \xrightarrow{d(i, t)}$ \\
+& & $\mathrm{Leaf}(\ar{m}{m+g(m)}), \mathrm{Cell}(\ar{c}{c-g(m)})$ \\ 
 & & $[c-g(m) > c_b]$ \\
-& & \\
-\addlinespace[-0.6em]
+\addlinespace[0.2em]
 & & similarly for other organs \\ 
+\addlinespace[-0.5em]
 & & \\
-& \textsf{maint} & $\mathrm{Leaf}(m=m), \mathrm{Cell}(c=c) \xrightarrow{}$ \\
-& & $\mathrm{Leaf}(m=m), \mathrm{Cell}(c=c-f(m)) \; [c-f(m) > 0]$ \\
-& & \\
-\addlinespace[-0.6em]
+& \textsf{maint} & $\mathrm{Leaf}(\ar{m}{m}), \mathrm{Cell}(\ar{c}{c}) \xrightarrow{}$ \\
+& & $\mathrm{Leaf}(\ar{m}{m}), \mathrm{Cell}(\ar{c}{c-f_m(m)})$ \\
+& & $[c-f_m(m) > 0]$ \\
+\addlinespace[0.2em]
 & & similarly for other organs \\ 
+\addlinespace[-0.5em]
 & & \\
-& \textsf{mobl} & $\mathrm{Leaf}(m=m), \mathrm{Cell}(c=c) \xrightarrow{}$ \\
-& & $\mathrm{Leaf}(m=m-f(m)), \mathrm{Cell}(c=c+f(m)) \; [c \leq c_b]$ \\
-& & \\
-\addlinespace[-0.6em]
-& & similarly for other organs \\ 
-& & \\
-& \textsf{assim} & $\mathrm{Cell}(c=c, s=s) \xrightarrow{\phi(e(t))}$ \\
-& & $\mathrm{Cell}(c=c+k_c a_{\mathrm{ros}}, s=s+(1-k_c) a_{\mathrm{ros}}) $ \\
+& \textsf{mobl} & $\mathrm{Leaf}(\ar{m}{m}), \mathrm{Cell}(\ar{c}{c}) \xrightarrow{}$ \\
+& & $\mathrm{Leaf}(\ar{m}{m-f_t(m)}), \mathrm{Cell}(\ar{c}{c+f_t(m)})$ \\
 & & $[c \leq c_b]$ \\
+\addlinespace[0.2em]
+& & similarly for other organs \\ 
+\addlinespace[-0.5em]
 & & \\
-& \textsf{sdegr} & $\mathrm{Cell}(c=c, s=s) \xrightarrow{}$ \\ 
-& & $\mathrm{Cell}(c=c+f(e(t)), s=s-f(e(t)) [\mathrm{night}]$ \\ 
+& \textsf{assim} & $\mathrm{Cell}(\ar{c}{c}, \ar{s}{s}) \xrightarrow{\phi(e(t))}$ \\
+& & $\mathrm{Cell}(\ar{c}{c+k_c a_{\mathrm{ros}}}, \ar{s}{s+(1-k_c) a_{\mathrm{ros}}}) $ \\
+& & $[c \leq c_b]$ \\
+\addlinespace[-0.5em]
 & & \\
-& \textsf{leaf cr} & $\mathrm{Plant}(), \mathrm{VAxis}(n=n) \xrightarrow{f(e(t))} $ \\ 
-& & $\mathrm{Plant}(), \mathrm{VAxis}(n=n+1), \mathrm{LAxis}(i=n+1), \mathrm{Leaf}(\dots)$ \\
+& \textsf{sdegr} & $\mathrm{Cell}(\ar{c}{c}, \ar{s}{s}) \xrightarrow{}$ \\ 
+& & $\mathrm{Cell}(\ar{c}{c+f_d(e(t)}), \ar{s}{s-f_d(e(t)})$ \\
+& & $[\mathrm{night} \land s-f_d(e(t)) > 0]$ \\ 
+\addlinespace[-0.5em]
+& & \\
+& \textsf{leaf cr} & $\mathrm{Plant}(), \mathrm{VAxis}(\ar{n}{n}) \xrightarrow{f_o(e(t))} $ \\ 
+& & $\mathrm{Plant}(), \mathrm{VAxis}(\ar{n}{n+1}), \mathrm{LAxis}(\ar{i}{n+1}),$ \\
+& & $\mathrm{Leaf}(\dots)$ \\
 \addlinespace[0.25cm]
 \bottomrule
-\end{tabularx} %}
+\end{tabularx}} %}
 \caption{An overview of the dynamics on FM-lite (growth component of vegetative stage). The dynamics take the form of flows between different reservoirs of carbon, here shown in a graphical way in the left panel with the corresponding Chromar rules on the right.  }
 \label{fig:fmv1}
 \end{figure}
 
 \begin{itemize}
 \item
-  \(\text{Cell}(c,s:\text{real})\) An agent that stores the amount of
+  \(\mr{Cell}(c,s:\mr{real})\) An agent that stores the amount of
   carbon in the sucrose (\(c\) attribute) and starch pools (\(s\)
   attribute). The amounts are carbon totals at the whole plant level.
 \item
-  \(\text{Leaf}(m:\text{real},i:\text{int})\) An agent that represents a
+  \(\mr{Leaf}(\mr{m}:\mr{real},\mr{i}:\mr{int})\) An agent that represents a
   rosette leaf. It has attributes for its mass (\(m\)) and its index of
   appearance (\(i\)).
 \item
-  \(\text{Root}(m:\text{real})\) An agent that represents the root with
+  \(\mr{Root}(\mr{m}:\mr{real})\) An agent that represents the root with
   an attribute for its mass (\(m\)).
 \end{itemize}
 
 For each organ we have a growth flow from the sucrose carbon pool to the mass of
-the organ (growth rule, ­­­Figure 2. The growth amount depends on the demand
+the organ (growth rule, Figure 2. The growth amount depends on the demand
 function of the organ (\(d(i,t)\) rule rate function) and its 'sink strength'
 (\(g(m)\)), which varies among organs. The value of the demand function varies
 over time between 1 (maximum demand) and 0 (no demand) at the end of the
 expansion period of the organ. The amount of carbon requested by an organ at
-every time unit is \(g\left( m \right) \bullet d(i,t)\). Depending on the
+every time unit is \(g( m ) \cdot d(i,t)\). Depending on the
 metabolic status of the whole plant (level of \(c\) pool) and the requests from
 other organs, an organ will receive either the full expected amount or a
 portion of it.\\
 A flow in the opposite direction (mobl rule, ­­­Figure 2) represents carbon
-mobilization from the organs if the central sucrose pool (\(\text{Cell}(c)\)) is
+mobilization from the organs if the central sucrose pool (\(\mr{Cell}(c)\)) is
 reduced to a critical level. Thus each organ can be either a net sink or source
 of carbon. For each organ, we also have a flow leaving the system from the \(c\)
 pool for the cost of the maintenance respiration and other processes of the
-organ (maint rule, ­­­Figure 2). Photosynthetic carbon fixation is represented
-by the assimilation process (assim rule, ­­­Figure 2). The amount of assimilate
+organ (maint rule,). Photosynthetic carbon fixation is represented
+by the assimilation process (assim rule, Figure 2). The amount of assimilate
 at every time unit is the product of the photosynthesis rate, which is a
 function of environmental conditions at that time step, and the projected area
-of the rosette. Here we use an observable, \(a_{\text{ros}}\), for the effective
+of the rosette. Here we use an observable, \(a_{\mr{ros}}\), for the effective
 rosette area, which is a function of the global state of the rosette at the
 current time (derived from the masses of all the current leaves) and takes into
 account the effect of shading, as in \citet{chew_multiscale_2014}. The carbon
@@ -428,11 +443,11 @@ partitioning function includes a baseline partitioning to starch, then support
 of a target sucrose level, with excess sucrose supporting growth and a final
 overflow to additional starch production, as in \citet{chew_multiscale_2014}. At
 night, no photosynthesis occurs and carbon from the starch pools flows to the
-sucrose pool (sdegr rule, ­­­Figure 2). Finally, we have the creation of new
+sucrose pool (sdegr rule, Figure 2). Finally, we have the creation of new
 leaves, which impacts the above processes indirectly by creating more demand for
 growth and adding maintenance costs (leaf cr rule, ­­­Figure 2). Leaves are
-created by the main apical meristem (\(\text{VAxis}\) agent) along with an
-\(\text{LAxis}\) agent that can give rise to lateral branches after flowering
+created by the main apical meristem (\(\mr{VAxis}\) agent) along with an
+\(\mr{LAxis}\) agent that can give rise to lateral branches after flowering
 (see next section).
 
 It is interesting to note that unlike FMv1 carbon partitioning between
@@ -442,7 +457,7 @@ competition for the finite amount of sucrose carbon in the main
 reservoir. For example, partitioning of carbon among organs for growth
 is done explicitly in FMv1 by dividing the demand of each organ by the
 sum of the demands of all other organs
-\(g\left( m \right) \cdot \ \frac{d(i,\ t)}{\sum_{}^{}{d(i,t\ )}}\). In
+\(g( m ) \cdot \ \frac{d(i,\ t)}{\sum_{}^{}{d(i,t\ )}}\). In
 the Chromar representation we do not have this explicit division by the
 global demand, which means that the amount of carbon that an organ gets
 is higher at each growth event but growth events are rarer because not
@@ -462,7 +477,7 @@ we made the following changes:
 \item
   The rate of photosynthesis is affected by soil moisture through
   stomatal closure. The photosynthesis rate is affected by a stomata
-  term \(f_{\text{stom}}(moist)\), which is a simple phenomenological
+  term \(f_{\mr{stom}}(moist)\), which is a simple phenomenological
   function that relates soil moisture and stomatal closure \citep{france_mathematical_1984}.
 \end{itemize}
 
@@ -496,8 +511,24 @@ levels are also more variable in FM-lite, since the growth rule
 larger amount but less frequently than the small fixed amount at every
 time step in FMv1 (see previous section).
 
-\subsubsection{Reproductive stage model
-  (C)}
+\begin{figure}[tb]
+  \centering
+  \includegraphics[width=0.9\textwidth]{figures/fmCompFig/fmCompLabs.jpg}
+  \caption{A comparison of the original FM implementation (FMv1) with the
+    adaptation used in this work (FM-lite) for 800 hours of growth. FM-lite
+    simulations were performed in the Haskell implementation of Chromar and
+    results were averaged over five runs. FMv1 simulations were carried out in
+    the Matlab environment. A Comparison of simulated rosette mass trajectories
+    between FMv1 and FM-lite B Comparison of simulated root mass trajectories
+    between FMv1 and FM-lite C Comparison of simulated sucrose carbon between
+    FMv1 and FM-lite and D Comparison of simulated starch carbon between FMv1
+    and FM-lite.}
+  \label{fig:comp}
+\end{figure}
+
+
+
+\subsubsection{Reproductive stage model (C)}
 \label{reproductive-stage-model-c}
 
 \paragraph{Timing}
@@ -511,21 +542,21 @@ and the thermal units that accumulate at time \(t\) are simply the value of the
 temperature at \(t\) above a base temperature \(T_{b}\):
 
 \[tu(t) = \left\{ \begin{matrix}
-T(t) - T_{b} & \text{if\ }T(t) > T_{b} \\
-0 & \text{otherwise} \\
+T(t) - T_{b} & \mr{if\ }T(t) > T_{b} \\
+0 & \mr{otherwise} \\
 \end{matrix} \right.\ \]
 
 Writing into Chromar we have an
-\(\text{FPlant}(\text{dev}:\text{real})\) type for a flowered plant and
+\(\mr{FPlant}(\mr{dev}:\mr{real})\) type for a flowered plant and
 the following rule for its development that follows from the
-\(\text{tu}\) definition above:
-
-\[\text{FPlant}\left( \text{dev} = d \right) \rightarrow \text{FPlant}(\text{dev} = d + tu(temp))\]
+\(\mr{tu}\) definition above:
+$$
+\mr{FPlant}( \ar{dev}{d} ) \xrightarrow{} \mr{FPlant}(\ar{dev}{d + tu(temp)})
+$$
 
 Finally, the transition to seed happens when the accumulated development
 reaches \(D_{s}\):
-
-\[\text{FPlant}\left( \text{attr} = a,\text{\ dev} = d \right) \rightarrow \text{Seed}\left( \text{attr} = a,\ \text{dev} = 0,\ r = 0 \right)\ \ \lbrack d > D_{s}\rbrack\]
+\[\mr{FPlant}( \mr{attr} = a,\mr{\ dev} = d ) \rightarrow \mr{Seed}( \mr{attr} = a,\ \mr{dev} = 0,\ r = 0 )\ \ \lbrack d > D_{s}\rbrack\]
 
 Note that the genotype attribute of the parent plant is transferred to
 the seeds unchanged.
@@ -551,18 +582,56 @@ represent this structure:
 
 \begin{itemize}
 \item
-  \(\text{INode}(i,pi:\text{int},m:\text{real})\) to represent the
+  \(\mr{INode}(i,pi:\mr{int},m:\mr{real})\) to represent the
   internode (stem between successive leaves). Attribute \(i\) is the
   temporal index of appearance in its axis (primary or lateral) and
-  attribute \(\text{pi}\) is the parent primary metamer. The cotyledons
+  attribute \(\mr{pi}\) is the parent primary metamer. The cotyledons
   have indices 1 and 2 on the primary axis, for example.
 \item
-  \(\text{LLeaf}(i,pi:\text{int},m:\text{real})\) to represent a leaf on
+  \(\mr{LLeaf}(i,pi:\mr{int},m:\mr{real})\) to represent a leaf on
   the lateral axes.
 \item
-  \(\text{Fruit}(i,pi:\text{int},m:\text{real})\) to represent a fruit
+  \(\mr{Fruit}(i,pi:\mr{int},m:\mr{real})\) to represent a fruit
   on the axis.
 \end{itemize}
+
+\begin{figure}[p]
+\centering
+\resizebox{\textwidth}{!}{
+\begin{tabularx}{1.05\textwidth}{c|ll} 
+\toprule
+\addlinespace[0.25cm]
+\textsf{\emph{Structure}} & & \textsf{\emph{Rules}} \\ 
+\multirow{5}[50]{*}{\includegraphics[scale=0.65]{figures/struct.pdf}} & \textsf{vgrowth}&  $\mathrm{FPlant}, \mathrm{VAxis}(\ar{n}{n}) \xrightarrow{f(e(t))}$ \\
+& & $\mathrm{FPlant}, \mathrm{VAxis}(\ar{n}{n+1})$ \\
+& & $\mathrm{INode}(\ar{i}{n+1}, \ar{pid}{V \, n+1}),$ \\ 
+& & $\mathrm{Leaf}(\ar{i}{n+1}, \dots)$ \\
+& & $[n < v_{\mathrm{max}}(n_f)]$ \\
+& & \\
+& \textsf{vfruit} & $\mathrm{FPlant}, \mathrm{VAxis}(\ar{n}{n}) \xrightarrow{f(e(t))}$\\
+& & $\mathrm{FPlant}, \mathrm{VAxis}(\ar{n}{n+1}), \mathrm{Fruit}(\ar{pi}{V \; n+1})$ \\
+& & $[n = v_{\mathrm{max}}(n_f)]$ \\
+& & \\
+& \textsf{lgrowth} & $\mathrm{FPlant}, \mathrm{LAxis}(\ar{i}{i},\ar{n}{n}), \mathrm{Fruit}(\ar{pi}{V \, i+1}) \xrightarrow{f(e(t))}$ \\
+& & $\mathrm{FPlant}, \mathrm{LAxis}(\ar{n}{n+1}), \mathrm{Fruit},$\\
+& & $ \mathrm{INode}(\ar{i}{n+1}, \ar{pi}{L \, i}), \mathrm{LLeaf}(\ar{i}{n+1}, \ar{pi}{L \, i})$ \\
+& & $[n < l_{\mathrm{max}}(n_f, i) \wedge t_{\mathrm{del}}]$ \\
+& & \\
+& \textsf{lfruit} & $\mathrm{FPlant}, \mathrm{LAxis}(\ar{i}{i}, \ar{n}{n}) \xrightarrow{f(e(t))}$ \\
+& & $\mathrm{FPlant}, \mathrm{LAxis}(\ar{n}{n+1}), \mathrm{Fruit}(\ar{pi}{L \, i})$ \\
+& & $[n = l_{\mathrm{max}}(n_f, i)]$ \\
+& & \\
+& & + metabolic processes (see Figure~\ref{fig:fmv1}) \\
+\addlinespace[0.25cm]
+\bottomrule
+\end{tabularx}}
+\caption{Overview of the structural part of the growth component of the
+reproductive stage model. The numbering scheme used to keep track of the
+positions of the organs in the inflorescence architecture is shown on
+the left. On the right the Chromar rules used to grow a structure like
+the one on the left panel (see main text for details).}
+\label{fig:reprModel}
+\end{figure}
 
 The maximum number of inflorescence metamers on the main axis is taken
 to be 20\% of the number of rosette leaves at flowering time (\(n_{f}\))
@@ -576,7 +645,7 @@ delay after the apical fruit has appeared on the primary axis. Each
 successive lateral branch going down can only start developing with a
 delay after the fruit of the axis above it has appeared. The delay
 associated with lateral axis growth, given in the rules by
-\(t_{\text{del}}\), is a function of the metabolic state of the plant,
+\(t_{\mr{del}}\), is a function of the metabolic state of the plant,
 as described (Christophe \emph{et al.}, 2008).
 
 The new organ types have associated sink strengths and demand functions.
@@ -595,7 +664,7 @@ as described below.
 The Chromar framework allows us simply to concatenate the rules of
 timing and growth components of the three models above, to represent the
 whole life cycle. Then given an initial state with the genetic
-attributes of the plant (\(\text{gntp}\) attribute of agents) and the
+attributes of the plant (\(\mr{gntp}\) attribute of agents) and the
 environmental conditions for a particular location, \(e(t)\), we can
 simulate an entire life cycle from seed to seed. The timing components
 of the model give us the timing within the year of the growth period
@@ -660,9 +729,9 @@ initial population is the sum of the population measures of all the
 lineages. This requires a birth function, which we use in a very simple
 form, as follows:
 
-\[b\left( m \right) = \left\{ \begin{matrix}
-1 & \text{if\ }m > m_{0} \\
-0 & \text{otherwise} \\
+\[b( m ) = \left\{ \begin{matrix}
+1 & \mr{if\ }m > m_{0} \\
+0 & \mr{otherwise} \\
 \end{matrix} \right.\ \]
 
 A plant produces one seed or none, the latter in life cycles with fruit
@@ -767,7 +836,7 @@ strategies available to plants of the LL genotype, although the absolute
 values of the predicted biomass are less certain (see Discussion). The
 100 plants amassed 4905 potential lifecycles over 45 years of
 phenological simulation (Figure 6A). Without a minimum mass threshold
-(\emph{m\textsubscript{0}}) for reproduction, 66\% of potential life
+($m_0$) for reproduction, 66\% of potential life
 cycles followed the more successful \emph{spring} and \emph{winter-veg}
 strategies (2 \& 4; Figure 6C). Figure 6D shows the sequential
 transitions between strategies. For example, 60\% of potential plants
