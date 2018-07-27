@@ -115,7 +115,7 @@ availability \citep{hammer_models_2006,asseng_uncertainty_2013}. For
 micro-organisms, comprehensive models link the metabolic and molecular level
 with the cellular \citep{karr_whole-cell_2012} and population growth scales
 \citep{weise_mechanistic_2015}, whereas contemporary work in more complex
-organisms has necessarily focused more narrowly \citep{buckley_modelling_2013;
+organisms has necessarily focused more narrowly \citep{buckley_modelling_2013,
   lynch_steep_2013, zhu_e-photosynthesis:_2013,klose_systematic_2015,
   le_novere_quantitative_2015, hepworth_absence_2018}.
 
@@ -189,49 +189,47 @@ expression evaluates to true.
 
 \section{The component models}
 \label{sec:compModels}
-The models presented here represent the full life cycle in three stages:
-seed dormancy (A, left panel, Figure~\ref{fig:overview}), vegetative growth up to
-flowering (B, left panel, Figure~\ref{fig:overview}), and the reproductive stage up to
-seed dispersal (C, left panel, Figure~\ref{fig:overview}). Each model (A, B, C) includes
-a phenology component that represents only timing
-(Section~\ref{phenology-models-in-chromar}). The
-vegetative and reproductive stage models also represent biomass growth
-at the organ level, based on the carbon budget of the plant. We varied
-genetic parameters that affect only the timing components of A (seed
-dormancy, \(\psi_{i}\)) and B (floral repression during vegetative
-growth, \(f_{i}\)), for comparison to \citet{burghardt_modeling_2015}.
-Each parameter value for an individual plant can be fixed or selected
-probabilistically from a distribution as described (Burghardt \emph{et
-al.}, 2015). The three models were integrated in a whole life-cycle
-model of one plant (FM-life), and then extended to a population of such
-plants.
+The models presented here represent the full life cycle in three stages: seed
+dormancy (A, left panel, Figure~\ref{fig:overview}), vegetative growth up to
+flowering (B, left panel, Figure~\ref{fig:overview}), and the reproductive stage
+up to seed dispersal (C, left panel, Figure~\ref{fig:overview}). Each model (A,
+B, C) includes a phenology component that represents only timing
+(Section~\ref{phenology-models-in-chromar}). The vegetative and reproductive
+stage models also represent biomass growth at the organ level, based on the
+carbon budget of the plant. We varied genetic parameters that affect only the
+timing components of A (seed dormancy, \(\psi_{i}\)) and B (floral repression
+during vegetative growth, \(f_{i}\)), for comparison to
+\citet{burghardt_modeling_2015}.  Each parameter value for an individual plant
+can be fixed or selected probabilistically from a distribution as described
+\citep{burghardt_modeling_2015}. The three models were integrated in a whole
+life-cycle model of one plant (FM-life), and then extended to a population of
+such plants.
 
 \begin{figure}[tb]
   \centering
 \includegraphics[width=0.9\textwidth]{figures/modelOverviewFig/modelOverview.eps}
-\caption{Overview of the FM-life and population models used in this
-study. Left Overview of the models used for the growth and timing
-components for the three developmental stages: seed dormancy (A),
-vegetative period (B), and reproductive period (C) and Right Sketch of
-the population level model. Inputs to the model are the distribution of
-values of the two genetic parameters (\(f_{i}\), \(\psi_{i}\)) and
-weather data from some location for a number of years. The output is
-some population measure of interest, an example might be the total
-number of plants after \(k\) years.}
+\caption{Overview of the FM-life and population models used in this study. Left
+  Overview of the models used for the growth and timing components for the three
+  developmental stages: seed dormancy (A), vegetative period (B), and
+  reproductive period (C) and Right Sketch of the population level model. Inputs
+  to the model are the distribution of values of the two genetic parameters
+  (\(f_{i}\), \(\psi_{i}\)) and weather data from some location for a number of
+  years. The output is some population measure of interest, an example might be
+  the total number of plants after \(k\) years.}
 \label{fig:overview}
 \end{figure}
 
-\subsubsection{Seed dormancy model (A)}
+\subsection{Seed dormancy model (A)}
 \label{seed-dormancy-model-a}
 
 The seed dormancy model is the Chromar version of the model of
 \citet{burghardt_modeling_2015}, which is based in turn on
 \citet{alvarado_hydrothermal_2002}. It represents the development of a
 newly-dispersed seed from \(dev = 0\) to a threshold value, \(D_{g}\), where the
-seed germinates. Above baseline levels of temperature $T_b$
-and of moisture (see below), increasing moisture and temperature speed the
-progress towards germination. The additional developmental units added
-(hydrothermal units, \(\mr{htu}\)) at every time unit are described by:
+seed germinates. Above baseline levels of temperature $T_b$ and of moisture (see
+below), increasing moisture and temperature speed the progress towards
+germination. The additional developmental units added (hydrothermal units,
+\(\mr{htu}\)) at every time unit are described by:
 
 \[\mr{htu}( t ) = \ \left\{ \begin{matrix}
 ( \Psi( t ) - \Psi_{b}( t ) ) \cdot ( T( t ) - T_{b} ) \\
@@ -259,16 +257,14 @@ where high \(\psi_{i}\) represents stronger dormancy.
 
 In Chromar, the \(\mr{Seed}\) type captures information about the seed
 development process:
-\(\mr{Seed}(\mr{gntp}:(\mr{real},\mr{real}),\mr{dev}:\mr{real},r:real)\).
-The \(\mr{gntp}\) attribute stores the genotype of the organism,
-\(\psi_{i}\) (seed dormancy level) and \(f_{i}\) (floral repression
-level), which is passed on to the agents representing the later stages
-of development and transmitted unchanged to the next generation.
-\(\mr{dev}\) stores the cumulative development indicator (sum of
-\(\mr{htu}\) up to the current timepoint), and \(r\) stores the
-after-ripening up to the current timepoint. The development rule is the
-following:
-
+\(\mr{Seed}(\mr{gntp}:(\mr{real},\mr{real}),\mr{dev}:\mr{real},r:real)\).  The
+\(\mr{gntp}\) attribute stores the genotype of the organism, \(\psi_{i}\) (seed
+dormancy level) and \(f_{i}\) (floral repression level), which is passed on to
+the agents representing the later stages of development and transmitted
+unchanged to the next generation.  \(\mr{dev}\) stores the cumulative
+development indicator (sum of \(\mr{htu}\) up to the current timepoint), and
+\(r\) stores the after-ripening up to the current timepoint. The development
+rule is the following:
 \begin{equation*}
 \begin{split}
 & \mr{Seed}(\ar{gntp}{a}, \ar{dev}{d}, \ar{r}{r}) \xrightarrow{1.0} \\ 
@@ -287,22 +283,21 @@ stage:
 & \mr{Plant}(\ar{gntp}{a}), \mr{Root}(\ldots),\mr{Leaf}( \ldots ), \mr{Leaf}(\ldots) \, \, \lbrack d > D_{g}\rbrack
 \end{split}
 \end{equation*}
-The abstract \(\mr{Plant}\) agent represents the plant at the vegetative
-stage, along with agents for the root and the two cotyledon leaves. The initial
+The abstract \(\mr{Plant}\) agent represents the plant at the vegetative stage,
+along with agents for the root and the two cotyledon leaves. The initial
 configuration of the organs at germination is as introduced by
 \citet{chew_multiscale_2014}. Note that the genotype attribute is passed from
 seed to emerged plant unchanged.
 
-\subsubsection{Vegetative growth model (FM-lite) (B)}
+\subsection{Vegetative growth model (FM-lite) (B)}
 \label{vegetative-growth-model-fm-lite-b}
-
 For the vegetative stage we introduce a simplified version of FMv1
 \citep{chew_multiscale_2014} for use in studies that do not focus on circadian
 timing. FM-lite has three constituent models represented in Chromar with
 modifications to environmental responses (see below), and without the fourth,
 circadian clock model of FMv1.
 
-\paragraph{Timing}
+\subsubsection*{Timing}
 \label{timing}
 
 The timing component is the simpler flowering phenology model of
@@ -312,9 +307,7 @@ The timing component is the simpler flowering phenology model of
 to a threshold value, \(D_{f}\), where the plant flowers. The main contributing
 environmental factors are photoperiod, ambient temperature and vernalisation,
 giving the modified photothermal units, \(\mr{mptu}\), at a time \(t\) as:
-
 \[\mr{mptu}(t) = \mr{photoperiod}(t) \cdot \mr{thermal}(t) \cdot \mr{vernalisation}(t)\]
-
 The \(\mr{vernalisation}\) term accounts for both the observed requirement for
 a specific duration of exposure to cold and is also used to represent the
 genetic effect on the progress towards flowering, modelled as
@@ -327,7 +320,6 @@ In Chromar, the plant type:
 includes the genotype attributes as noted above, the development so far
 (\(dev)\), and finally the accumulated winter chilling (\(wc)\). The
 development rule is then:
-
 \begin{equation*}
 \begin{split}
 &\mr{Plant}(\ar{gntp}{a},\ar{dev}{d}, \ar{wc}{w}) \xrightarrow{1.0} \\ 
@@ -340,20 +332,17 @@ flowering plant, \(\mr{FPlant}\), follows:
 $$
 \mr{Plant}(\ar{gntp}{a}, \ar{dev}{d}, \ar{wc}{w}) \xrightarrow{1.0} \mr{\ FPlant}(\ar{gntp}{a}) \, \, \lbrack d > D_{f} \rbrack
 $$
-\paragraph{Growth}
-\label{growth}
 
+\subsubsection*{Growth}
 As in FMv1 \citep{chew_multiscale_2014}, the growth component includes a carbon
 budget for the plant from \citet{rasse_leaf_2006}, which in turn includes
 photosynthesis rate equations based on the \citet{farquhar_biochemical_1980}
 . Growth at the organ level (rosette leaves and root) is represented based on
 the Greenlab model \citep{christophe_model-based_2008}. We will consider a
 sucrose carbon pool (\(c\)), a starch carbon pool (\(s\)), and one pool for the
-biomass of the root and each of the rosette leaves (left panel, ­­­Figure 2). In
+biomass of the root and each of the rosette leaves (left panel, Figure~\ref{fig:fmv1}). In
 Chromar we have the following agents to store the state (amount of carbon, or
 total biomass) of these pools:
-
-
 \begin{figure}[p]
 \centering
 \resizebox{\textwidth}{!}{
@@ -398,10 +387,13 @@ total biomass) of these pools:
 \addlinespace[0.25cm]
 \bottomrule
 \end{tabularx}} %}
-\caption{An overview of the dynamics on FM-lite (growth component of vegetative stage). The dynamics take the form of flows between different reservoirs of carbon, here shown in a graphical way in the left panel with the corresponding Chromar rules on the right.  }
+\caption{An overview of the dynamics on FM-lite (growth component of vegetative
+  stage). The dynamics take the form of flows between different reservoirs of
+  carbon, here shown in a graphical way in the left panel with the corresponding
+  Chromar rules on the right.  }
 \label{fig:fmv1}
 \end{figure}
-
+%
 \begin{itemize}
 \item
   \(\mr{Cell}(c,s:\mr{real})\) An agent that stores the amount of
@@ -417,38 +409,40 @@ total biomass) of these pools:
 \end{itemize}
 
 For each organ we have a growth flow from the sucrose carbon pool to the mass of
-the organ (growth rule, Figure 2. The growth amount depends on the demand
-function of the organ (\(d(i,t)\) rule rate function) and its 'sink strength'
-(\(g(m)\)), which varies among organs. The value of the demand function varies
-over time between 1 (maximum demand) and 0 (no demand) at the end of the
-expansion period of the organ. The amount of carbon requested by an organ at
-every time unit is \(g( m ) \cdot d(i,t)\). Depending on the
+the organ (\textsf{growth} rule, Figure~\ref{fig:fmv1}. The growth amount
+depends on the demand function of the organ (\(d(i,t)\) rule rate function) and
+its 'sink strength' (\(g(m)\)), which varies among organs. The value of the
+demand function varies over time between 1 (maximum demand) and 0 (no demand) at
+the end of the expansion period of the organ. The amount of carbon requested by
+an organ at every time unit is \(g( m ) \cdot d(i,t)\). Depending on the
 metabolic status of the whole plant (level of \(c\) pool) and the requests from
-other organs, an organ will receive either the full expected amount or a
-portion of it.\\
-A flow in the opposite direction (mobl rule, ­­­Figure 2) represents carbon
-mobilization from the organs if the central sucrose pool (\(\mr{Cell}(c)\)) is
-reduced to a critical level. Thus each organ can be either a net sink or source
-of carbon. For each organ, we also have a flow leaving the system from the \(c\)
-pool for the cost of the maintenance respiration and other processes of the
-organ (maint rule,). Photosynthetic carbon fixation is represented
-by the assimilation process (assim rule, Figure 2). The amount of assimilate
-at every time unit is the product of the photosynthesis rate, which is a
-function of environmental conditions at that time step, and the projected area
-of the rosette. Here we use an observable, \(a_{\mr{ros}}\), for the effective
-rosette area, which is a function of the global state of the rosette at the
-current time (derived from the masses of all the current leaves) and takes into
-account the effect of shading, as in \citet{chew_multiscale_2014}. The carbon
-partitioning function includes a baseline partitioning to starch, then support
-of a target sucrose level, with excess sucrose supporting growth and a final
-overflow to additional starch production, as in \citet{chew_multiscale_2014}. At
-night, no photosynthesis occurs and carbon from the starch pools flows to the
-sucrose pool (sdegr rule, Figure 2). Finally, we have the creation of new
-leaves, which impacts the above processes indirectly by creating more demand for
-growth and adding maintenance costs (leaf cr rule, ­­­Figure 2). Leaves are
-created by the main apical meristem (\(\mr{VAxis}\) agent) along with an
-\(\mr{LAxis}\) agent that can give rise to lateral branches after flowering
-(see next section).
+other organs, an organ will receive either the full expected amount or a portion
+of it.
+
+A flow in the opposite direction (\textsf{mobl} rule, Figure~\ref{fig:fmv1})
+represents carbon mobilization from the organs if the central sucrose pool
+(\(\mr{Cell}(c)\)) is reduced to a critical level. Thus each organ can be either
+a net sink or source of carbon. For each organ, we also have a flow leaving the
+system from the \(c\) pool for the cost of the maintenance respiration and other
+processes of the organ (maint rule,). Photosynthetic carbon fixation is
+represented by the assimilation process (\textsf{assim} rule,
+Figure~\ref{fig:fmv1}). The amount of assimilate at every time unit is the
+product of the photosynthesis rate, which is a function of environmental
+conditions at that time step, and the projected area of the rosette. Here we use
+an observable, \(a_{\mr{ros}}\), for the effective rosette area, which is a
+function of the global state of the rosette at the current time (derived from
+the masses of all the current leaves) and takes into account the effect of
+shading, as in \citet{chew_multiscale_2014}. The carbon partitioning function
+includes a baseline partitioning to starch, then support of a target sucrose
+level, with excess sucrose supporting growth and a final overflow to additional
+starch production, as in \citet{chew_multiscale_2014}. At night, no
+photosynthesis occurs and carbon from the starch pools flows to the sucrose pool
+(\textsf{sdegr} rule, Figure~\ref{fig:fmv1}). Finally, we have the creation of
+new leaves, which impacts the above processes indirectly by creating more demand
+for growth and adding maintenance costs (\textsf{leaf cr} rule,
+Figure~\ref{fig:fmv1}). Leaves are created by the main apical meristem
+(\(\mr{VAxis}\) agent) along with an \(\mr{LAxis}\) agent that can give rise to
+lateral branches after flowering (see next section).
 
 It is interesting to note that unlike FMv1 carbon partitioning between
 processes and organs is done explicitly whereas in our Chromar
@@ -484,32 +478,29 @@ we made the following changes:
 These conservative changes give a lower bound on the effects of natural
 weather conditions.
 
-\paragraph{Comparison of FM-lite with
-  FMv1}
+\paragraph{Comparison of FM-lite with FMv1}
 \label{comparison-of-fm-lite-with-fmv1}
 
-In addition to the weather responses, Wilczek flowering model and
-emergent carbon partitioning among organs, our model representation uses
-the stochastic rule-based Chromar as opposed to the deterministic Matlab
-program of FMv1. In order to compare the model representations, we
-simulated growth in the two models for a fixed number of hours in lab
-conditions, where the modifications to weather responses have no effect.
-The two models were simulated in lab conditions (22 °C, 12/12 light/dark
-cycles) for \(800\) growth hours and showed comparable results (Figure
-3). FMv1 was simulated in Matlab while FM-lite was simulated in the
-Haskell implementation of Chromar and the results were averaged over
-five runs. The rosette mass results are the closest since they represent
-the development of multiple Leaf agents, masking the stochastic effects
-on each Leaf. The difference between the final rosette mass of the FMv1
-and FM-lite (averaged over 5 runs) simulations is within 10\% of the
-final rosette mass in FMv1. The stochasticity is more apparent for the
-root where the growth curves are further apart. The difference between
-final root mass in FMv1 and FM-lite (averaged over 5 runs) is
-\textasciitilde{}20\% of the final root mass in FMv1. Sucrose carbon
-levels are also more variable in FM-lite, since the growth rule
-(removing sucrose carbon from the central pool) provides organs with a
-larger amount but less frequently than the small fixed amount at every
-time step in FMv1 (see previous section).
+In addition to the weather responses, Wilczek flowering model and emergent
+carbon partitioning among organs, our model representation uses the stochastic
+rule-based Chromar as opposed to the deterministic Matlab program of FMv1. In
+order to compare the model representations, we simulated growth in the two
+models for a fixed number of hours in lab conditions, where the modifications to
+weather responses have no effect.  The two models were simulated in lab
+conditions (22 °C, 12/12 light/dark cycles) for \(800\) growth hours and showed
+comparable results (Figure~\ref{fig:comp}). FMv1 was simulated in Matlab while
+FM-lite was simulated in the Haskell implementation of Chromar and the results
+were averaged over five runs. The rosette mass results are the closest since
+they represent the development of multiple Leaf agents, masking the stochastic
+effects on each Leaf. The difference between the final rosette mass of the FMv1
+and FM-lite (averaged over 5 runs) simulations is within 10\% of the final
+rosette mass in FMv1. The stochasticity is more apparent for the root where the
+growth curves are further apart. The difference between final root mass in FMv1
+and FM-lite (averaged over 5 runs) is \textasciitilde{}20\% of the final root
+mass in FMv1. Sucrose carbon levels are also more variable in FM-lite, since the
+growth rule (removing sucrose carbon from the central pool) provides organs with
+a larger amount but less frequently than the small fixed amount at every time
+step in FMv1 (see previous section).
 
 \begin{figure}[tb]
   \centering
@@ -526,12 +517,10 @@ time step in FMv1 (see previous section).
   \label{fig:comp}
 \end{figure}
 
-
-
-\subsubsection{Reproductive stage model (C)}
+\subsection{Reproductive stage model (C)}
 \label{reproductive-stage-model-c}
 
-\paragraph{Timing}
+\subsubsection*{Timing}
 \label{timing-1}
 
 The timing component is a thermal time model from
@@ -561,24 +550,23 @@ reaches \(D_{s}\):
 Note that the genotype attribute of the parent plant is transferred to
 the seeds unchanged.
 
-\paragraph{Growth}
+\subsubsection*{Growth}
 \label{growth-1}
 
-The growth component of the reproductive stage model is loosely related
-to the Greenlab model (Christophe \emph{et al.}, 2008). The metabolic
-processes affecting the carbon budget of the plant are the same as in
-vegetative growth but with additional organ types to represent the
-Arabidopsis inflorescences. Organs appear in units (metamers) with a
-metamer identifier. Each growth unit on the main axis consists of an
-internode (stem between leaves), a leaf, and a lateral meristem that can
-give rise to a lateral axis. We consider only the primary axis and
-secondary, lateral branches, thus metamers on the lateral axis lack a
-further lateral meristem. All fruits on an axis are represented on its
-last metamer, replacing the leaf; this metamer also lacks a meristem.
-Two indices represent metamer position: the index of the metamer along
-its axis and the index of the parent metamer along the primary axis
-(left panel, Figure 4). We define the following new agent types to
-represent this structure:
+The growth component of the reproductive stage model is loosely related to the
+Greenlab model \citep{christophe_model-based_2008}. The metabolic processes
+affecting the carbon budget of the plant are the same as in vegetative growth
+but with additional organ types to represent the Arabidopsis
+inflorescences. Organs appear in units (metamers) with a metamer
+identifier. Each growth unit on the main axis consists of an internode (stem
+between leaves), a leaf, and a lateral meristem that can give rise to a lateral
+axis. We consider only the primary axis and secondary, lateral branches, thus
+metamers on the lateral axis lack a further lateral meristem. All fruits on an
+axis are represented on its last metamer, replacing the leaf; this metamer also
+lacks a meristem.  Two indices represent metamer position: the index of the
+metamer along its axis and the index of the parent metamer along the primary
+axis (left panel, Figure~\ref{fig:reprModel}). We define the following new agent
+types to represent this structure:
 
 \begin{itemize}
 \item
@@ -602,20 +590,23 @@ represent this structure:
 \toprule
 \addlinespace[0.25cm]
 \textsf{\emph{Structure}} & & \textsf{\emph{Rules}} \\ 
-\multirow{5}[50]{*}{\includegraphics[scale=0.65]{figures/struct.pdf}} & \textsf{vgrowth}&  $\mathrm{FPlant}, \mathrm{VAxis}(\ar{n}{n}) \xrightarrow{f(e(t))}$ \\
+\multirow{20}[0]{*}{\includegraphics[scale=0.7]{figures/struct.pdf}} & \textsf{vgrowth}&  $\mathrm{FPlant}, \mathrm{VAxis}(\ar{n}{n}) \xrightarrow{f(e(t))}$ \\
 & & $\mathrm{FPlant}, \mathrm{VAxis}(\ar{n}{n+1})$ \\
 & & $\mathrm{INode}(\ar{i}{n+1}, \ar{pid}{V \, n+1}),$ \\ 
 & & $\mathrm{Leaf}(\ar{i}{n+1}, \dots)$ \\
 & & $[n < v_{\mathrm{max}}(n_f)]$ \\
+\addlinespace[-0.15cm]
 & & \\
 & \textsf{vfruit} & $\mathrm{FPlant}, \mathrm{VAxis}(\ar{n}{n}) \xrightarrow{f(e(t))}$\\
 & & $\mathrm{FPlant}, \mathrm{VAxis}(\ar{n}{n+1}), \mathrm{Fruit}(\ar{pi}{V \; n+1})$ \\
 & & $[n = v_{\mathrm{max}}(n_f)]$ \\
+\addlinespace[-0.15cm]
 & & \\
 & \textsf{lgrowth} & $\mathrm{FPlant}, \mathrm{LAxis}(\ar{i}{i},\ar{n}{n}), \mathrm{Fruit}(\ar{pi}{V \, i+1}) \xrightarrow{f(e(t))}$ \\
 & & $\mathrm{FPlant}, \mathrm{LAxis}(\ar{n}{n+1}), \mathrm{Fruit},$\\
 & & $ \mathrm{INode}(\ar{i}{n+1}, \ar{pi}{L \, i}), \mathrm{LLeaf}(\ar{i}{n+1}, \ar{pi}{L \, i})$ \\
 & & $[n < l_{\mathrm{max}}(n_f, i) \wedge t_{\mathrm{del}}]$ \\
+\addlinespace[-0.15cm]
 & & \\
 & \textsf{lfruit} & $\mathrm{FPlant}, \mathrm{LAxis}(\ar{i}{i}, \ar{n}{n}) \xrightarrow{f(e(t))}$ \\
 & & $\mathrm{FPlant}, \mathrm{LAxis}(\ar{n}{n+1}), \mathrm{Fruit}(\ar{pi}{L \, i})$ \\
@@ -626,41 +617,38 @@ represent this structure:
 \bottomrule
 \end{tabularx}}
 \caption{Overview of the structural part of the growth component of the
-reproductive stage model. The numbering scheme used to keep track of the
-positions of the organs in the inflorescence architecture is shown on
-the left. On the right the Chromar rules used to grow a structure like
-the one on the left panel (see main text for details).}
+  reproductive stage model. The numbering scheme used to keep track of the
+  positions of the organs in the inflorescence architecture is shown on the
+  left. On the right the Chromar rules used to grow a structure like the one on
+  the left panel (see main text for details).}
 \label{fig:reprModel}
 \end{figure}
 
-The maximum number of inflorescence metamers on the main axis is taken
-to be 20\% of the number of rosette leaves at flowering time (\(n_{f}\))
-and given by \(v_{\max}(n_{f})\) (Pouteau and Albertini, 2009). The
-maximum number of growth units on each lateral axis is given by
-\(l_{\max}(i)\), a decreasing function of the index of the lateral axis
-starting from a maximum of 6 at the axis after the cotyledons (index 3)
-and going to a minimum of 1 at the topmost lateral branch (Mündermann
-\emph{et al.}, 2005). The topmost lateral axis can only appear with a
-delay after the apical fruit has appeared on the primary axis. Each
-successive lateral branch going down can only start developing with a
-delay after the fruit of the axis above it has appeared. The delay
-associated with lateral axis growth, given in the rules by
-\(t_{\mr{del}}\), is a function of the metabolic state of the plant,
-as described (Christophe \emph{et al.}, 2008).
+The maximum number of inflorescence metamers on the main axis is taken to be
+20\% of the number of rosette leaves at flowering time (\(n_{f}\)) and given by
+\(v_{\max}(n_{f})\) \citep{pouteau_significance_2009}. The maximum number of
+growth units on each lateral axis is given by \(l_{\max}(i)\), a decreasing
+function of the index of the lateral axis starting from a maximum of 6 at the
+axis after the cotyledons (index 3) and going to a minimum of 1 at the topmost
+lateral branch \citep{mundermann_quantitative_2005}. The topmost lateral axis
+can only appear with a delay after the apical fruit has appeared on the primary
+axis. Each successive lateral branch going down can only start developing with a
+delay after the fruit of the axis above it has appeared. The delay associated
+with lateral axis growth, given in the rules by \(t_{\mr{del}}\), is a function
+of the metabolic state of the plant, as described
+\citep{christophe_model-based_2008}.
 
-The new organ types have associated sink strengths and demand functions.
-The cauline leaves on the main axis contribute to the photosynthetically
-active area and can shade the rosette leaves underneath them. The
-lateral leaves contribute to photosynthesis without shading. Internodes
-and fruits do not contribute to photosynthesis. Seeds are not directly
-represented, so a birth function \(b(m)\) is required to calculate the
-number of seeds for a given fruit mass \emph{m} at seed dispersal time,
-as described below.
 
-\subsection{Whole life cycle model,
-  FM-life}
+The new organ types have associated sink strengths and demand functions.  The
+cauline leaves on the main axis contribute to the photosynthetically active area
+and can shade the rosette leaves underneath them. The lateral leaves contribute
+to photosynthesis without shading. Internodes and fruits do not contribute to
+photosynthesis. Seeds are not directly represented, so a birth function \(b(m)\)
+is required to calculate the number of seeds for a given fruit mass \emph{m} at
+seed dispersal time, as described below.
+
+\section{Whole life cycle model, FM-life}
 \label{whole-life-cycle-model-fm-life}
-
 The Chromar framework allows us simply to concatenate the rules of
 timing and growth components of the three models above, to represent the
 whole life cycle. Then given an initial state with the genetic
@@ -674,49 +662,67 @@ components predict growth at the individual organ level with these
 environmental conditions and therefore give us the environmentally
 determined seed number given by the \(b(m)\) function.
 
-\subsection{Population level model and plotting
-  conventions}
+\subsection{Population level model and plotting conventions}
 \label{population-level-model-and-plotting-conventions}
 
-Since FM-life estimates the number of seeds at the end of the life
-cycle, these can initiate multiple independent copies of the model in
-the next generation. We then have a classical evolutionary birth
-process, sometimes called a branching process since it unfolds in
-tree-like way. The potential number of individuals in generation \(i\),
-\(n_{i}\), is equal to the sum of the number of seeds produced by the
-individuals in the previous generation (see Discussion). Dormant seed
-never die in the model and may germinate after several years \citep{burghardt_modeling_2015}.
+\begin{figure}[tb]
+\centering
+\includegraphics[width=\textwidth]{figures/popLevelFig/popLevel1.pdf}
+\caption{The two-stage simulation of the population level model. A The
+  distributions of developmental events (germination, flowering) from the
+  phenology-only simulation of the population model (C) with the identification
+  of two clusters representing two distinct strategies. B The 25-th, 50-th, and
+  75-th percentiles of the distributions of developmental events of the two
+  clusters from A. C Illustration of the phenology only simulation with b(m)=1
+  (each plant makes a single seed) D Results of simulations of the growth models
+  for the median dates of developmental events (B) E Illustration of the
+  assignment of fruit masses to the lifecycles of the phenology-only simulation
+  (C) according to their clusters. This recovers the full branching population
+  process.}
+\label{fig:popModel}
+\end{figure}
+
+Since FM-life estimates the number of seeds at the end of the life cycle, these
+can initiate multiple independent copies of the model in the next generation. We
+then have a classical evolutionary birth process, sometimes called a branching
+process since it unfolds in tree-like way. The potential number of individuals
+in generation \(i\), \(n_{i}\), is equal to the sum of the number of seeds
+produced by the individuals in the previous generation (see Discussion). Dormant
+seed never die in the model and may germinate after several years
+\citep{burghardt_modeling_2015}.
 
 Since we are using an individual-based model, \(n_{i}\) becomes computationally
 prohibitive to simulate over decades of population growth. In order to overcome
 this limitation, we simulated the timing (phenology) and growth components
-sequentially and used conservative birth functions \emph{b}(\emph{m}). Figure 5
-introduces the plotting conventions for these results. The timing components
-were first simulated with \(b(m) = 1\), such that each plant makes one seed, as
-in \citet{(Burghardt et al., 2015).}. The phenological simulation results in an
-unbranched sequence of developmental stage timings for each lineage (Figure
-5C). The simulation results for several decades typically revealed a small
+sequentially and used conservative birth functions
+\emph{b}(\emph{m}). Figure~\ref{fig:popModel} introduces the plotting
+conventions for these results. The timing components were first simulated with
+\(b(m) = 1\), such that each plant makes one seed, as in
+\citet{burghardt_modeling_2015}. The phenological simulation results in an
+unbranched sequence of developmental stage timings for each lineage (Figure~\ref{fig:popModel}
+C). The simulation results for several decades typically revealed a small
 number of life cycle growth strategies, from clusters of individual life
 cycles. The clusters were generated using \(k\)-means clustering, where \(k\) is
-chosen by visual inspection of the life cycle plots (Figure 5A). Alternative
-clustering approaches might be an area for future work. Figure 5A shows the
-distribution over a year of all individual life cycles that conformed to two
-contrasting life cycle strategies under environmental conditions for Valencia
-(see Results).  Cluster membership depends on the dates and durations of
-multiple developmental stages. This is hard to visualize, because the timing of
-any single developmental stage partially overlaps among different
-strategies. Figure 5B therefore summarises the median dates of all three
-developmental transitions in each strategy, here illustrated by 1. a summer
-growth strategy and 2. a winter growth strategy. In the next stage, the growth
-models were simulated once per cluster, with the environmental conditions
+chosen by visual inspection of the life cycle plots
+(Figure~\ref{fig:popModel}A). Alternative clustering approaches might be an area
+for future work. Figure~\ref{fig:popModel}A shows the distribution over a year
+of all individual life cycles that conformed to two contrasting life cycle
+strategies under environmental conditions for Valencia (see Results).  Cluster
+membership depends on the dates and durations of multiple developmental
+stages. This is hard to visualise, because the timing of any single
+developmental stage partially overlaps among different
+strategies. Figure~\ref{fig:popModel}B therefore summarises the median dates of
+all three developmental transitions in each strategy, here illustrated by 1. a
+summer growth strategy and 2. a winter growth strategy. In the next stage, the
+growth models were simulated once per cluster, with the environmental conditions
 associated with the typical timing of that cluster (median vegetative and
 reproductive stages). This returns the typical biomass of organs over time,
 including the fruit mass at seed dispersal (m1 for cluster 1, m2 for cluster 2;
-Figure 5D). Finally, each life cycle is assigned the fruit mass \emph{m}
-associated with its cluster, and thereby a growth-based, reproductive success
-\emph{b}(\emph{m}) that evaluates to 0 in some cases. Thus, the second stage
-recovers a version of the branching lineage tree, where some lineages die out
-(Figure 5E).
+Figure~\ref{fig:popModel}D). Finally, each life cycle is assigned the fruit mass
+\emph{m} associated with its cluster, and thereby a growth-based, reproductive
+success \emph{b}(\emph{m}) that evaluates to 0 in some cases. Thus, the second
+stage recovers a version of the branching lineage tree, where some lineages die
+out (Figure~\ref{fig:popModel}E).
 
 Our output population measure is the total population of plants over all
 lineages over all generations. For example, consider a lineage with
@@ -750,7 +756,7 @@ stochasticity in the model representation.
 \label{weather-data}
 
 For the phenology model simulation we used the weather data that accompanied the
-\citet{(Burghardt et al., 2015).}, available from a Dryad repository
+\citet{burghardt_modeling_2015}, available from a Dryad repository
 \citep{burghardt_data_2014}. In this dataset weather inputs over 60 years were
 generated stochastically for four locations in Europe: Halle, Valencia, Norwich,
 and Oulu. The weather inputs include values for temperature, moisture, and
@@ -767,38 +773,34 @@ parameters in the ERA dataset).
 \section{Results}
 \label{results}
 
-The population of FM-life models (see Methods) allows us to test how
-growth processes that alter reproductive success affect the life history
-strategies of Arabidopsis growing in different environmental conditions
-(location) and with different genetic parameters in the initial
-population. We can therefore explore the genotype x environment
-interaction, using a population measure. To illustrate this potential,
-we compare simulation results for two previously-studied locations,
-Valencia (Spain) and Oulu (Finland), and two opposing combinations of
-genetic parameters, high seed dormancy /high floral repression (HH) and
-low seed dormancy /low floral repression (LL). Within an initial
-population of 100 seeds, the seed dormancy levels, \(\psi_{i}\), were
-assigned probabilistically, sampling from a normal distribution with
-mean \(0.0\) and standard deviation, \(1\), for the Low dormancy level
-(L) and mean \(2.5\) with the same standard deviation for the High
-dormancy case (H). Floral repression was fixed at either \(0.598\) for
-the Low level (L) and \(0.737\) for the High level (H), values that were
-chosen to reflect the behaviour of natural populations of Arabidopsis in
-Wilczek \emph{et al.} (2009). Both parameter choices follow Burghardt et
-al. (2015). The simulation time period was 60 years and, as in Burghardt
-\emph{et al (}2015), we discarded the first 15 years of the simulation
-to focus on stable life history strategies. A key difference from the
-earlier work is that even our conservative choice of birth function (see
-Methods) allows some lineages to die out.
+The population of FM-life models (see Methods) allows us to test how growth
+processes that alter reproductive success affect the life history strategies of
+Arabidopsis growing in different environmental conditions (location) and with
+different genetic parameters in the initial population. We can therefore explore
+the genotype x environment interaction, using a population measure. To
+illustrate this potential, we compare simulation results for two
+previously-studied locations, Valencia (Spain) and Oulu (Finland), and two
+opposing combinations of genetic parameters, high seed dormancy /high floral
+repression (HH) and low seed dormancy /low floral repression (LL). Within an
+initial population of 100 seeds, the seed dormancy levels, \(\psi_{i}\), were
+assigned probabilistically, sampling from a normal distribution with mean
+\(0.0\) and standard deviation, \(1\), for the Low dormancy level (L) and mean
+\(2.5\) with the same standard deviation for the High dormancy case (H). Floral
+repression was fixed at either \(0.598\) for the Low level (L) and \(0.737\) for
+the High level (H), values that were chosen to reflect the behaviour of natural
+populations of Arabidopsis in \citet{wilczek_effects_2009}. Both parameter
+choices follow \citet{burghardt_modeling_2015}. The simulation time period was
+60 years and, as in \citet{burghardt_modeling_2015}, we discarded the first 15
+years of the simulation to focus on stable life history strategies. A key
+difference from the earlier work is that even our conservative choice of birth
+function (see Methods) allows some lineages to die out.
 
 \subsection{Valencia}
 \label{valencia}
-
-Figure 6 shows the results of the two-stage simulation for a population
-of the LL genotype in Valencia (Figure 6A). We identify four possible
+Figure~\ref{fig:valComp} shows the results of the two-stage simulation for a population
+of the LL genotype in Valencia (Figure~\ref{fig:valComp}A). We identify four possible
 life history strategies based on the timing (phenology) components of
 the FM-life model:
-
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
@@ -829,69 +831,83 @@ the FM-life model:
   high fruit mass.
 \end{enumerate}
 
-Plants with life cycle strategies 2 and 4 predicted orders of magnitude
-more fruit mass than plants with life cycle strategy 3 and or the least
-successful strategy 1 (Figure 6C). This result clearly ranked the
-strategies available to plants of the LL genotype, although the absolute
-values of the predicted biomass are less certain (see Discussion). The
-100 plants amassed 4905 potential lifecycles over 45 years of
-phenological simulation (Figure 6A). Without a minimum mass threshold
-($m_0$) for reproduction, 66\% of potential life
-cycles followed the more successful \emph{spring} and \emph{winter-veg}
-strategies (2 \& 4; Figure 6C). Figure 6D shows the sequential
-transitions between strategies. For example, 60\% of potential plants
-following the successful \emph{spring} strategy (2) disperse their seeds
-early enough for the next generation to adopt the \emph{winter-veg}
-strategy (4), achieving two generations per year. These transitions
-underlie the bimodal distribution of life cycle times reported by \citet{burghardt_modeling_2015}
-for this simulation.
+\begin{figure}[p]
+\includegraphics[width=\textwidth]{figures/valCompFig/valComp.eps}
+\caption{Population experiments in Valencia in two different genetic backgrounds
+  (LL:low dormancy, Low floral repression and HH: High dormancy, High floral
+  repression). A Results of the phenology-only simulation results for the LL
+  genotype. The 25-th, 50-th, and 75-th percentile of the distribution of
+  developmental events are shown for each identified cluster B Illustration of
+  growth stages over a year for each cluster from A according to the median time
+  of the distribution of developmental events for each cluster. C Growth
+  simulations over the growth period shown in panel B for each cluster.  D
+  Probabilities of successive strategies. E Probabilities of successive
+  strategies after eliminating life cycles with strategies 1 and 3 using a
+  reproductive threshold. F, G, H, I, J Equivalently for the HH genotype in the
+  same location.}
+\label{fig:valComp}
+\end{figure}
 
-Simulation of the HH genotype (Figure 6F, 6J) identified similar
+
+Plants with life cycle strategies 2 and 4 predicted orders of magnitude more
+fruit mass than plants with life cycle strategy 3 and or the least successful
+strategy 1 (Figure~\ref{fig:valComp}C). This result clearly ranked the strategies available to
+plants of the LL genotype, although the absolute values of the predicted biomass
+are less certain (see Discussion). The 100 plants amassed 4905 potential
+lifecycles over 45 years of phenological simulation (Figure~\ref{fig:valComp}A). Without a
+minimum mass threshold ($m_0$) for reproduction, 66\% of potential life cycles
+followed the more successful \emph{spring} and \emph{winter-veg} strategies (2
+\& 4; Figure~\ref{fig:valComp}C). Figure~\ref{fig:valComp}D shows the sequential transitions between
+strategies. For example, 60\% of potential plants following the successful
+\emph{spring} strategy (2) disperse their seeds early enough for the next
+generation to adopt the \emph{winter-veg} strategy (4), achieving two
+generations per year. These transitions underlie the bimodal distribution of
+life cycle times reported by \citet{burghardt_modeling_2015} for this
+simulation.
+
+Simulation of the HH genotype (Figure~\ref{fig:valComp}F, 6J) identified similar
 strategies. Since the seed have longer dormancy, the population amassed
 fewer potential life cycles (2954 as opposed to 4905 in the LL case;
-Figure 6F). The growth and final fruit masses are different because of
+Figure~\ref{fig:valComp}F). The growth and final fruit masses are different because of
 slight variation in timing of the growth period but strategies 2 and 4
-are again more successful than strategies 1 and 3 (Figure 6H). A higher
+are again more successful than strategies 1 and 3 (Figure~\ref{fig:valComp}H). A higher
 fraction of potential life cycles followed the successful strategies
-(78\% as opposed to 66\% in the LL case; Figure 6G). Higher seed
+(78\% as opposed to 66\% in the LL case; Figure~\ref{fig:valComp}G). Higher seed
 dormancy reduced the germination in the summer and early autumn that led
 to the less successful strategies 1 and 3, so any strategy was likely to
-be followed by either strategy 2 or 4 in the next generation (Figure 6).
+be followed by either strategy 2 or 4 in the next generation (Figure~\ref{fig:valComp}).
 
 In order to calculate the population success we make two choices for the
 reproduction mass threshold, \(m_{0}\), which eliminate one or both of
 the least successful strategies. Choosing a value
 \(m_{0} = 2 \times 10^{- 5}\) g (the mass of a single seed) eliminated
 the \emph{summer-only} strategy from both genotypes, which gives a
-population of 1210 plants over 45 years in the LL case (Figure 6C). The
+population of 1210 plants over 45 years in the LL case (Figure~\ref{fig:valComp}C). The
 HH genotype allows a larger percentage of viable life cycles but we
 predict fewer plants (1020) since the number of potential life cycles
-was lower (Figure 6H). Choosing a value \(m_{0} = 6 \times 10^{- 3}\) g
+was lower (Figure~\ref{fig:valComp}H). Choosing a value \(m_{0} = 6 \times 10^{- 3}\) g
 left only two viable strategies, 2 and 4, for both genotypes. Reciprocal
 transitions between the strategies were still possible but
-\emph{winter-veg} was strongly favoured (Figure 6E, 6J). The LL genotype
+\emph{winter-veg} was strongly favoured (Figure~\ref{fig:valComp}E, J). The LL genotype
 predicted 240 plants in total over 45 years, compared to 360 plants for
 the HH genotype: G x E interaction favoured the HH genotype despite its
 smaller number of potential life cycles. Thus, modelling the growth
 processes not only distinguished among the potential life cycle
 strategies within a genotype but also between the genotypes.
 
-
-
 \subsection{Oulu}
 \label{oulu}
-
 The equivalent simulations were performed for conditions in Oulu,
-Finland in the same LL and HH genetic backgrounds (Figure 7). The
-results indicated 3 potential life cycle strategies (Figure 7A, 7B, 7E,
-7F):
+Finland in the same LL and HH genetic backgrounds (Figure~\ref{fig:oulComp}). The
+results indicated 3 potential life cycle strategies (Figure~\ref{fig:oulComp}A, B, E,
+F):
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
   \emph{summer-only strategy} where the entire life cycle occurs in the
   summer. The vegetative period is short, the rosette is very small and
-  supports negligible fruit growth (Figure 7C).
+  supports negligible fruit growth (Figure~\ref{fig:oulComp}C).
 \item
   \emph{winter-repr strategy} where a life cycle of almost a year has a
   very short vegetative stage, followed by a long reproductive stage
@@ -905,22 +921,37 @@ results indicated 3 potential life cycle strategies (Figure 7A, 7B, 7E,
   fruit mass is smaller than in Valencia.
 \end{enumerate}
 
-The severe winter conditions limited the number of potential life cycles
-to 2361 for the LL genotype or 363 for HH. A higher proportion of HH
-life cycles followed the successful \emph{winter-veg} strategy (3; 32\%
-against 24\% in LL; Figure 7B, 7G). Surprisingly, a majority of life
-cycles for both genotypes followed the \emph{winter-repr} strategy (2).
-Applying the reproductive threshold mass, \(m_{0}\), eliminated one or
-both of strategies 1 and 2 (Figures 7C, 7G), suggesting a strong
-selective pressure for greater floral repression to reduce the number of
-\emph{winter-repr} life cycles. With \(m_{0}\) = \(2 \times 10^{- 3}\)
-g, the LL genotype yielded 159 plants over 45 years compared to 53
-plants for HH. All G x E combinations had actively-growing plants at the
-end of the simulation. Interestingly, plants of the HH genotype had
-higher average reproductive success per plant in Oulu yet the LL plants
-were more successful by our population measure. The faster development
-of LL plants allowed more, short lifecycles within the simulated
-interval (consistent with the phenology model alone).
+\begin{figure}[p]
+\centering
+\includegraphics[width=\textwidth]{figures/oulCompFig/oulComp.eps}
+\caption{Population experiments in Oulu in two different genetic backgrounds (LL
+  ? low dormancy, Low floral repression and HH-High dormancy, High floral
+  repression). A Results of the phenology-only simulation results for the LL
+  genotype. The 25-th, 50-th, and 75-th percentile of the distribution of
+  developmental events are shown for each identified cluster B Illustration of
+  growth stages over a year for each cluster according to the median time of the
+  distribution of developmental events for each cluster. C Growth simulations
+  over the growth period shown in panel B for each cluster.  D Probabilities of
+  successive strategies. E, F, G, HJ Equivalently for the HH genotype in the
+  same location.}
+\label{fig:oulComp}
+\end{figure}
+
+The severe winter conditions limited the number of potential life cycles to 2361
+for the LL genotype or 363 for HH. A higher proportion of HH life cycles
+followed the successful \emph{winter-veg} strategy (3; 32\% against 24\% in LL;
+Figure~\ref{fig:oulComp}B, G). Surprisingly, a majority of life cycles for both genotypes
+followed the \emph{winter-repr} strategy (2).  Applying the reproductive
+threshold mass, \(m_{0}\), eliminated one or both of strategies 1 and 2 (Figures~\ref{fig:oulComp}
+C, G), suggesting a strong selective pressure for greater floral repression to
+reduce the number of \emph{winter-repr} life cycles. With \(m_{0}\) =
+\(2 \times 10^{- 3}\) g, the LL genotype yielded 159 plants over 45 years
+compared to 53 plants for HH. All G x E combinations had actively-growing plants
+at the end of the simulation. Interestingly, plants of the HH genotype had
+higher average reproductive success per plant in Oulu yet the LL plants were
+more successful by our population measure. The faster development of LL plants
+allowed more, short lifecycles within the simulated interval (consistent with
+the phenology model alone).
 
 \section{Discussion}
 \label{discussion}
@@ -937,7 +968,7 @@ from the component models naturally remain
 emphasising interactions. The cauline leaves in our inflorescence model, for
 example, extend the duration of photosynthetic competence. As cauline leaves can
 be produced 6 months later than early rosette leaves in the \emph{winter-veg}
-strategy (Figure 7), they remain active photosynthetic sources
+strategy (Figure~\ref{fig:oulComp}), they remain active photosynthetic sources
 \citep{earley_inflorescences_2009, leonardos_photosynthetic_2014} when the
 rosette leaves are senescing. The growth models provided the fruit mass that we
 used as an indicator of reproductive success, such that metabolic and
@@ -954,11 +985,11 @@ behaviour of the cognate wild populations \citep{atwell_genome-wide_2010,
 G x E combination, individual plants in our simulations might adopt alternative
 life cycle strategies. The less-successful strategies were lethal in our model,
 eliminating \textgreater{}95\% of potential lifecycles (simulated by the
-phenology model alone) for the LL genotype in Valencia, for example (Figure 6A,
-6C). Thus, our results supported the observed genotypic distinction between
-Valencia and Oulu, because the requirement for a minimum fruit mass eliminated
-more lineages of the less-successful genotype in each case (Figures 6C, 6H and
-7C, 7G).
+phenology model alone) for the LL genotype in Valencia, for example
+(Figure~\ref{fig:valComp}A, C). Thus, our results supported the observed
+genotypic distinction between Valencia and Oulu, because the requirement for a
+minimum fruit mass eliminated more lineages of the less-successful genotype in
+each case (Figures~\ref{fig:valComp}C,H and \ref{fig:oulComp}C,G).
 
 Our approach might appear conservative, as the binary birth function (one
 seed/no seed) ignored variation in seed mass among life cycle strategies, which
@@ -966,14 +997,46 @@ might otherwise reinforce the advantage of successful strategies. The successful
 genotype LL in Oulu, however, had lower reproductive success per plant than HH,
 suggesting a more subtle balance of advantage. Genotypes with Low dormancy and
 High floral repression (LH) are observed in far northern locations
-\citep{atwell_genome-wide_2010}. We therefore simulated the LH genotype (Figure
-8). LH plants delayed flowering time enough to reduce the frequency of potential
-\emph{summer-only} life cycles to 9\% compared to 15\% in LL (Figure 8B) and
-increased the fruit mass of the successful \emph{winter-veg} life cycle close to
-the HH genotype (Figure 8C). The LH model predicted slightly higher reproductive
-success overall, returning 171 life cycles (Figure 8C) compared to 159 for the
-LL variant (Figure 7C), consistent with the observation of LH genotypes at this
-location.
+\citep{atwell_genome-wide_2010}. We therefore simulated the LH genotype (Figure~\ref{oulLH})
+. LH plants delayed flowering time enough to reduce the frequency of potential
+\emph{summer-only} life cycles to 9\% compared to 15\% in LL
+(Figure~\ref{fig:oulLH}B) and increased the fruit mass of the successful
+\emph{winter-veg} life cycle close to the HH genotype
+(Figure~\ref{fig:oulLH}C). The LH model predicted slightly higher reproductive
+success overall, returning 171 life cycles (Figure~\ref{fig:oulLH}C) compared to
+159 for the LL variant (Figure~\ref{fig:oulComp}C), consistent with the
+observation of LH genotypes at this location.
+
+\begin{figure}[tb]
+\centering
+\includegraphics[width=\textwidth]{figures/conclFigure/oulLH.eps}
+\caption{Simulation results for a combined variant in Oulu (LH - low dormancy,
+  high floral repression). A Results of the phenology-only simulation
+  results. The 25-th, 50-th, and 75-th percentile of the distribution of
+  developmental events are shown for each identified cluster B Illustration of
+  growth stages over a year for each cluster according to the median time of the
+  distribution of developmental events for each cluster. C Growth simulations
+  over the growth period shown in panel B for each cluster.  D Probabilities of
+  successive strategies.}
+\label{fig:oulLH}
+\end{figure}
+
+\begin{figure}[tb]
+\centering
+\includegraphics[width=\textwidth]{figures/growthInvFigure/growthInv.eps}
+\caption{Robustness of timing and growth simulation results.  A Sources of
+  variability for the timing results. B Timing results for variable weather (60
+  years) and variable genetic parameters chosen from a distribution and timing
+  results for simulations with constant weather (same 1-year weather over 60
+  years) and constant parameters. The timings of the strategies are very similar
+  but strategy 1 life cycles have moved to strategy 3. This could be because of
+  the particular year of weather data we used for the simulations. C Sources of
+  variability for growth results D Growth simulation results starting from three
+  different germination dates (corresponding to 25-th, 50-th, and 75-th
+  percentiles of the distribution of germination times) of strategy 4 in
+  Valencia LL (Figure~\ref{fig:valComp})}
+\label{fig:growthInv}
+\end{figure}
 
 A limitation of our work arises from the fact that the phenology component
 models of FM-life have been validated against field data
@@ -982,20 +1045,21 @@ component models have not
 \citep{rasse_leaf_2006,christophe_model-based_2008}. Biomass simulations are
 inevitably sensitive to the timing of the growth period, because a longer
 interval of exponential growth in good conditions rapidly changes absolute
-biomass, as illustrated in Figure 9D. Nonetheless, the FM-life model predicted
-unreasonably high fruit mass in some cases. The binary birth function ensured
-that this had no effect on our population measure. Among possible gaps in
-understanding of the environmental effects on growth in natural settings or in
-our representation, we repeat our previous caution \citep{chew_multiscale_2014,
-  chew_linking_2017} that models of nutrient balance for Arabidopsis will be
-helpful. Rosette biomass in the Framework Model is understandably sensitive to
-photosynthetic parameters \citep{chew_multiscale_2014} yet these have not been
-validated in Arabidopsis across the wide range of photoperiods and temperatures
-simulated here \citep{walker_temperature_2013}. FM-life predicts a discretised
-fruit mass and hence reproductive success for a typical representative of each
-life cycle strategy, approximating an underlying, continuous distribution of
-fruit mass. The accuracy of this approximation will depend on the variation
-within clusters. The benefit lies in computational tractability, allowing us to
+biomass, as illustrated in Figure~\ref{fig:growthInv}D. Nonetheless, the FM-life
+model predicted unreasonably high fruit mass in some cases. The binary birth
+function ensured that this had no effect on our population measure. Among
+possible gaps in understanding of the environmental effects on growth in natural
+settings or in our representation, we repeat our previous caution
+\citep{chew_multiscale_2014, chew_linking_2017} that models of nutrient balance
+for Arabidopsis will be helpful. Rosette biomass in the Framework Model is
+understandably sensitive to photosynthetic parameters
+\citep{chew_multiscale_2014} yet these have not been validated in Arabidopsis
+across the wide range of photoperiods and temperatures simulated here
+\citep{walker_temperature_2013}. FM-life predicts a discretised fruit mass and
+hence reproductive success for a typical representative of each life cycle
+strategy, approximating an underlying, continuous distribution of fruit
+mass. The accuracy of this approximation will depend on the variation within
+clusters. The benefit lies in computational tractability, allowing us to
 simulate differential reproductive success that is informed by understanding of
 growth processes.
 
@@ -1016,6 +1080,4 @@ ecology and evolution.
 \singlespace
 
 \printbibliography[heading=bibintoc]
-
-%% ... that's all, folks!
 \end{document}
