@@ -110,13 +110,14 @@ systems. Some go as far as to say that (self-)organisation and the resulting
 self-maintenance are the only common and defining characteristics of living
 organisms and that they are primary to even natural selection in shaping the
 forms of life that we see \citep[sometimes referred to as structuralism, for
-example;][]{thompson1942growth, kauffman1992origins}. Even if we do not take such an
-extreme view, it is still true that if we want to understand life we have to
-understand the organisation that sustains it and the links between processes at
-all scales defined by this organisation -- from genes to organisms and
-ecosystems. Organisation here means both spatial organisation, for example cells
-in a tissue, but also relations or interactions between processes that give rise
-to other higher-level phenomena or between processes and the environment
+example;][]{thompson1942growth, kauffman1992origins}. Even if we do not take
+such an extreme view, it is still true that if we want to understand life we
+have to understand the organisation that sustains it and the links between
+processes at all scales defined by this organisation -- from genes to organisms
+and ecosystems. Organisation here means both spatial organisation, for example
+cells in a tissue, but also relations or interactions between processes that
+give rise to other higher-level phenomena or between processes and the
+environment
 
 % other less fundamental question could possibly be answered but at the core
 % we need this
@@ -162,20 +163,19 @@ As the systems we are trying to understand become more complex, which is
 particularly the case when we take the systems view, intuitive thinking and
 mental models of the processes are not adequate tools to aid our
 understanding. A useful tool in these cases is formal models where the systems
-are represented using some formal languages based on a mathematical
+are represented using some formal language based on a mathematical
 intepretation, either directly or indirectly. An interesting view is that of
 formal models as machines that turn the assumptions that we put in into them to
-conclusions \citet{gunawardena_models_2014}. The unique advantage of formals
-models compared to informal models (mental models) in Biology is that this
-machine is guaranteed to be correct therefore providing a good tool for testing
-our hypotheses (assumptions) just like an experiment would. Mental models
-however do not provide this guarantee and therefore do not know if the fault is
-in our assumption or in the animation of the model in our heads.
+conclusions \citep{gunawardena_models_2014}. The unique advantage of formal
+models compared to informal ones (mental models) in Biology is that this machine
+is guaranteed to be correct therefore providing a good tool for testing our
+hypotheses (assumptions) just like an experiment would. Mental models however do
+not provide this guarantee and we therefore do not know if the fault is in our
+assumption or in the animation of the model in our heads.
 
-%also cite gunawardena2013biology
 Historically, it is no surprise that formal models have been used in systems
 models, for example for morphogenesis \citep{turing_chemical_1952} and neuronal
-activity \citep{hodgkin_quantitative_1952\} although in some cases good
+activity \citep{hodgkin_quantitative_1952} although in some cases good
 abstraction theories have been used in evolutionary genetics \citep[by
 abstracting away the organism;][]{fisher} and in the small scale for chemical
 kinetics \citep{michaelis-menten}, \citep[see
@@ -200,42 +200,70 @@ organisation to understand life, as we have seen above. For small
 micro-organisms, comprehensive models link the metabolic and molecular level
 with the cellular \citep{karr_whole-cell_2012} and population growth scales
 \citep{weise_mechanistic_2015}. Work on more complex organisms has focused more
-narrowly \citep[Virtual liver; virtual heart; bones]{} altough there are
-ambitious collaborative project aiming at whole organisms \citep[virtual rat,
-virtual human]{}.
+narrowly (Virtual liver, \citet{holzhutter2012virtual}; Virtual heart;
+\citet{noble_modeling_2002}; Bone system, \citet{paoletti_multilevel_2012})
+altough there are ambitious collaborative project aiming at whole organisms
+\citep[virtual rat, virtual human][]{beard_multiscale_2012, kohl_systems_2009}.
 
 %multi-scale models in plants
 %plants
 In plant science research is concentrated on the laboratory model species
 \emph{Arabibopsis thaliana}, which offers an opportunity for broad understanding
-that includes mechanistic models
-\citep{chew_mathematical_2014, voss_modelling_2014}. 
-%ecology and crops
-Plants are interesting because modelling has been happening also on the other
-side at the higher scale. There is ground to unify here
-Unique challenges including languages
-This further creates some problems social and technical, for example languages (\ref{})
+that includes mechanistic models \citep{chew_mathematical_2014,
+  voss_modelling_2014}. This multi-scale view starting from a molecular
+mechanism and metabolism is realised explicitly in the Framework Model that
+represents vegetative growth starting from the a specific well-understood
+molecular mechanism \citet[FMv1]{chew_multiscale_2014}. On the other end of the
+scales spectrum there is modelling work for plants in the crop and ecology world
+where the organism is usually absent. While this work usually is concerned with
+more crop or ecologically relevant species, recently Arabidopsis is starting to
+appear in crop and ecology research in attempts to bring the organism back into
+the equation and provide insight into relevant mechanisms that affect ecological
+or crop phenotypes especially with respect to the interaction with the
+environment.
 
-Aims
-In this thesis we are interested
-This is where our work is placed buidling on this multiscale models (supra
-multiscale) reaching to crop or ecology and evolution.
+The work of this thesis is situated exactly in this space, in the intersection
+and modelling space between plant science and crop or ecological
+research. We are particularly interested in linking multi-scale plant models
+that consider growth through environmental interaction with ecological models
+that consider ecosystems in the natural environment.  Apart from the scientific
+challenges these multi-scale models present, in plants or elsewhere, there are
+also some challenges regarding the technical language used for their
+representation.
 
+Therefore, the \emph{aims} of this thesis are:
+\begin{itemize}
+\item Develop a suitable notation to address the problem of naturally and
+  succintly representing multi-scale plant models that go beyond the organism
+  and act in a dynamic natural environment.
+\item Use the above language to create such multi-scale plant models from the
+  organism to the ecosystem.
+\item Use the models for answering questions in ecological models using the
+  mechanistic understanding that comes from including a model of the organism in
+  ecological studies.
+\end{itemize}
 
-In the rest of this chapter I will give an overview of the uses of the
-multi-scale plant models beyond the organism
+In the rest of this chapter we will first give an overview of modelling in the
+plant domain starting from plant science and then going to the ecology and crop
+areas. We will then overview the language question in multi-scale models that
+relates to the organisation view of living organisms we noted above. Finally, we
+give the contributions of this thesis in reference to the outlined aims.
 
-
-\section{Multi-scale models -- from plants to ecosystems}
+\section{From plants to crops and ecosystems}
 putting the organism back into evolution or ecology? That's the tagline?
 introduce how and why questions
-And then This will need some time to place the current work in other works in
-plant ecology anad evolution
-
-Nothings makes sense except in the light of population genetics
 
 I think what needs justification is the need for putting the organism (the
 individual in the population) There I can use the Doebeli etc.
+
+Plants in general and their interaction with the environment all the way to the
+ecosystem and evolution. How and why questions?
+
+\subsection{Multi-scale plant models}
+Start with different mechanisms, one or two scales
+
+Then the peak is the FM I guess, which I will need to describe a little bit.
+
 
 \subsection{Ecology and evolution}
 usually abstracting away the organism from this.
@@ -243,19 +271,59 @@ This has been useful in giving tractable representations and allowing general
 principles to be uncovered. However, many details and the mechanistic foundation
 of many of the assumptions is absent. A more fundamental view puts the organism
 back into the equation and tries to explain the fitness differences starting
-from 
+from
+
+the gene centric view, we jump from the gene directly to evolution bypassing the
+organism that will give us answers to the how questions.
+
+People:
+Kathleen Donohue
+Amity Wilczek
+Carlos Alonso-Blanco
+Justin Borevitz
+Isabelle Chuine
+
+data collection on population genetics Arabidopsis since we have genome etc.
+distribution of species
+
+making sense of data?
+Phenology models, donohue, wilczek-> others?
+
+Important issue in plants is control of life history (phenology)
+This gives ground for some modelling work done
+This is adaptation indirectly to the environment since life history determines
+the environment at different developmental stages
+
+although there is more work on adaptation to other things directlye like
+temperature
+See Caroline Dean and Juliette de Meaux
+
+The importance and simplicity of the phenology story gives rise to the only (is
+it the only?) modelling work in the field
+
+We ask the why questions but wheres the how? Or we have the some part of the how
+and make hypotheses about the why..
+
+More systems view come from modelling and suggested by Millar and Donohue 
 
 
-\section{Multi-scale models -- from plants to crops}
+
+\subsection{Crop modelling}
+%crops
 This is perhaps easier? Need for multiscale, there are multiple papers
 advocating for this, in fact there are whole movements
 
-\subsection{Crop modelling}
+Start with general traditional crop models and then go to the 
 
-\section{Languages for multi-scale biology}
+
+
+
+\section{Languages for biology}
 why modelling? What are the purposes of models?
 The fundamental difference in the question asked in Biology means that 
 Only say a few general things, there's a whole chapter about this next.
+
+Refer to the examples above.
 
 \section{Contributions}
 bullet points and references to later chapters
