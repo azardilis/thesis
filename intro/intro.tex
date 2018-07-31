@@ -1,0 +1,245 @@
+\documentclass[phd]{infthesis}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[british]{babel}
+\usepackage{microtype}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage[english=british,autopunct=false]{csquotes}
+\usepackage[natbib=true,style=authoryear-comp,maxbibnames=6]{biblatex}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{wrapfig}
+\usepackage{xfrac}
+\usepackage{xspace}
+\usepackage{mathcommon}
+\usepackage[sc]{mathpazo}
+\usepackage{hyperref}
+\usepackage{expl3}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{mathpartir}
+\usepackage{fancyvrb}
+\usepackage{inconsolata}
+\usepackage{multirow}
+
+\frenchspacing
+
+% Bibliography
+\addbibresource{intro.bib}
+\bibliography{intro}
+
+% Text
+\newcommand{\ie}{i.e.\xspace}
+\newcommand{\eg}{e.g.\xspace}
+
+% Referencing
+\newcommand{\chp}[1]{\S\ref{chp:#1}}
+\newcommand{\sct}[1]{\S\ref{sec:#1}}
+\newcommand{\ssec}[1]{\S\ref{subsec:#1}}
+\newcommand{\eqn}[1]{Eq.~\ref{eq:#1}}
+\newcommand{\eqns}[2]{Eq. \ref{eq:#1} and \ref{eq:#2}}
+\newcommand{\lem}[1]{Lemma~\ref{lemma:#1}}
+\newcommand{\lems}[2]{Lemmas \ref{lemma:#1} and \ref{lemma:#2}}
+\newcommand{\thm}[1]{Th.~\ref{thm:#1}}
+\newcommand{\fig}[1]{Fig.~\ref{fig:#1}}
+\newcommand{\diagram}[1]{diagram~\ref{eq:#1}}
+\newcommand{\app}[1]{Appendix~\ref{app:#1}}
+\newcommand{\mcite}[1]{\mrcolor{gray}{#1}} % missing cite
+\newcommand{\defn}[1]{Def.~\ref{def:#1}}
+\newcommand{\prop}[1]{Prop.~\ref{prop:#1}}
+
+% Math
+\renewcommand{\tuple}[1]{(#1)}
+\DeclareMathOperator*{\expn}{exp}
+\renewcommand*{\exp}[1]{e^{\,#1}} % \mathrm{e}^{#1}}
+\renewcommand{\qedsymbol}{\ensuremath{\blacksquare}}
+\newcommand{\partialto}{\rightharpoonup}
+\newcommand{\id}{\vec{1}} % identity function
+\newcommand{\mr}[1]{\mathrm{#1}}
+
+\newcommand{\den}[1]{\llbracket #1 \rrbracket}
+\newcommand{\m}[1]{\{\!| #1 |\!\}}
+\newcommand{\M}[1]{\mathcal{#1}}
+\newcommand{\MS}[0]{\mathrm{M}}
+\newcommand{\SQ}[0]{\mathrm{S}}
+\newcommand{\s}[1]{\underline{#1}}
+\newcommand{\G}[0]{\Gamma}
+\newcommand{\D}[0]{\Delta}
+\newcommand{\mytt}{t\!t}
+\newcommand{\myff}{f\!\!f}
+
+\newcommand{\V}{\mathrm{V}}
+
+\newcommand{\sel}{\mathrm{sel}}
+\newcommand{\fold}{\mathrm{fold}}
+
+\newcommand{\ms}{\mathrm{ms}}
+
+
+\newtheorem{mydef}{Definition}
+\def\dotminus{\mathbin{\ooalign{\hss\raise1ex\hbox{.}\hss\cr
+  \mathsurround=0pt$-$}}}
+\setlength{\tabcolsep}{8pt}
+\renewcommand{\arraystretch}{1.0}
+
+\newcommand{\match}{m}
+\newcommand{\up}[1]{\uparrow\! #1}
+
+\newcommand{\n}{\mathrm{n}}
+
+% Other stuff
+\newcommand{\maybe}[1]{\mrcolor{gray}{#1}}
+\newcommand{\todo}[1]{\mrcolor{red}{TODO: #1}}
+
+% rules
+\newcommand{\ar}[2]{\mr{#1} \! = \! {#2}}
+
+\setlength{\tabcolsep}{8pt}
+\renewcommand{\arraystretch}{1.2}
+
+\begin{document}
+\chapter{Introduction}
+% In light of this discussion I will also need to change the dicsussion in the
+% next chapter
+
+Life is produced and sustained through the organisation of entities at various
+levels that interact to construct other autonomous entities. Organisation and
+structure are therefore fundamental and defining properties of all living
+systems. Some go as far as to say that (self-)organisation and the resulting
+self-maintenance are the only common and defining characteristics of living
+organisms and that they are primary to even natural selection in shaping the
+forms of life that we see \citep[sometimes referred to as structuralism, for
+example;][]{thompson1942growth, kauffman1992origins}. Even if we do not take such an
+extreme view, it is still true that if we want to understand life we have to
+understand the organisation that sustains it and the links between processes at
+all scales defined by this organisation -- from genes to organisms and
+ecosystems. Organisation here means both spatial organisation, for example cells
+in a tissue, but also relations or interactions between processes that give rise
+to other higher-level phenomena or between processes and the environment
+
+% other less fundamental question could possibly be answered but at the core
+% we need this
+This view of organisation as a fundamental and defining principle of Biology
+makes the subject distinct from other natural sciences, like Physics for example
+and precludes a natural mode of enquiry, which is abstraction. The nature of the
+questions is different. How can we abstract the details of an organism if those
+details are exactly what makes the organism alive and in fact what we are trying
+to understand? Since abstraction or at least complete abstraction is not
+available, in order to answer biological questions we have to take a more
+holistic and multi-scale view of the natural systems of interest.
+
+%reductionist vs system (organisation)
+Despite the importance of organisation in understanding life, historically the
+focus in Biology has been on understanding individual mechanisms at the
+molecular level. The reductionist view of life is that if cell is the main unit
+of life then if we understand all the processes inside the cell we will
+understand life as everything else follows.
+
+There were, however, even if on the fringes or often completele outside
+mainstream biology, few historical (and independent) threads of work that
+recognised the importance of organisation and consequently of the systems
+view. \citet{rashevsky_topology_1954} explained the need for organisation or
+what he called the relational aspects of biology to complement usual approaches
+that follow only the metric aspects of physical systems, which is the usual
+abstraction in Physics where systems are viewed only by their quantifiable
+properties (captured by numeric variables). \citet{rosen_relational_1958}
+developed a theory, based on category theory, for the relational/organisational
+aspects of biology and was a proponent of a systems view
+\citep{rosen1991life}. \citet{varela_autopoiesis:_1974} developed the concept of
+`autopoieisis' (self creation through organisation) as a necessary condition for
+autonomous living entities. Following this, \citet{fontana_what_1994}
+highlighted the importance of organisation as the definining characteristic of
+living systems and also developed a theory of organisation as a basis for
+biological understanding borrowing from computer science
+\citep[$\lambda$-calculus in particular;][]{fontana_barrier_1996}. Finally, the
+systems view entered the mainstream through the \emph{systems biology} movement
+\citep{kitano2002systems} as a way to consolidate increasingly diverse
+experimental molecular biology datasets.
+
+% need for modelling
+As the systems we are trying to understand become more complex, which
+particularly true for the systems view, intuitive thinking and mental models of
+the processes are not adequate tools to aid our understanding. 
+
+%from simple systems biology models to multi-scale systems biology to return to
+%the more fundamental question
+Taking this to its extreme and recognising the importance of organisation in
+understanding life the systems view means the need for multi-scale view and
+multi-scale modelling
+means multi-scale
+modelling with explicity representation of processes at multiple levels of
+organisation to understand the links between scales and how life or particular
+phenomena in life emerge through this, which cannot be explained only as a
+sum of their parts.
+
+%small scale examples
+in the samll scale we have very comprehensive attempts at making the links,
+single cell Karr etc.
+!!This is what we care about not the systems biology kitano, we care about the
+bold digital organisms etc.!!
+
+%plants
+in the larger scale we have
+Then plants
+
+%ecology and crops
+Plants are interesting because modelling has been happening also on the other
+side at the higher scale. There is ground to unify here
+
+This is where our work is placed buidling on this multiscale models (supra
+multiscale) reaching to crop or ecology and evolution.
+
+This further creates some problems social and technical, for example languages (\ref{})
+
+Place our work in this thesis.
+place here
+
+In the rest of this chapter I will give an overview of the uses of the
+multi-scale plant models beyond the organism
+
+% Dichotomy between reductionism, if we take this to the extreme 
+% the ones that advocated for a systems view are the ones that understood the
+% importance of organisation
+% organisation is not important, if we understand molecular biology we
+% understand everything ->
+
+%give examples
+Boom systems biology
+
+Models?
+
+Then comprehensive models for small organisms
+
+
+However, as we now have a good knowledge 
+
+\section{Multi-scale models for understanding -- from plants to ecosystems}
+introduce how and why questions
+And then This will need some time to place the current work in other works in
+plant ecology anad evolution
+
+Nothings makes sense except in the light of population genetics
+
+I think what needs justification is the need for putting the organism (the
+individual in the population) There I can use the Doebeli etc.
+
+
+\section{Multi-scale models for engineering -- from plants to crops}
+This is perhaps easier? Need for multiscale, there are multiple papers
+advocating for this, in fact there are whole movements
+
+\section{Languages for multi-scale biology}
+why modelling? What are the purposes of models?
+The fundamental difference in the question asked in Biology means that 
+Only say a few general things, there's a whole chapter about this next.
+
+\section{Contributions}
+bullet points and references to later chapters
+This need to be refutable, like a contract for the thesis
+
+\printbibliography[heading=bibintoc]
+\end{document}
+
+% I think for the conclusion we somehow need to link to the multi-language for
+% each scale and then one for the organisation, not sure
