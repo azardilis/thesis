@@ -45,7 +45,7 @@
 \newcommand{\fig}[1]{Fig.~\ref{fig:#1}}
 \newcommand{\diagram}[1]{diagram~\ref{eq:#1}}
 \newcommand{\app}[1]{Appendix~\ref{app:#1}}
-\newcommand{\mcite}[1]{\mrcolor{gray}{#1}} % missing cite
+\newcommand{\mcite}[1]{\textcolor{gray}{#1}} % missing cite
 \newcommand{\defn}[1]{Def.~\ref{def:#1}}
 \newcommand{\prop}[1]{Prop.~\ref{prop:#1}}
 
@@ -89,8 +89,8 @@
 \newcommand{\n}{\mathrm{n}}
 
 % Other stuff
-\newcommand{\maybe}[1]{\mrcolor{gray}{#1}}
-\newcommand{\todo}[1]{\mrcolor{red}{TODO: #1}}
+\newcommand{\maybe}[1]{\textcolor{gray}{#1}}
+\newcommand{\todo}[1]{\textcolor{red}{TODO: #1}}
 
 % rules
 \newcommand{\ar}[2]{\mr{#1} \! = \! {#2}}
@@ -276,12 +276,46 @@ with some knowledge of the how this affect organism behaviour make evolutionary
 hypotheses on the why.
 
 \subsection{Multi-scale plant models}
-Start with different mechanisms, one or two scales
+Modelling in plant biology is usually concerned with individual mechanisms, for
+example photosynthesis or leaf stomata conductance. There is work on models that
+link two scales, for example models of plant development with the dynamics of
+the hormone auxin or functional-structural models that link plant physical
+development with aspects of metabolism.
 
-Then the peak is the FM I guess, which I will need to describe a little bit.
-->
 \subsubsection*{Framework Model}
+The Framework Model is a whole-plant model that represents vegetative growth of
+Arabidopis Thaliana incorporating processes ranging multiple scales of
+organisation. At the genetic level the well-studied circadian clock, metabolism
 
+
+\subsection{Crop modelling}
+%for understanding vs for engineering
+% crops
+Crop models use many of the same ideas that we have seen in multi-scale plant
+models but they have a different more engineering oriented goal in
+mind instead of understanding. Usually the motivation is understanding the
+effect of interventions to either plant genetics or crop management on plant
+performance, which is usually growth related.
+
+% traditional crop models
+Traditionally in crop models the entire crop is seen as one big plant.
+The focus here should be that we are trying to engineer the genome to
+get a specific outcome at the organism or crop level, usually related to
+growth, for example, crop yield.
+
+
+\subsubsection*{Multi-scale models}
+The multi-scale systems modelling approach has also been proposed in crop
+modelling in attempts to engineer crop traits starting from genetics or from
+genomes \citep{welch_merging_2005, yin_applying_nodate, yin_modelling_2010,
+  parent_can_2014, wu_connecting_2016, chenu_integrating_2018}, where simpler
+models have demonstrated both the potential of crop modelling in general and the
+significant demands of detailed models for empirical data that varies in
+availability \citep{hammer_models_2006,asseng_uncertainty_2013}.
+
+% for engineering, more application oriented
+% interventions for increasing performance etc.
+% different uses
 
 \subsection{Ecology and evolution}
 The lifecycle of Arabidopis plants can be divided into three major
@@ -314,8 +348,11 @@ on understanding the molecular mechanisms involved in plant adaptation through
 the control of developmetal events. The assumption is then that these mechanisms
 reflect adaptation to different environments and therefore hint towards the
 'why' questions.
-% \todo{Give examples}
-% FLC, DOG1 variation
+
+\todo{Give examples, \eg{FLC, DOG1 variation}}
+
+% sometimes events are investigated together to see co-evolution
+% Co-Variation between Seed Dormancy, Growth Rate and Flowering Time Changes with Latitude in Arabidopsis thaliana
 
 \subsubsection*{Phenology models}
 The hypothesis in phenology is that plants sense and integrate environmental
@@ -353,7 +390,7 @@ Furthermore, dealing with each developmental stage in isolation means, while
 being simple and inducing simple 'why' hypotheses, is sometimes not enough as one
 developmental stage affects the timing and length of the next and the length of
 the entire generation affects the next generation and so on.
-%examples
+\todo{examples}
 
 \subsubsection*{System models}
 In order to be useful in evolutionary ecology other work has incorporated
@@ -387,46 +424,20 @@ results, a more fundamental understanding requires the organism to fill the gaps
 between the scales from genes to the population. Adding the organism to the
 population level recovers a more mechanistically founded reproductive success
 (fitness) as a first step towards explicitly modelling evolutionary dynamics.
-%Prusinkiewicz paper here?
 
-People:
-Kathleen Donohue
-Amity Wilczek
-Carlos Alonso-Blanco
-Justin Borevitz
-Isabelle Chuine
+\todo{Prusinkiewicz paper here?}
+% People:
+% Kathleen Donohue
+% Amity Wilczek
+% Carlos Alonso-Blanco
+% Justin Borevitz
+% Isabelle Chuine
 
 % although there is more work on adaptation to other things directlye like
 % temperature
 % See Caroline Dean and Juliette de Meaux
 
-\subsection{Crop modelling}
-%for understanding vs for engineering
-% crops
-Crop models use many of the same ideas that we have seen in multi-scale plant
-and ecology models but they have a different more engineering oriented goal in
-mind instead of understanding. Usualle the motivation is understanding the
-effect of interventions to either plant genetics or crop management on plant
-performance, which is usually growth related.
 
-%traditional crop models
-Start with general traditional crop models and then go to the
-different goals but similar techniques although usually more mechanistic at
-least in regards to mechanisms involved in growth.
-
-
-\subsubsection*{Multi-scale models}
-The multi-scale systems modelling approach has also been proposed in attempts to
-engineer crop traits starting from genetics or from genomes
-\citep{welch_merging_2005, yin_applying_nodate, yin_modelling_2010,
-  parent_can_2014, wu_connecting_2016, chenu_integrating_2018}, where simpler
-models have demonstrated both the potential of crop modelling in general and the
-significant demands of detailed models for empirical data that varies in
-availability \citep{hammer_models_2006,asseng_uncertainty_2013}.
-
-% for engineering, more application oriented
-% interventions for increasing performance etc.
-% different uses
 
 \section{Languages for multi-scale biology}
 why modelling? What are the purposes of models?
