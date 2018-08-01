@@ -177,12 +177,12 @@ Historically, it is no surprise that formal models have been used in systems
 models, for example for morphogenesis \citep{turing_chemical_1952} and neuronal
 activity \citep{hodgkin_quantitative_1952} although in some cases good
 abstraction theories have been used in evolutionary genetics \citep[by
-abstracting away the organism;][]{fisher} and in the small scale for chemical
-kinetics \citep{michaelis-menten}, \citep[see
-also;][]{gunawardena2013biology}. With the movement of systems biology as the
-intellectual successor to the system and organisation theorists of the 20th
-century we have seen an increase in mathematical models of cellular processes,
-from metabolism, to the circadian clock, and .
+abstracting away the organism;][]{dobzhansky1982genetics} and in the small scale
+for chemical kinetics \citep{michaelis1913kinetics, gunawardena_lessons_201},
+\citep[see also;][]{gunawardena2013biology}. With the movement of systems
+biology as the intellectual successor to the system and organisation theorists
+of the 20th century we have seen an increase in mathematical models of cellular
+processes, from metabolism, to the circadian clock, and .
 
 % multi-scale models
 % modelling with explicity representation of processes at multiple levels of
@@ -275,6 +275,12 @@ Figure~\ref{fig:circle}. This is usually done by observing genetic variation and
 with some knowledge of the how this affect organism behaviour make evolutionary
 hypotheses on the why.
 
+Multi-scale plant models that go beyond the organism can be seen as tools for
+understanding (evolutionary ecology) and tools for engineering (crop
+science). Next, we start with plant models with an emphasis on the Framework
+Model of \citet{chew_multiscale_2014} and go to an overview of crops and
+evolutionary ecology models.
+
 \subsection{Multi-scale plant models}
 Modelling in plant biology is usually concerned with individual mechanisms, for
 example photosynthesis or leaf stomata conductance. There is work on models that
@@ -283,10 +289,25 @@ the hormone auxin or functional-structural models that link plant physical
 development with aspects of metabolism.
 
 \subsubsection*{Framework Model}
-The Framework Model is a whole-plant model that represents vegetative growth of
-Arabidopis Thaliana incorporating processes ranging multiple scales of
-organisation. At the genetic level the well-studied circadian clock, metabolism
-
+represented vegetative growth of Arabidopsis in lab conditions
+\citep{chew_multiscale_2014}, starting from four independent models that
+represent photosynthesis and carbon storage \citep{rasse_leaf_2006}, plant
+structure and carbon partitioning among organs
+\citep{christophe_model-based_2008}, flowering phenology
+\citep{chew_augmented_2012} and the circadian clock gene circuit and its output
+to photoperiodic flowering \citep{salazar_prediction_2009}. Later updates
+focussed on plant phenotypes controlled by the clock, such as tissue elongation
+and starch metabolism \citep[FMv2;][]{chew_linking_2017}, or temperature and
+organ-specific inputs to flowering
+\citep{kinmonth-schultz_mechanistic_2018}. The Framework Models align with
+community efforts to link understanding of crop plant processes at multiple
+scales, for benefits in agriculture \citep{wu_connecting_2016,
+  zhu_plants_2016}. Among the limitations of the Framework Models, growth was
+limited to the vegetative stage, ending upon flower induction. Without
+reproduction, the models had no seed yield or link to evolutionary
+fitness. Without seed dormancy, they lacked a major determinant of Arabidopsis
+life history in the field. Their representation of the circadian clock was also
+unnecessarily detailed for many studies outside chronobiology.
 
 \subsection{Crop modelling}
 %for understanding vs for engineering
@@ -313,9 +334,6 @@ models have demonstrated both the potential of crop modelling in general and the
 significant demands of detailed models for empirical data that varies in
 availability \citep{hammer_models_2006,asseng_uncertainty_2013}.
 
-% for engineering, more application oriented
-% interventions for increasing performance etc.
-% different uses
 
 \subsection{Ecology and evolution}
 The lifecycle of Arabidopis plants can be divided into three major
@@ -351,8 +369,9 @@ reflect adaptation to different environments and therefore hint towards the
 
 \todo{Give examples, \eg{FLC, DOG1 variation}}
 
-% sometimes events are investigated together to see co-evolution
-% Co-Variation between Seed Dormancy, Growth Rate and Flowering Time Changes with Latitude in Arabidopsis thaliana
+% sometimes events are investigated together to see co-evolution Co-Variation
+% between Seed Dormancy, Growth Rate and Flowering Time Changes with Latitude in
+% Arabidopsis thaliana
 
 \subsubsection*{Phenology models}
 The hypothesis in phenology is that plants sense and integrate environmental
@@ -438,17 +457,58 @@ population level recovers a more mechanistically founded reproductive success
 % See Caroline Dean and Juliette de Meaux
 
 
-
 \section{Languages for multi-scale biology}
-why modelling? What are the purposes of models?
-The fundamental difference in the question asked in Biology means that 
-Only say a few general things, there's a whole chapter about this next.
+Models serve both as
+The notation we use to describe parts of the natural or artificial world can act
+as a tool for thinking about it. The characteristics that a notation for a
+specific domain should have in order to be a good tool for thought have been
+succinctly listed by Kenneth Iverson: ``ease of expression of common constructs
+in the domain, suggestivity, ability to subordinate detail, economy, and
+amenability to formal proofs" \cite{iverson2007notation}.
 
-Refer to the examples above.
+Modelling in biology becomes necessary when systems are complex. However, the
+more complex the systems are, the harder models become to read and write.  The
+fundamental difference in the question asked in Biology means that
+
+constructive organisation that is a fundamental characteristic of the
+multi-scale systems view of biological processes. This was noted since Rashevsky
+who as we have seen pointed out the need for the representation of
+need for discrete objects
+
+While organisation is important especially at multi-scale representations
+abstraction through quantifiable properties is also needed
+
+
+See next chapter for a more detailed overview and comparison of languages in
+this domain.
+
+%refer to examples above.
+
 
 \section{Contributions}
 bullet points and references to later chapters
 This need to be refutable, like a contract for the thesis
+
+\begin{itemize}
+\item A notation for describing systems like the ones we hinted to above at the
+  intersection of plant biology models in a natural envrionment. This notation
+  combines object-based discrete dynamics along with quantifiable properties
+  that offer the possibility for abstraction. Further extension allows an
+  enriched expression language that combines regular mathematical expressions
+  with a flexible system of state observation based on database operations and a
+  way of definining determinstically time-dependent values that can be used to
+  describe parts of the systems or the natural envrionment that we do not wish
+  to model mechanistically.
+\item An extensions of the Framework Model to the full-lifecycle with
+  modifcations that allow its operation realistic weather ranges. Gap between
+  even multi-scale plant models like the FM and the population and ecology level.
+\item An application of the Framework Model for the crop engineering
+  perspective. Instead of taking the traditional approach to engineer genomes as
+  we have seen we take an alternative approach that engineers the environment
+  for achieving specific growth-related organism traits. We frame the problem as
+  an optimal control problem and frame two instances, one where the control is
+  direct and another one where the control is indirect through positioning.
+\end{itemize}
 
 \printbibliography[heading=bibintoc]
 \end{document}
