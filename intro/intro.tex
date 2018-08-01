@@ -102,7 +102,7 @@
 \chapter{Introduction}
 % In light of this discussion I will also need to change the dicsussion in the
 % next chapter
-
+%somehow need to include the word constructive more, that's key
 Life is produced and sustained through the organisation of entities at various
 levels that interact to construct other autonomous entities. Organisation and
 structure are therefore fundamental and defining properties of all living
@@ -207,7 +207,7 @@ altough there are ambitious collaborative project aiming at whole organisms
 
 %multi-scale models in plants
 %plants
-In plant science research is concentrated on the laboratory model species
+Plant science research is concentrated on the laboratory model species
 \emph{Arabibopsis thaliana}, which offers an opportunity for broad understanding
 that includes mechanistic models \citep{chew_mathematical_2014,
   voss_modelling_2014}. This multi-scale view starting from a molecular
@@ -244,28 +244,131 @@ Therefore, the \emph{aims} of this thesis are:
 \end{itemize}
 
 In the rest of this chapter we will first give an overview of modelling in the
-plant domain starting from plant science and then going to the ecology and crop
-areas. We will then overview the language question in multi-scale models that
+plant domain starting from plant science and going to the ecology and crop
+modelling. We will then overview the language question in multi-scale models that
 relates to the organisation view of living organisms we noted above. Finally, we
 give the contributions of this thesis in reference to the outlined aims.
 
 \section{From plants to crops and ecosystems}
-putting the organism back into evolution or ecology? That's the tagline?
-introduce how and why questions
+Traditional plant biology research has been focused on understanding molecular
+mechanisms at the foundation of important plant processes like
+photosynthesis. Unlike mammalian systems, however, the effect of environmental
+conditions is usually taken into account since plants are highly dependent on
+those. The importance for crop traits also led to attempts at linking molecular
+knowledge to organism traits, like growth. We can think of these kind of questions
+of how a particular phenotypic trait arises from a molecular mechanism as the
+\emph{how} questions (top part of cycle in Figure~\ref{fig:circle}.
 
-I think what needs justification is the need for putting the organism (the
-individual in the population) There I can use the Doebeli etc.
+\begin{figure}[tb]
+  \centering
+  \includegraphics[width=0.8\textwidth]{figures/circle.eps}
+  \caption{Plant biology research is usually concerned with the top part of the
+    cycle and the 'how' of organisms. Evolution and ecology are concenred with
+    the why although they usually use a limited view of the 'how' to make
+    hypotheses about the 'why'.}
+  \label{fig:circle}
+\end{figure}
 
-Plants in general and their interaction with the environment all the way to the
-ecosystem and evolution. How and why questions?
+In the fields of ecology and evolution on the other hand, the question are more
+on they \emph{why} organisms evolved the way they have (bottom part of cycle in
+Figure~\ref{fig:circle}. This is usually done by observing genetic variation and
+with some knowledge of the how this affect organism behaviour make evolutionary
+hypotheses on the why.
 
 \subsection{Multi-scale plant models}
 Start with different mechanisms, one or two scales
 
 Then the peak is the FM I guess, which I will need to describe a little bit.
+->
+\subsubsection*{Framework Model}
 
 
 \subsection{Ecology and evolution}
+The lifecycle of Arabidopis plants can be divided into three major
+developmental stages where the transition between them is marked by
+developmental events. Starting out as a seed the plant germinates transitioning
+to the vegetative stage after which it bolts going to the reproductive stage
+that ends with the dropping of the new seeds (Figure~\ref{fig:plantLife}.
+
+In natural settings the timing of this events throughout the year
+(\emph{phenology}) determines the environment that the plant is exposed to
+during growth. Therefore phenology is a major determinant of plant fitness. If
+growth coincides, for example, with unfavourable weather conditions the plant
+might not have enough resources to put into making seeds or might not even
+survive to reproduction.
+
+\begin{figure}[tb]
+\centering
+\includegraphics[width=0.8\textwidth]{figures/phenology.eps}
+  \caption{Plant developmental stages and timing in the year (phenology), which
+    is a big determinant of fitness}
+\label{fig:plantLife}
+\end{figure}
+
+Yet species have a natural geographic range that spans a wide range of climactic
+conditions. For example, Arabidopsis in Europe grows naturally all the way from
+Spain to Northern Finland. The hypothesis is then that the genes that control
+these developmental events must be under selective pressure to adapt to
+different climates. A lot of work in evolutionary ecology of plants is focused
+on understanding the molecular mechanisms involved in plant adaptation through
+the control of developmetal events. The assumption is then that these mechanisms
+reflect adaptation to different environments and therefore hint towards the
+'why' questions.
+
+%\todo{Give examples}
+\subsubsection*{Phenology models}
+The hypothesis in phenology is that plants sense and integrate environmental
+signals until they reach the optimal condition for triggering the transition to
+the next developmental stage. There are experimental evidenence of this
+integration but evidence on the mechanism are still behind altough there are is
+some work pointing to the clock as a possible mechanism.
+
+Phenology models are usually phenomenological and make no attempt to represent
+the mechanism for sensing and integration of the environmental effects. Instead,
+they use numerical quantities to represent the progress towards a transition,
+which is an integral over time of the values of envrironmental indicators that
+affect the particular stage under consideration. For example, if we know that
+temperature affects a developmental stage, a phenology model might use a
+temperature sum to track the progress towards the transition:
+$$
+d(t) = \sum_{i}^{t} T(i) - T_b
+$$
+The development at time $t$, $d(t)$, is the sum of the temperatures at every
+time unit above a base temperature $T_b$. The transition time, $t_s$, is the
+time such that the development sum reaches a threshold value, $d(t_s) >
+D_s$. Incorporating genetics is usually represent by adding a sensitivity value
+to the above, $ d(t) = \sum_{i}^{t} k \cdot (T(i) - T_b)$ or changing the base temperature,
+$T_b$. The idea is that plants adapt by changing, $k$ or $T_b$, which reflects
+some molecular mechanism, to time their transition at the optimal time depending
+on the natural environment.
+
+Modelling phenology usually goes in tandem with experimental observations about
+timing but the models usually stop there and they do not provide anything about
+the evolutionary hypotheses that usually follow.
+%examples
+
+Limitations?
+Developmental events in isolation
+Usually ecological and while the effect on fitness is known
+
+\subsubsection*{System models}
+Some work takes a step further by integrating developmental with genetic
+information to substantiate evolutionary hypotheses. Chuine model
+See Chuine work with fitness phenofit not in Arabidopsis
+
+Burghardt takes a more systems approach by taking an integrative look at the
+whole life cycle instead of events in isolation. The same authors
+
+Organisms is absent
+
+Limitations
+Mechanistically founded fitness + population genetics
+Nothing makes sense except in light of population genetics
+
+Although other work has considered the organism but has, again
+Prusinkiewicz paper
+
+
 usually abstracting away the organism from this.
 This has been useful in giving tractable representations and allowing general
 principles to be uncovered. However, many details and the mechanistic foundation
@@ -283,42 +386,34 @@ Carlos Alonso-Blanco
 Justin Borevitz
 Isabelle Chuine
 
-data collection on population genetics Arabidopsis since we have genome etc.
-distribution of species
-
-making sense of data?
-Phenology models, donohue, wilczek-> others?
-
-Important issue in plants is control of life history (phenology)
-This gives ground for some modelling work done
-This is adaptation indirectly to the environment since life history determines
-the environment at different developmental stages
-
 although there is more work on adaptation to other things directlye like
 temperature
 See Caroline Dean and Juliette de Meaux
 
-The importance and simplicity of the phenology story gives rise to the only (is
-it the only?) modelling work in the field
-
-We ask the why questions but wheres the how? Or we have the some part of the how
-and make hypotheses about the why..
-
-More systems view come from modelling and suggested by Millar and Donohue 
-
+%for understanding
 
 
 \subsection{Crop modelling}
-%crops
-This is perhaps easier? Need for multiscale, there are multiple papers
-advocating for this, in fact there are whole movements
-
-Start with general traditional crop models and then go to the 
-
+% crops
+Start with general traditional crop models and then go to the
+different goals but similar techniques although usually more mechanistic at
+least in mechanisms involved in growth.
 
 
+\subsubsection*{Multi-scale system models}
+The multi-scale systems modelling approach has also been proposed in attempts to
+engineer crop traits starting from genetics or from genomes
+\citep{welch_merging_2005, yin_applying_nodate, yin_modelling_2010,
+  parent_can_2014, wu_connecting_2016, chenu_integrating_2018}, where simpler
+models have demonstrated both the potential of crop modelling in general and the
+significant demands of detailed models for empirical data that varies in
+availability \citep{hammer_models_2006,asseng_uncertainty_2013}.
 
-\section{Languages for biology}
+% for engineering, more application oriented
+% interventions for increasing performance etc.
+% different uses
+
+\section{Languages for multi-scale biology}
 why modelling? What are the purposes of models?
 The fundamental difference in the question asked in Biology means that 
 Only say a few general things, there's a whole chapter about this next.
