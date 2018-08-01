@@ -314,8 +314,9 @@ on understanding the molecular mechanisms involved in plant adaptation through
 the control of developmetal events. The assumption is then that these mechanisms
 reflect adaptation to different environments and therefore hint towards the
 'why' questions.
+% \todo{Give examples}
+% FLC, DOG1 variation
 
-%\todo{Give examples}
 \subsubsection*{Phenology models}
 The hypothesis in phenology is that plants sense and integrate environmental
 signals until they reach the optimal condition for triggering the transition to
@@ -325,7 +326,7 @@ some work pointing to the clock as a possible mechanism.
 
 Phenology models are usually phenomenological and make no attempt to represent
 the mechanism for sensing and integration of the environmental effects. Instead,
-they use numerical quantities to represent the progress towards a transition,
+they use numerical quantities to represent the progress towards the transition,
 which is an integral over time of the values of envrironmental indicators that
 affect the particular stage under consideration. For example, if we know that
 temperature affects a developmental stage, a phenology model might use a
@@ -339,45 +340,54 @@ time such that the development sum reaches a threshold value, $d(t_s) >
 D_s$. Incorporating genetics is usually represent by adding a sensitivity value
 to the above, $ d(t) = \sum_{i}^{t} k \cdot (T(i) - T_b)$ or changing the base temperature,
 $T_b$. The idea is that plants adapt by changing, $k$ or $T_b$, which reflects
-some molecular mechanism, to time their transition at the optimal time depending
-on the natural environment.
+some molecular mechanism, to change the length of the stage and time their
+transition at the optimal time depending on the natural environment.
 
 Modelling phenology usually goes in tandem with experimental observations about
-timing but the models usually stop there and they do not provide anything about
-the evolutionary hypotheses that usually follow.
+timing but the models usually stop there and they do not deal with the
+evolutionary hypotheses that usually follow. These models usually appear in
+ecological studies and do not consider the genetics while the genetic studies of
+developmental timing adaptation usually do not have a modelling component.
+
+Furthermore, dealing with each developmental stage in isolation means, while
+being simple and inducing simple 'why' hypotheses, is sometimes not enough as one
+developmental stage affects the timing and length of the next and the length of
+the entire generation affects the next generation and so on.
 %examples
 
-Limitations?
-Developmental events in isolation
-Usually ecological and while the effect on fitness is known
-
 \subsubsection*{System models}
-Some work takes a step further by integrating developmental with genetic
-information to substantiate evolutionary hypotheses. Chuine model
-See Chuine work with fitness phenofit not in Arabidopsis
+In order to be useful in evolutionary ecology other work has incorporated
+genetics and fitness into the simple phenology models of the kind we have seen
+above. \citet{chuine_phenology_2001}, for exaple, propose a model that combines
+fitness with traditional phenology models to predict the distribution of a
+species. The model is simple, the phenology part predicts the timing and the
+fitness, given as probabilities of survival under different weather stresses,
+predicts overall survival rates.
 
-Burghardt takes a more systems approach by taking an integrative look at the
-whole life cycle instead of events in isolation. The same authors
+While the simple phenology models consider species mean behaviour, other work
+has made the links between the genetic studies of timing mechanisms to phenology
+models to understand the range of expected behaviour both within but also
+between populations. For example, \citet{wilczek_effects_2009} add genetic
+variation of the FLC gene (involved in control of flowering time) to a flowering
+phenology model to predict variation in flowering time and vegetative season
+length.
 
-Organisms is absent
+\citet{burghardt_modeling_2015} takes a more systems approach by taking an
+integrative look at the whole life cycle instead of events in
+isolation. Variation is also considered explicitly by using an individual-based
+population model. Fitness, however, is not considered either directly as the
+reproductive success of the individual in the population or indirectly as
+survival rates as we have seen before. The focus is more on the timing and the
+consequences of the genetic environmental interaction.
 
-Limitations
-Mechanistically founded fitness + population genetics
-Nothing makes sense except in light of population genetics
-
-Although other work has considered the organism but has, again
-Prusinkiewicz paper
-
-
-usually abstracting away the organism from this.
-This has been useful in giving tractable representations and allowing general
-principles to be uncovered. However, many details and the mechanistic foundation
-of many of the assumptions is absent. A more fundamental view puts the organism
-back into the equation and tries to explain the fitness differences starting
-from
-
-the gene centric view, we jump from the gene directly to evolution bypassing the
-organism that will give us answers to the how questions.
+In representations in both simple and more complex evolutionary ecology models
+in this domain the organism is absent. While this gives tractable
+representations of complex processes and allows understanding of experimental
+results, a more fundamental understanding requires the organism to fill the gaps
+between the scales from genes to the population. Adding the organism to the
+population level recovers a more mechanistically founded reproductive success
+(fitness) as a first step towards explicitly modelling evolutionary dynamics.
+%Prusinkiewicz paper here?
 
 People:
 Kathleen Donohue
@@ -386,21 +396,26 @@ Carlos Alonso-Blanco
 Justin Borevitz
 Isabelle Chuine
 
-although there is more work on adaptation to other things directlye like
-temperature
-See Caroline Dean and Juliette de Meaux
-
-%for understanding
-
+% although there is more work on adaptation to other things directlye like
+% temperature
+% See Caroline Dean and Juliette de Meaux
 
 \subsection{Crop modelling}
+%for understanding vs for engineering
 % crops
+Crop models use many of the same ideas that we have seen in multi-scale plant
+and ecology models but they have a different more engineering oriented goal in
+mind instead of understanding. Usualle the motivation is understanding the
+effect of interventions to either plant genetics or crop management on plant
+performance, which is usually growth related.
+
+%traditional crop models
 Start with general traditional crop models and then go to the
 different goals but similar techniques although usually more mechanistic at
-least in mechanisms involved in growth.
+least in regards to mechanisms involved in growth.
 
 
-\subsubsection*{Multi-scale system models}
+\subsubsection*{Multi-scale models}
 The multi-scale systems modelling approach has also been proposed in attempts to
 engineer crop traits starting from genetics or from genomes
 \citep{welch_merging_2005, yin_applying_nodate, yin_modelling_2010,
