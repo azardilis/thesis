@@ -283,25 +283,34 @@ evolutionary ecology models.
 
 \subsection{Multi-scale plant models}
 Modelling in plant biology is usually concerned with individual mechanisms, for
-example photosynthesis or leaf stomata conductance. There is work on models that
-link two scales, for example models of plant development with the dynamics of
-the hormone auxin or functional-structural models that link plant physical
-development with aspects of metabolism.
+example photosynthesis or leaf stomata conductance. What perhaps makes it
+distinct from modelling work in other species is the importaance of the
+environment and the attempt to link these molecular processes to organism traits
+directly important for agriculture.
+%examples? clock to flowering time
 
-% Standard molecular models, focus on photosynthesis etc. envrinomental effects
-% important
-% % rasse tocquin and other crop style
-% I guess we should introduce structural models, they're interesting also given
-% the previous discussion on organisation
-% Then two scale, development + something
-% - auxin diffusion and movement
-% - functional structural greenlab
+Unlike other organisms most of the development of plants happens throughout
+their lifecycle and a lot of work was based on descriptive models of their
+structural growth. As the role of molecular mechanisms into development became
+clearer there is more multi-scale work linking molecular mechanisms to
+development, for example there are models of the distribution of the hormone
+auxin along the plant structure, which is known to act as a
+morphogen. Functional-structural models also try to link molecular mechanisms,
+usually abstract views of metabolism, to structural growth at the organ level.
+
+Plant development models usually ignore most of the underlying biochemistry of
+the organism except for a very narrow description of directly relevant molecular
+mechanisms. On the other hand models of molecular mechanisms, while sometimes
+linked to the organism, they usually ignore the constructive organisation of the
+plant. The question is can we construct the organism representing its
+contstructive organisation and underlying mechanisms? We next overview one
+attempt at a digital organism, the Framework Model, which is inspired by the
+functional-structural models.
 
 % Then FM more multi-scale
 % ->
-
 \subsubsection*{Framework Model}
-represented vegetative growth of Arabidopsis in lab conditions
+The Framework Model represents vegetative growth of Arabidopsis in lab conditions
 \citep{chew_multiscale_2014}, starting from four independent models that
 represent photosynthesis and carbon storage \citep{rasse_leaf_2006}, plant
 structure and carbon partitioning among organs
@@ -313,36 +322,59 @@ and starch metabolism \citep[FMv2;][]{chew_linking_2017}, or temperature and
 organ-specific inputs to flowering
 \citep{kinmonth-schultz_mechanistic_2018}. The Framework Models align with
 community efforts to link understanding of crop plant processes at multiple
-scales, for benefits in agriculture \citep{wu_connecting_2016,
-  zhu_plants_2016}. Among the limitations of the Framework Models, growth was
-limited to the vegetative stage, ending upon flower induction. Without
-reproduction, the models had no seed yield or link to evolutionary
-fitness. Without seed dormancy, they lacked a major determinant of Arabidopsis
-life history in the field. Their representation of the circadian clock was also
-unnecessarily detailed for many studies outside chronobiology.
+scales, for benefits in agriculture \citep{wu_connecting_2016, zhu_plants_2016}.
+
+Among the limitations of the Framework Models, growth was limited to the
+vegetative stage, ending upon flower induction. Without reproduction, the models
+had no seed yield or link to evolutionary fitness. Without seed dormancy, they
+lacked a major determinant of Arabidopsis life history in the field. Their
+representation of the circadian clock was also unnecessarily detailed for many
+studies outside chronobiology. These limitations mean that going beyond the
+organism to the population level to answer ecological questions is not possible.
 
 \subsection{Crop modelling}
 %for understanding vs for engineering
 % crops
 Crop models use many of the same ideas that we have seen in multi-scale plant
-models but they have a different more engineering oriented goal in
-mind instead of understanding. Usually the motivation is understanding the
-effect of interventions to either plant genetics or crop management on plant
-performance, which is usually growth related.
+models but they have a different more engineering oriented goal in mind instead
+of the fundemantal biology goal of understanding. Usually the motivation is
+understanding the effect of interventions to either plant genetics or crop
+management on plant performance, which is usually growth related.
 
 % traditional crop models
-Traditionally in crop models the entire crop is seen as one big plant.
-The focus here should be that we are trying to engineer the genome to
-get a specific outcome at the organism or crop level, usually related to
-growth, for example, crop yield.
+Traditionally in crop models the entire crop is seen as one big plant. The
+challenges relate exaclty to this assumption. For example, computing light
+interception of the canopy has to take into account the geometry and assumed
+configuration and positioning of plants in the field. The constructive
+organisation of plants is absent and plant processes, like photosynthesis, are
+scaled to the entire crop. Genetics or molecular mechanisms are represented, if
+at all, in a phenomenological way. For example, a mutant might have a different
+set of photosynthesis parameters and so on.
 
-% when considering plant could introduce the crop style model of carbon movemnt
-% and reservoirs, important for later
-%actually the more comprehensive plant organism models came from here!
+Since the goal in this models is prediction, as long as these models come
+reasonably close to the behaviour of the crop under different environmental
+conditions they are considered to be adequate representations. However, because
+of their nature it becomes difficult to capture the responses of the systems
+under multiple environmental inputs.
+
+\subsubsection*{A flows-based view of a plant}
+Other approaches start from a whole-plant model and then try to extrapolate to
+the entire crop. This usual representation is of the plant as multiple
+reservoirs of nutrients with flows between them. Growth, which is the main goal
+usually, is calculated as a function of the levels in these nutrient pools.
+
+%figure here, this view is important for later
+
+This view has later found its way into more traditional plant models and it is
+the metabolism level representation found in the Framework Model, for example,
+although the flows are calculated more mechanistically and the pools are the
+organ level reflecting the representation of the plant organisation. Again in
+this whole plant flow-based models, the constructive organisation of the plant
+is absent preventing fundamental questions but as long as the goal is prediction
+for engineering then sometimes this representation is adequate.
 
 
 \subsubsection*{Multi-scale models}
-% with mechanism
 The multi-scale systems modelling approach has also been proposed in crop
 modelling in attempts to engineer crop traits starting from genetics or from
 genomes \citep{welch_merging_2005, yin_applying_nodate, yin_modelling_2010,
@@ -385,7 +417,6 @@ reflect adaptation to different environments and therefore hint towards the
 'why' questions.
 
 \todo{Give examples, \eg{FLC, DOG1 variation}}
-
 % sometimes events are investigated together to see co-evolution Co-Variation
 % between Seed Dormancy, Growth Rate and Flowering Time Changes with Latitude in
 % Arabidopsis thaliana
@@ -469,10 +500,9 @@ population level recovers a more mechanistically founded reproductive success
 % Justin Borevitz
 % Isabelle Chuine
 
-% although there is more work on adaptation to other things directlye like
+% although there is more work on adaptation to other things directly like
 % temperature
 % See Caroline Dean and Juliette de Meaux
-
 
 \section{Languages for multi-scale biology}
 Models serve both as
