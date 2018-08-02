@@ -100,7 +100,7 @@
 
 \begin{document}
 \chapter{Introduction}
-% In light of this discussion I will also need to change the dicsussion in the
+% In light of this discussion I will also need to change the discussion in the
 % next chapter
 %somehow need to include the word constructive more, that's key
 Life is produced and sustained through the organisation of entities at various
@@ -137,7 +137,7 @@ molecular level. The reductionist view of life is that if cell is the main unit
 of life then if we understand all the processes inside the cell we will
 understand life as everything else follows.
 
-There were, however, even if on the fringes or often completele outside
+There were, however, even if on the fringes or often completely outside
 mainstream biology, few historical (and independent) threads of work that
 recognised the importance of organisation and consequently of the systems
 view. \citet{rashevsky_topology_1954} explained the need for organisation or
@@ -164,7 +164,7 @@ particularly the case when we take the systems view, intuitive thinking and
 mental models of the processes are not adequate tools to aid our
 understanding. A useful tool in these cases is formal models where the systems
 are represented using some formal language based on a mathematical
-intepretation, either directly or indirectly. An interesting view is that of
+interpretation, either directly or indirectly. An interesting view is that of
 formal models as machines that turn the assumptions that we put in into them to
 conclusions \citep{gunawardena_models_2014}. The unique advantage of formal
 models compared to informal ones (mental models) in Biology is that this machine
@@ -191,8 +191,8 @@ processes, from metabolism, to the circadian clock, and .
 % sum of their parts.
 % also cite 
 Taking the systems and modelling view to the extreme and remembering the
-fundamental goal of understanding living organisms through their organisation we
-can take a step further and expand our systems view from the cell to larger
+fundamental goal of understanding living organisms through their organisation,
+we can take a step further and expand our systems view from the cell to larger
 scales, for example to the organism and beyond. These models that reach beyond
 organisation on a single scale are usually called \emph{multi-scale models} and
 they are more close to the historical spirit of understanding system
@@ -202,7 +202,7 @@ with the cellular \citep{karr_whole-cell_2012} and population growth scales
 \citep{weise_mechanistic_2015}. Work on more complex organisms has focused more
 narrowly (Virtual liver, \citet{holzhutter2012virtual}; Virtual heart;
 \citet{noble_modeling_2002}; Bone system, \citet{paoletti_multilevel_2012})
-altough there are ambitious collaborative project aiming at whole organisms
+although there are ambitious collaborative project aiming at whole organisms
 \citep[virtual rat, virtual human][]{beard_multiscale_2012, kohl_systems_2009}.
 
 %multi-scale models in plants
@@ -213,14 +213,14 @@ that includes mechanistic models \citep{chew_mathematical_2014,
   voss_modelling_2014}. This multi-scale view starting from a molecular
 mechanism and metabolism is realised explicitly in the Framework Model that
 represents vegetative growth starting from the a specific well-understood
-molecular mechanism \citet[FMv1]{chew_multiscale_2014}. On the other end of the
-scales spectrum there is modelling work for plants in the crop and ecology world
-where the organism is usually absent. While this work usually is concerned with
-more crop or ecologically relevant species, recently Arabidopsis is starting to
-appear in crop and ecology research in attempts to bring the organism back into
-the equation and provide insight into relevant mechanisms that affect ecological
-or crop phenotypes especially with respect to the interaction with the
-environment.
+molecular mechanism, the circadian clock \citet[FMv1]{chew_multiscale_2014}. On
+the other end of the scales spectrum there is modelling work for plants in the
+crop and ecology world where the organism is usually absent. While this work
+usually is concerned with more crop or ecologically relevant species, recently
+Arabidopsis is starting to appear in crop and ecology research in attempts to
+bring the organism back into the equation and provide insight into relevant
+mechanisms that affect ecological or crop phenotypes especially with respect to
+the interaction with the environment.
 
 The work of this thesis is situated exactly in this space, in the intersection
 and modelling space between plant science and crop or ecological
@@ -235,8 +235,8 @@ representation.
 \label{sec:aims}
 Therefore, the \emph{aims} of this thesis are:
 \begin{itemize}
-\item Develop a suitable notation to address the problem of naturally and
-  succintly representing multi-scale plant models that go beyond the organism
+\item Develop a suitable language to address the problem of naturally and
+  succinctly representing multi-scale plant models that go beyond the organism
   and act in a dynamic natural environment.
 \item Use the above language to create such multi-scale plant models from the
   organism to the ecosystem.
@@ -246,10 +246,10 @@ Therefore, the \emph{aims} of this thesis are:
 \end{itemize}
 
 In the rest of this chapter we will first give an overview of modelling in the
-plant domain starting from plant science and going to the ecology and crop
-modelling. We will then overview the language question in multi-scale models that
-relates to the organisation view of living organisms we noted above. Finally, we
-give the contributions of this thesis in reference to the outlined aims.
+plant domain starting from plant science and going to ecology and crops . We
+will then overview the language question in multi-scale models that relates to
+the organisation view of living organisms we noted above. Finally, we give the
+contributions of this thesis in reference to the outlined aims.
 
 \section{From plants to crops and ecosystems}
 Traditional plant biology research has been focused on understanding molecular
@@ -265,9 +265,9 @@ of how a particular phenotypic trait arises from a molecular mechanism as the
   \centering
   \includegraphics[width=0.8\textwidth]{figures/circle.eps}
   \caption{Plant biology research is usually concerned with the top part of the
-    cycle and the 'how' of organisms. Evolution and ecology are concenred with
+    cycle and the 'how' of organisms. Evolution and ecology are concerned with
     the why although they usually use a limited view of the 'how' to make
-    hypotheses about the 'why'.}
+    hypotheses about the 'why' \citep{millar_intracellular_2016}.}
   \label{fig:circle}
 \end{figure}
 
@@ -285,20 +285,25 @@ evolutionary ecology models.
 
 \subsection{Multi-scale plant models}
 Modelling in plant biology is usually concerned with individual mechanisms, for
-example photosynthesis or leaf stomata conductance. What perhaps makes it
-distinct from modelling work in other species is the importaance of the
-environment and the attempt to link these molecular processes to organism traits
-directly important for agriculture.
-%examples? clock to flowering time
+example photosynthesis \citep{farquhar_biochemical_1980} or leaf stomata
+conductance \citep{tardieu1993integration}. What perhaps makes it distinct from
+modelling work in other species is the importance of the environment and the
+attempt to link these molecular processes to organism traits directly important
+for agriculture. For example photosynthesis models have been linked to sucrose
+synthesis \citep{zhu_e-photosynthesis:_2013}, the circadian clock to flowering
+time \citep{salazar_prediction_2009}, and leaf-stomata conductance to leaf
+growth \citep{tardieu2015modelling}.
 
 Unlike other organisms most of the development of plants happens throughout
 their lifecycle and a lot of work was based on descriptive models of their
-structural growth. As the role of molecular mechanisms into development became
-clearer there is more multi-scale work linking molecular mechanisms to
-development, for example there are models of the distribution of the hormone
-auxin along the plant structure, which is known to act as a
-morphogen. Functional-structural models also try to link molecular mechanisms,
-usually abstract views of metabolism, to structural growth at the organ level.
+structural growth \citep{mundermann_quantitative_2005}. As the role of molecular
+mechanisms into development became clearer there is more multi-scale work
+linking molecular mechanisms to development, for example there are models of the
+distribution of the hormone auxin along the plant structure, which is known to
+act as a morphogen \citep{prusinkiewicz2009control,
+  jonsson2006auxin}. Functional-structural models also try to link molecular
+mechanisms, usually abstract views of metabolism, to structural growth at the
+organ level \citep{christophe_model-based_2008}.
 
 Plant development models usually ignore most of the underlying biochemistry of
 the organism except for a very narrow description of directly relevant molecular
@@ -312,6 +317,7 @@ functional-structural models.
 % Then FM more multi-scale
 % ->
 \subsubsection*{Framework Model}
+\label{subsec:fm}
 The Framework Model represents vegetative growth of Arabidopsis in lab conditions
 \citep{chew_multiscale_2014}, starting from four independent models that
 represent photosynthesis and carbon storage \citep{rasse_leaf_2006}, plant
@@ -335,8 +341,6 @@ studies outside chronobiology. These limitations mean that going beyond the
 organism to the population level to answer ecological questions is not possible.
 
 \subsection{Crop modelling}
-%for understanding vs for engineering
-% crops
 Crop models use many of the same ideas that we have seen in multi-scale plant
 models but they have a different more engineering oriented goal in mind instead
 of the fundemantal biology goal of understanding. Usually the motivation is
@@ -361,7 +365,7 @@ under multiple environmental inputs.
 
 \subsubsection*{A flows-based view of a plant}
 Other approaches start from a whole-plant model and then try to extrapolate to
-the entire crop. This usual representation is of the plant as multiple
+the entire crop. The usual representation is of the plant as multiple
 reservoirs of nutrients with flows between them. Growth, which is the main goal
 usually, is calculated as a function of the levels in these nutrient pools.
 
@@ -369,11 +373,12 @@ usually, is calculated as a function of the levels in these nutrient pools.
 
 This view has later found its way into more traditional plant models and it is
 the metabolism level representation found in the Framework Model, for example,
-although the flows are calculated more mechanistically and the pools are the
-organ level reflecting the representation of the plant organisation. Again in
-this whole plant flow-based models, the constructive organisation of the plant
-is absent preventing fundamental questions but as long as the goal is prediction
-for engineering then sometimes this representation is adequate.
+although the flows are calculated more mechanistically and the pools are at the
+organ level reflecting the explcit representation of plant organisation. Again.
+in this whole plant flow-based models, the constructive organisation of the
+plant is usually absent preventing fundamental questions. However, as long as
+the goal is prediction for engineering, then often this kind of representation
+is adequate.
 
 
 \subsubsection*{Multi-scale models}
@@ -410,18 +415,23 @@ survive to reproduction.
 
 Yet species have a natural geographic range that spans a wide range of climatic
 conditions. For example, Arabidopsis in Europe grows naturally all the way from
-Spain to Northern Finland. The hypothesis is then that the genes that control
-these developmental events must be under selective pressure to adapt to
+Spain to Northern Finland. The hypothesis is then that the mechanisms that
+control these developmental events must be under selective pressure to adapt to
 different climates. A lot of work in evolutionary ecology of plants is focused
 on understanding the molecular mechanisms involved in plant adaptation through
 the control of developmetal events. The assumption is then that these mechanisms
 reflect adaptation to different environments and therefore hint towards the
-'why' questions.
-
-\todo{Give examples, \eg{FLC, DOG1 variation}}
-% sometimes events are investigated together to see co-evolution Co-Variation
-% between Seed Dormancy, Growth Rate and Flowering Time Changes with Latitude in
-% Arabidopsis thaliana
+'why' questions. \citet{mendez-vigo_altitudinal_2011} characterise the variation
+in four flowering related genes across large geographical regions to investigate
+their involvement in the variation of flowering related traits across the
+region. Other studies focus on seed dormancy related genes
+\citep{chiang_dog1_2011} or more broadly on general characterisation of genetic
+variation for multiple traits across the natural habitats of Arabidopsis
+\citep{atwell_genome-wide_2010}. The developmental events are correlated since
+the length of one stage affects the next, which in turn affects the next
+generation. Therefore the genetic mechanisms behind two related (and
+consecutive) developmental events are sometimes studied together
+\citep{debieu_co-variation_2013}.
 
 \subsubsection*{Phenology models}
 The hypothesis in phenology is that plants sense and integrate environmental
@@ -452,14 +462,14 @@ transition at the optimal time depending on the natural environment.
 Modelling phenology usually goes in tandem with experimental observations about
 timing but the models usually stop there and they do not deal with the
 evolutionary hypotheses that usually follow. These models usually appear in
-ecological studies and do not consider the genetics while the genetic studies of
-developmental timing adaptation usually do not have a modelling component.
+ecological studies and do not consider the genetics while studies of genetic
+variation of developmental timing adaptation usually do not have a modelling
+component.
 
 Furthermore, dealing with each developmental stage in isolation means, while
 being simple and inducing simple 'why' hypotheses, is sometimes not enough as one
 developmental stage affects the timing and length of the next and the length of
 the entire generation affects the next generation and so on.
-\todo{examples}
 
 \subsubsection*{System models}
 In order to be useful in evolutionary ecology other work has incorporated
@@ -494,17 +504,14 @@ between the scales from genes to the population. Adding the organism to the
 population level recovers a more mechanistically founded reproductive success
 (fitness) as a first step towards explicitly modelling evolutionary dynamics.
 
-\todo{Prusinkiewicz paper here?}
 % People:
 % Kathleen Donohue
 % Amity Wilczek
-% Carlos Alonso-Blanco
 % Justin Borevitz
-% Isabelle Chuine
 
 % although there is more work on adaptation to other things directly like
 % temperature
-% See Caroline Dean and Juliette de Meaux
+% See Caroline Dean
 
 \section{Languages for multi-scale biology}
 We have already outlined the need for formal models in the description of
@@ -567,7 +574,6 @@ details in some of the issues we highlighted above using illustrative examples.
 The work of this thesis is concerned primarily with whole plant models that go
 beyond the organism, languages for their description, and their applications. In
 reference to the aims and dicussion above, specifically our contributions are:
-% bullet points and references to later chapters
 % This need to be refutable, like a contract for the thesis
 
 \begin{itemize}
@@ -575,10 +581,10 @@ reference to the aims and dicussion above, specifically our contributions are:
   we hinted to above at the intersection of plant biology models in a natural
   environment. The language follows the structuralist tradition and is therefore
   object-based, which means that it can capture certain important aspects of the
-  constructive organsiation of living systems. At the same time quantifiable
+  constructive organisation of living systems. At the same time quantifiable
   properties can also be represented allowing abstraction while further
-  extensions allows an enriched expression language for these properties that
-  combine regular mathematical expressions with (i) a flexible system of state
+  extensions allow an enriched expression language for these properties that
+  combines regular mathematical expressions with (i) a flexible system of state
   observation based on database operations and (ii) a way of definining
   determinstically time-dependent values that can be used to describe parts of
   the systems or the natural envrionment that we do not wish to model
@@ -588,20 +594,21 @@ reference to the aims and dicussion above, specifically our contributions are:
   Haskell. This allows the set of expressions and types for quantifiable
   properties to come from the host language, which increases expresiveness while
   at the same time maintaining the naturalness of a domain-specific language.
-\item An extension of the Framework Model to the full-lifecycle including
-  reproduction and see dormancy along with modifcations that allow its operation
-  realistic weather ranges. This is combined with full-lifecycle phenology
-  models from ecology to provide a population level model that includes the
-  organism (through the FM). This allows simulation experiments for determining
-  ecological properties in different genotype x environment scenarios that are
-  mechanistically founded.
-\item An application of the Framework Model for engineering perspective, like
-  the crop models. Instead of taking the traditional approach to engineer
-  genomes ,as we have seen, we take an alternative approach that aims at
+\item An extension of the Framework Model (FM; \ssec{fm}) to the full-lifecycle
+  including reproduction and see dormancy along with modifcations that allow its
+  operation realistic weather ranges. This is combined with full-lifecycle
+  phenology models from ecology to provide a population level model that
+  includes the organism (through the FM). This allows simulation experiments for
+  determining ecological properties in different genotype x environment
+  scenarios that are mechanistically founded and a step towards organism-centred
+  models of evolution.
+\item An application of the Framework Model with an engineering perspective,
+  like the crop models. Instead of taking the traditional approach to engineer
+  genomes, as we have seen, we take an alternative approach that aims at
   engineering the environment for achieving specific growth-related organism
   traits. We pose the problem as an optimal control problem and frame two
-  instances, one where the control is direct and another one where the control
-  is indirect through positioning.
+  instances of it, one where the control is direct and another one where the
+  control is indirect through positioning.
 \end{itemize}
 
 \printbibliography[heading=bibintoc]
