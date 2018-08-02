@@ -406,7 +406,7 @@ survive to reproduction.
 \label{fig:plantLife}
 \end{figure}
 
-Yet species have a natural geographic range that spans a wide range of climactic
+Yet species have a natural geographic range that spans a wide range of climatic
 conditions. For example, Arabidopsis in Europe grows naturally all the way from
 Spain to Northern Finland. The hypothesis is then that the genes that control
 these developmental events must be under selective pressure to adapt to
@@ -505,31 +505,58 @@ population level recovers a more mechanistically founded reproductive success
 % See Caroline Dean and Juliette de Meaux
 
 \section{Languages for multi-scale biology}
-Models serve both as
-The notation we use to describe parts of the natural or artificial world can act
-as a tool for thinking about it. The characteristics that a notation for a
-specific domain should have in order to be a good tool for thought have been
-succinctly listed by Kenneth Iverson: ``ease of expression of common constructs
+We have already outlined the need for formal models in the description of
+biological systems. The unique advantage is their formal nature, which means
+that they can be used as tools for turning hypotheses into predictions using the
+formal methods that are provided by the technical language we use to specify
+them. Usually this involves simulating them on a computer. Their formal nature
+also serves another purpose. Since they are externalisations of our knowledge
+about a system, the representations can serve as documentation for our knowledge
+when trying to communicating it to ourselves (for thinking) but also for others.
+
+This view of notation or language as tool for thought and not solely as
+technical object has been recognised by Kenneth Iverson who succinlty listed the
+characteristics of a good notation: ``ease of expression of common constructs
 in the domain, suggestivity, ability to subordinate detail, economy, and
 amenability to formal proofs" \cite{iverson2007notation}.
 
 Modelling in biology becomes necessary when systems are complex. However, the
-more complex the systems are, the harder models become to read and write.  The
-fundamental difference in the question asked in Biology means that
+more complex the systems are, the harder models become to read and write. This
+means that, while they might serve their first purpose as technical objects,
+they fail on their second purpose as tools for thought. One reason for this
+might be that the standadrd technical languages from Physics, like Ordinary
+Differential Equations, are not adequate for the representation of the
+constructive nature of the organisation of living organisms. The standard
+abstraction is to ignore the organisation and describe metric properties of the
+system captured with their values captured in numeric variables and their
+dynamics in equations. While this abstraction of systems as numeric variables is
+sometimes enough, if we really want to fundamnetally undestand an organism or
+aspects of it, which is the case in these complex systems, we also need a
+description of their constructive organisation. This was already noted, as we
+have seen, by the first `structuralists' and systems theorists like Rashevsky
+who pointed out the need for the representation of the 'relational aspects of
+biological systems' as well as their more metric properties. Later work focused
+on finding suitable theories of organisation analogous to the equations of
+motions in Physics. For that reason Rashevsky's student, Robert Rosen, was
+called the Newton of Biology.
 
-constructive organisation that is a fundamental characteristic of the
-multi-scale systems view of biological processes. This was noted since Rashevsky
-who as we have seen pointed out the need for the representation of
-need for discrete objects
+While we appreciate the organisation is important especially at multi-scale
+representations abstraction through quantifiable properties is also needed
+especially at a more complex systems where we do not have the capacity or the
+desire to model everything mechanistically.
 
-While organisation is important especially at multi-scale representations
-abstraction through quantifiable properties is also needed
+For complex models like the ones we have seen above from plant, crop, and
+evolutionary ecology research they are either simple enough that they are
+captured with ODEs or similar formalisms or they are complex that they cannot be
+easily mapped to any existing technical language in which case more pragmatic
+approaches are used where the model becomes a program in a general purpose
+programming language. 
 
-
-See next chapter for a more detailed overview and comparison of languages in
-this domain.
-
-%refer to examples above.
+The more complex models are the one we are interested representing processes
+like whole-plant models beyond the organism reaching to ecology and
+evolution. The next chapter~\ref{chp:relWork} is dedicated to a more in depth
+overview of existing work on languages for this domain and goes into more
+details in some of the issues we highlighted above using illustrative examples.
 
 
 \section{Contributions}
