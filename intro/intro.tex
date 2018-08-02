@@ -231,6 +231,8 @@ challenges these multi-scale models present, in plants or elsewhere, there are
 also some challenges regarding the technical language used for their
 representation.
 
+\section{Aims}
+\label{sec:aims}
 Therefore, the \emph{aims} of this thesis are:
 \begin{itemize}
 \item Develop a suitable notation to address the problem of naturally and
@@ -535,10 +537,11 @@ aspects of it, which is the case in these complex systems, we also need a
 description of their constructive organisation. This was already noted, as we
 have seen, by the first `structuralists' and systems theorists like Rashevsky
 who pointed out the need for the representation of the 'relational aspects of
-biological systems' as well as their more metric properties. Later work focused
-on finding suitable theories of organisation analogous to the equations of
-motions in Physics. For that reason Rashevsky's student, Robert Rosen, was
-called the Newton of Biology.
+biological systems' as well as their more metric properties
+\citet{rashevsky_topology_1954}. Later work focused on finding suitable theories
+of organisation analogous to the equations of motions in Physics. For that
+reason Rashevsky's student, Robert Rosen, was called the Newton of Biology
+\citep{mikulecky2001robert}.
 
 While we appreciate the organisation is important especially at multi-scale
 representations abstraction through quantifiable properties is also needed
@@ -550,9 +553,10 @@ evolutionary ecology research they are either simple enough that they are
 captured with ODEs or similar formalisms or they are complex that they cannot be
 easily mapped to any existing technical language in which case more pragmatic
 approaches are used where the model becomes a program in a general purpose
-programming language. 
+programming language. This is problematic because the knowledge is usually
+hidden in the simulation code.
 
-The more complex models are the one we are interested representing processes
+The more complex models are the one we are interested in, representing processes
 like whole-plant models beyond the organism reaching to ecology and
 evolution. The next chapter~\ref{chp:relWork} is dedicated to a more in depth
 overview of existing work on languages for this domain and goes into more
@@ -560,28 +564,44 @@ details in some of the issues we highlighted above using illustrative examples.
 
 
 \section{Contributions}
-bullet points and references to later chapters
-This need to be refutable, like a contract for the thesis
+The work of this thesis is concerned primarily with whole plant models that go
+beyond the organism, languages for their description, and their applications. In
+reference to the aims and dicussion above, specifically our contributions are:
+% bullet points and references to later chapters
+% This need to be refutable, like a contract for the thesis
 
 \begin{itemize}
-\item A notation for describing systems like the ones we hinted to above at the
-  intersection of plant biology models in a natural envrionment. This notation
-  combines object-based discrete dynamics along with quantifiable properties
-  that offer the possibility for abstraction. Further extension allows an
-  enriched expression language that combines regular mathematical expressions
-  with a flexible system of state observation based on database operations and a
-  way of definining determinstically time-dependent values that can be used to
-  describe parts of the systems or the natural envrionment that we do not wish
-  to model mechanistically.
-\item An extensions of the Framework Model to the full-lifecycle with
-  modifcations that allow its operation realistic weather ranges. Gap between
-  even multi-scale plant models like the FM and the population and ecology level.
-\item An application of the Framework Model for the crop engineering
-  perspective. Instead of taking the traditional approach to engineer genomes as
-  we have seen we take an alternative approach that engineers the environment
-  for achieving specific growth-related organism traits. We frame the problem as
-  an optimal control problem and frame two instances, one where the control is
-  direct and another one where the control is indirect through positioning.
+\item A notation, we call \emph{Chromar}, for describing systems like the ones
+  we hinted to above at the intersection of plant biology models in a natural
+  environment. The language follows the structuralist tradition and is therefore
+  object-based, which means that it can capture certain important aspects of the
+  constructive organsiation of living systems. At the same time quantifiable
+  properties can also be represented allowing abstraction while further
+  extensions allows an enriched expression language for these properties that
+  combine regular mathematical expressions with (i) a flexible system of state
+  observation based on database operations and (ii) a way of definining
+  determinstically time-dependent values that can be used to describe parts of
+  the systems or the natural envrionment that we do not wish to model
+  mechanistically.
+\item An implementation of the abstract version of Chromar as an embedded Domain
+  Specific Language (EDSL) in the general-purpose programming language
+  Haskell. This allows the set of expressions and types for quantifiable
+  properties to come from the host language, which increases expresiveness while
+  at the same time maintaining the naturalness of a domain-specific language.
+\item An extension of the Framework Model to the full-lifecycle including
+  reproduction and see dormancy along with modifcations that allow its operation
+  realistic weather ranges. This is combined with full-lifecycle phenology
+  models from ecology to provide a population level model that includes the
+  organism (through the FM). This allows simulation experiments for determining
+  ecological properties in different genotype x environment scenarios that are
+  mechanistically founded.
+\item An application of the Framework Model for engineering perspective, like
+  the crop models. Instead of taking the traditional approach to engineer
+  genomes ,as we have seen, we take an alternative approach that aims at
+  engineering the environment for achieving specific growth-related organism
+  traits. We pose the problem as an optimal control problem and frame two
+  instances, one where the control is direct and another one where the control
+  is indirect through positioning.
 \end{itemize}
 
 \printbibliography[heading=bibintoc]
