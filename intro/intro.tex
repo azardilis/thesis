@@ -374,11 +374,25 @@ under multiple environmental inputs.
 %Main point is to introduce the concept of this reservoir flow view, which is
 %important for later
 Other approaches start from a whole-plant model and then try to extrapolate to
-the entire crop. The usual representation is of the plant as multiple
-reservoirs of nutrients with flows between them. Growth, which is the main goal
-usually, is calculated as a function of the levels in these nutrient pools.
+the entire crop. The usual representation is of the plant as multiple reservoirs
+of nutrients with flows between them. Growth, which is the main goal usually, is
+calculated as a function of the levels in these nutrient pools (see
+Figure~\ref{fig:plantFlow}).
 
-%figure here, this view is important for later
+\begin{figure}[tb]
+\centering  
+\includegraphics[scale=0.8]{figures/flowPlant.eps}
+\caption{A generic plant model with the standard flow-based view of a plant
+  \citep{france_mathematical_1984}. The plant is represented by several state
+  variable representing the levels of various nutrients in different parts of
+  the plant. The dynamics are then seen as flows between the pools. The pools
+  could also represent entities outside the system, like the soil, for
+  example. The variables represent, structural mass ($X$), nitrogen ($N$),
+  carbon ($C$), and water ($Wa$). The output is usually the biomass of each part
+  of the plant and espcially the fruits or seeds, which are important traits for
+  agriculture.}
+  \label{fig:plantFlow}
+\end{figure}
 
 This view has later found its way into more traditional plant models and it is
 the metabolism level representation found in the Framework Model, for example,
