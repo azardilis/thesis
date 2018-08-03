@@ -18,6 +18,8 @@
 \usepackage{expl3}
 \usepackage{enumitem}
 \usepackage{booktabs}
+\usepackage{fancyvrb}
+\usepackage{inconsolata}
 
 \frenchspacing
 
@@ -781,7 +783,7 @@ transitions, Simile represents all variables and interactions graphically
 further adding to the complexity of the representation.
 
 \section{Pragmatic approaches}
-When modellers are confronted with the complexity in models like the one we have
+When modellers are confronted with complexity in models like the ones we have
 seen in the Introduction or the example ones from this chapter, they sometimes
 turn to more pragmatic approaches when they cannot map their understanding into
 any suitable technical language.
@@ -791,7 +793,7 @@ the model as a program in a general-purpose programming language. We next give
 an overview of these methods with references to the examples as before.
 
 
-\subsection{General-purpose programming languages}
+\subsection{Models as programs}
 By far the most popular approach when confronted with the limitations of either
 object-based or dynamics-based languages we noted above, is to use a custom
 simulation software. In this approach the domain knowledge is represented as a
@@ -802,62 +804,86 @@ and the whole-cell of \citet{karr_whole-cell_2012}, which are examples of the
 kinds of the comprehensive multi-scale models we are interested in, are written
 in this way, for example (both given as Matlab programs).
 
-Turning to our example, if one wanted to write our root development example we
-could:
+Turning to our examples, in order to write the root development model one could
+write something like the following in a general-purpose programming language:
 
-\begin{verbatim}
-Cell{}
-state = []
-for i=1 to n:
-   move_carbon
-\end{verbatim}
+\begin{BVerbatim}
+type Mode = Idle | Growing
+type Cell = {s, a: real, m: Mode}
+type Shoot = {s : real}
+type State = {root : [Cell], shoot : Shoot}
+
+function simulate(s : State, n:Int) -> [State]
+  ...
+  for i = 1 to n
+    s' = step s
+    ...
+
+function step(s: State) -> State
+  s' = (diff . growth . cellDiv . ...) s
+  return s'
+\end{BVerbatim}
+
+where we assume we are in a programming language that allows the definition of
+compound data types that we use to represent the information about cells and the
+shoot. We first decide on a representation for the state of the system where we
+use a list to represent the array of cells in the root since lists are
+ordered. Then in order to simulate the system we apply the \texttt{step}
+function \texttt{n} times to some initial state. The \texttt{step} function
+applies functions that represent all the biological processes that change the
+systems of the system, diffusion, cell growth and division and so on.
 
 One is faced not only with a decision on representation but also with a decision
-of a simulation algorithm to follow since the model is not mapped to a
-well-defined technical languages with existing implementation. Since
+of a simulation algorithm to follow, since the model is not mapped to a
+well-defined technical language with existing implementation. Since
 general-purpose programming languages are inherently sequential, for example,
 one has to find a reasonable serialisation of the execution of the processes
 that does not affect the results. \citet{karr_whole-cell_2012} deal with this by
 using an appropriate time-step and in each time-step randomising the execution
 of the processes.
+%mention somewhere declaratively vs describing the process
 
-As we have seen this approach gives greater flexibility as one can use any
-existing programming language constructs, either built-in or through external
-libraries, for the construction of the model. At the same time, unless one
-spends a great deal of effort, the resulting representation is hard to read in
-the first place and hard to maintain or extend in the future. In contrast the
-rule-based representations we have seen above are inherently declarative and
-concurrent and extending a model is just a matter of concatenating more rules to
-the existing ones.
+This approach gives greater flexibility as one can use any existing programming
+language constructs, either built-in or through external libraries, for the
+construction of the model. At the same time, unless one spends a great deal of
+effort, the resulting representation is hard to read in the first place and hard
+to maintain or extend in the future. In contrast, the rule-based representations
+we have seen above are inherently declarative and concurrent and extending a
+model is just a matter of concatenating more rules to the existing ones.
 
 \subsubsection{Multi-model simulation environments}
 To deal with the problem of extension many models are written in a modular way
 such that related components are packaged together. Each component is written in
 the most convenient way. The problem comes in their combination.Sometimes models
 are written in different programming languages, with different input/output
-formats, different time-steps and units and so on. What happens in practice is
-that models are usually reimplemented in one language to create a multi-model
-written in a single language. This is the approach taken, for example, in the
-Framework Model where all constituent models are reimplemented in Matlab along
-with other compatability changes, likes time resolution changes.
+formats, different time-steps, units and other incompatabilities. What happens
+in practice is that models are usually reimplemented in one language to create a
+multi-model written in a single language. This is the approach taken, for
+example, in the Framework Model where all constituent models are reimplemented
+in Matlab along with other compatability changes, likes time resolution changes.
 
 There has been some work on multi-model simulators that can deal with
 heterogeneous models written in possibly different languages or have other
-incompatibilities.
-% mois
-% cis_interface from plants/crops in silico people
-
+incompatibilities. The idea is that the user declares their intentions on how
+the modules should interact and the rest, like interaction, conversion and
+simulation, are handled by the framework. The modular integration of processes
+in the \citet{karr_whole-cell_2012} model inspired the \emph{mois} tool
+\citep{erbm_mois_2015} that uses various techniques, like variable time-steps
+and backtracking \citep{bucher2013decomposition}, for the simulation of the
+interacting modules. Another tool \citep{cis_2018} was developed as part of the
+Plants in Silico initiative \citep{zhu_plants_2016}, a collaborative effort on
+multi-scale plant and crop modelling.
 
 \subsection{Simulation frameworks}
-Going a step further instead of the user having to write custom simulation
+Going a step further, instead of the user having to write custom simulation
 software, some frameworks provide libraries that expose common functionality for
-the construction of models.
+the construction or combination of models.
 
-\subsubsection*{Agent-based}
+\subsubsection*{Agent-based frameworks}
 In Agent-based modelling (ABM) simulation frameworks, the description of the
-process/model also happens declaratively through the description of the
-behaviour of classes of agents (see for example \cite{solovyev2010spark} used in
-systems biology). 
+process/model happens declaratively through the description of the behaviour of
+classes of agents (see for example \cite{solovyev2010spark} used in systems
+biology).
 
 While initially this looks similar to the object-based formalisms we have seen
 above, in ABM systems the main unit of description is the entire behaviour of
@@ -868,17 +894,54 @@ synchronisation often leads to more natural descriptions and, more practically,
 makes the resulting models easier to change and combine. The advantages of being
 in a programming language remain.
 
-\subsection{Crop Simulation Frameworks}
-Crop simulation software, like apsim provide a set of classes in c\# for the most
-common functionality likely to be encountered in crop models, like the
-environment module, water module and so on.
+\subsection{Crop Simulation frameworks}
+Modelling has historically been used much more extensively in crop science than
+in plant biology. Several large models incorporating significant environemental
+components (from soil to ecosystem) have been developed. These have been
+increasingly developed in a modular fashion providing the user with
+functionality for common modelling scenarios, like calculation of water uptake
+or light interception by the canopy \citep{keating_overview_2003}. In order to
+increase re-usability and decrease user effort, several frameworks have been
+developed on top of crop simulaiton software that offer a set of parameterised
+components that can be used to model different scenarios or even different crops
+\citep{brown_plant_2014}.
+
+This modular approach of crop models has found its way in complex and
+comprehensive biology models, like the \citet{karr_whole-cell_2012} whole-cell
+model and the Framework Model \citep{chew2014multiscale}, which were built in a
+modular fashion with exactly the same motivation -- re-usability and
+extensibility. Writing these models requires familiarity the programming
+language of the framework but, again, the advantages of a general-purpose
+programming language remain.
 
 
-\subsection{Data Formats}
+\subsection{Model interchange formats (SBML)}
 % SBML
-The Systems Biology Markup Language \citep[SMBL;][]{hucka_systems_2003} is used
-as an interchange format between tools to share descriptions of molecular
-biology.
+The growth of the systems biology movement led to a large number of tools for
+the representation and analysis of models of molecular processes. Most of the
+models can be represented by all dealt with similar type of processes of genetic
+networks and were represented similarly as systems of ODE's in the continuous
+form or Petri Nets in a discrete form. The Systems Biology Markup Language
+\citep[SMBL;][]{hucka_systems_2003} was developed as an interchange format
+between the different tools for these kind of processes and had support for the
+representation of the most commonly used constructs in these models, reactions,
+compartments along with model information, like units and so on.
+
+As models started becoming more complex it faced the same limitations we noted
+in the Introduction and in the Petri Net section regading dynamic organisation
+among others. This led to the development of multiple extensions to the original
+format \citep[SBML L3];[]{sbmlL3} to handle the increased complexity. For
+example, the `Dynamic Structures' package adds support for defining dynamic
+structures and the `Hierarchical Model Composition' package adds support for
+hierarchy representation. The L3 specification was put to the test for the
+representation of the \citet{karr_whole-cell_2012} whole-cell model
+\citep{waltemath_toward_2016}.
+
+SBML models are only used as a description language and they do not have any
+interpretation as mathematical objects. Each tool using it can interpet however
+it wants although there is an underlying assumption that all tools will
+interpret the language constructs in the same way.
+
 
 
 
