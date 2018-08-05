@@ -67,121 +67,151 @@
 \chapter{Optimal Control}
 \label{chp:oc}
 
-\section{Introduction}
-Understanding the links between biological processes at multiple scales, from
-genomes and molecular regulation to populations and evolution along with their
-interactions with the environment, is a major challenge in understanding
-life. Apart from understanding this is also becoming important in attempts to
-engineer traits, for example in crops, starting from genetics or from genomes at
-different environmental conditions (genotype x environment ->
-trait). In this work we instead address the problem of controlling the
-environment to achieve particular traits of individual plants (e.g biomass) or
-populations of plants (climate control problem). While the automatic climate
-control problem has been studied before for greenhouses, the focus was more on
-minimising energy consumption and/or achieving certain predefined climate
-regimes and rarely on optimising crop traits \citep{Chalabi1996,
-udinktenCate1983, Challa_1990, Aaslyng2003}. More insulated and sophisticated
-growth environments with more precise control are becoming available as part of
-the urban and controlled-environment agriculture movement \citep{mok_strawberry_2014, despommier_farming_2013}. There are many
-commercial examples (\href{https://aerofarms.com/}{Aerofarms},
-\href{https://motorleaf.com/}{Motorleaf}) and others like Intelligent Growth
-Solutions (\href{https://www.intelligentgrowthsolutions.com/}{IGS}) that are based on
-novel technologies, for example, for reducing energy consumption and increasing
-control over the growth space (lightning patent \citep{aykroyd_novel_2016},
-automated growth tower patent \citep{aykroyd_automated_2018}). These more
-sophisticated growth environment allow us to focus more on crop traits and even
-more precisely at specific quality standards (size, uniformity) that crops need
-to meet (see for example EU marketing standards on fruit and vegetables;
-\citep{eu-543-2011}).
+Biological dynamics, from single cell behaviours to emergent properties of
+populations, are the result of the complex interplay between genomes and the
+environment. Efforts to tightly regulate them have so far largely been focused
+on (re)engineering genomes. In this work we instead address the problem of
+controlling the plant biomass manipulating the environment around it. While the
+automatic climate control problem has been studied before for greenhouses, the
+focus of such efforts was on the minimisation of energy consumption and/or
+achieving assigned climate regimes. Seldom those works attempted to optimise
+crop traits \citep{Chalabi1996, udinktenCate1983, Challa_1990, Aaslyng2003}.
 
-In order to address the above, we present a formulation of the climate control
-problem for \textit{Arabidopsis thaliana} plants as an optimal control problem
+More insulated and sophisticated growth environments with more precise control
+are becoming available as part of the urban and controlled-environment
+agriculture movement \citep{mok_strawberry_2014, despommier_farming_2013}. There
+are many commercial examples (\href{https://aerofarms.com/}{Aerofarms},
+\href{https://motorleaf.com/}{Motorleaf}) and others like Intelligent Growth
+Solutions (\href{https://www.intelligentgrowthsolutions.com/}{IGS}) that are
+based on novel technologies, for example, for reducing energy consumption and
+increasing control over the growth space (lighting patent
+\cite{aykroyd_novel_2016}, automated growth tower patent
+\cite{aykroyd_automated_2018}). These more sophisticated growth environment
+allow us to focus more on crop traits and even more precisely at specific
+quality standards (size, uniformity) that crops need to meet \citep[see for
+example EU marketing standards on fruit and vegetables;][]{eu-543-2011}.
+
+In this chapter, we present a formulation of the climate control problem for
+\textit{Arabidopsis thaliana} plants as an optimal control problem
 \citep{kirk_optimal_2012} where the control variables are climate conditions
 (temperature) and the performance criterion is a crop trait. It has already been
 proposed that more mechanistic models are needed when linking between multiple
 scales instead of the usually empirical models used in crop modelling
-\citep{yin_role_2004, yin_modelling_2010}. Here we use the Framework Model (FMv1;
-\citep{chew2014multiscale}) as a mathematical description of vegetative plant
-growth of \textit{Arabidopsis thaliana} that provides mechanistic links from
-molecular regulation all the way to whole-plant traits, like biomass. In
+\citep{yin_role_2004, yin_modelling_2010}. Here we use the Framework Model
+\citep[FMv1;][]{chew2014multiscale} as a mathematical description of vegetative
+plant growth of \textit{Arabidopsis thaliana} that provides mechanistic links
+from molecular regulation all the way to whole-plant traits, like biomass. In
 particular, our contributions in this work are:
-
 \begin{itemize}
 \item Formulation and solution of a \textit{direct problem} of offline climate
-control where the control variable is the temperature of a growth chamber in
-order to achieve a particular plant biomass at a particular time (predicted from
-the FM). The solution to the problem uses standard gradient-based optimisation
-techniques by discretising the growth period and assuming constant temperature
-within each time interval.
+  control where the control variable is the temperature of a growth chamber in
+  order to achieve a particular plant biomass at a particular time (predicted
+  from the FM). The solution to the problem uses standard gradient-based
+  optimisation techniques by discretising the growth period and assuming
+  constant temperature within each time interval.
 \item Formulation and solution of an \textit{indirect problem} of offline
-climate control. Here we assume that we cannot control temperature precisely in
-the growth space, which leads to temperature inhomogeneities. We further assume
-that we can control the position of plants (e.g. switch their positions) in a
-linear array that has a temperature gradient. The control variable is the
-position of the plants and the performance criterion is homogeneity in final
-plant biomass (as predicted from the FM) for the population of plants in the
-array. For the solution of the problem we use techniques from combinatorial
-optimisation since the control variables are discrete.
+  climate control. Here we assume that we cannot control temperature precisely
+  in the growth space, which leads to temperature inhomogeneities. We further
+  assume that we can control the position of plants (e.g. switch their
+  positions) in a linear array that has a temperature gradient. The control
+  variable is the position of the plants and the performance criterion is
+  homogeneity in final plant biomass (as predicted from the FM) for the
+  population of plants in the array. For the solution of the problem we use
+  techniques from combinatorial optimisation since the control variables are
+  discrete.
 \end{itemize}
 
 \section{The model and main idea}
 For this work we use the Framework Model (FM) as described in
-\citep{chew2014multiscale}. For the next of this work we will use the FM as a
-black box that translates a temperature signal to a biomass signal (growth)
-over a time period. However since we are trying to control temperature to
-indirectly control growth, it is instructive to look at two particular metabolic
-processes that are highly temperature dependent.
+\citet{chew2014multiscale}. The FM takes environmental inputs (CO2 level,
+temperature, light intensity, and temperature) and outputs several
+growth-related quantities over its simulation time. In the following work,
+however, we will treat the FM model a Single Input Single Output system
+accepting temperature as input and outputting biomass by regarding all the other
+inputs as constant and ignoring the rest of the output signals. Despite the
+``black box'' approach we take to model plant growth, it is instructive to look
+at two particular metabolic processes that are highly temperature dependent.
 
-\begin{figure}
+\begin{figure}[tb]
 \centering
 \includegraphics[width=\linewidth]{figures/fmFig/agentFlows.eps}
-\caption{Metabolic processes as flows in the Framework Model (FM). A The FM keeps track of carbon movement in different pools, one for each organ (leaves and root) and two whole-plant reserves of sucrose carbon (c) and starch carbon (s). Maintenance respiration and assimilation (intake of carbon) are explicitly temperature dependent (indicated by red dots) B Photosynthesis and maintenance rate trends for a range of temperature values.}
+\caption{Metabolic processes as flows in the Framework Model (FM). A The FM
+  keeps track of carbon movement in different pools, one for each organ (leaves
+  and root) and two whole-plant reserves of sucrose carbon (c) and starch carbon
+  (s). Maintenance respiration and assimilation (intake of carbon) are
+  explicitly temperature dependent (indicated by red dots) B Photosynthesis and
+  maintenance rate trends for a range of temperature values.}
 \label{fig:fm}
 \end{figure}
 
-The main output of the FM is the growth rate of the plant given environmental inputs (CO2 level, temperature, light intensity, and temperature). All the metabolic processes keep track of the main building block of new mass, carbon, and are represented as flows between various pools representing the organs (root and leaves only at the vegetative stage) and whole plant reserves of carbon as sucrose (C) and starch (S) (Figure~\ref{fig:fm}A). The two metabolic processes that are temperature dependent are (i) assimilation, the intake of carbon from the environment represented as an in-flow into the central reservoir of sucrose carbon (C) and (ii) maintenance respiration, the use of carbon for maintaining the life-sustaining processes inside the plant represented as an out-flow from the main sucrose carbon reservoir. Figure~\ref{fig:fm}B shows the rates of these flows for a range of temperature while keeping the other environmental inputs constant (light intensity,120 $\mu \mathrm{mol} \cdot m^{-2} \cdot s^{-1}$, CO2=420ppm).
+All the metabolic processes keep track of the main building block of new mass,
+carbon, and are represented as flows between various pools representing the
+organs (root and leaves only at the vegetative stage) and whole plant reserves
+of carbon as sucrose (C) and starch (S) (Figure~\ref{fig:fm}A). The two
+metabolic processes that are temperature dependent are (i) assimilation, the
+intake of carbon from the environment represented as an in-flow into the central
+reservoir of sucrose carbon (C) and (ii) maintenance respiration, the use of
+carbon for maintaining the life-sustaining processes inside the plant
+represented as an out-flow from the main sucrose carbon
+reservoir. Figure~\ref{fig:fm}B shows the rates of these flows for a range of
+temperature while keeping the other environmental inputs constant (light
+intensity,120 $\mu \mathrm{mol} \cdot m^{-2} \cdot s^{-1}$, CO2=420ppm).
 
-While temperature directly affects only two of the processes it also indirectly affects the other since all of them compete for the sucrose carbon in the main reservoir. Therefore and not surprisingly temperature is a major determinant of growth rate and final biomass. The \emph{main idea} of this work is to control temperature and therefore indirectly control growth to achieve a particular growth- related objective of interest using the FM as our ground truth to evaluate the growth of an \textit{Arabidopsis thaliana} plant at different temperature inputs.
+While temperature directly affects only two of the processes it also indirectly
+affects the other since all of them compete for the sucrose carbon in the main
+reservoir. Therefore and not surprisingly temperature is a major determinant of
+growth rate and final biomass. The \emph{main idea} of this work is to control
+temperature and therefore indirectly control growth to achieve a particular
+growth-related objective of interest using the FM as our ground truth to
+evaluate the growth of an \textit{Arabidopsis thaliana} plant at different
+temperature inputs.
 
-In the FM the growing plants starts as seeds and wait for a period of time (emergence period), that is a function of temperature, before they emerge and start vegetative growth. In the following we only control temperature in the vegetative growth phase and not in the emergence period. Therefore we assume that seeds are kept in a constant temperature of 22\textdegree C.
+In the FM the growing plants starts as seeds and wait for a period of time
+(emergence period), which is a function of temperature, before they emerge and
+start vegetative growth. In the following we only control temperature in the
+vegetative growth phase and not in the emergence period. Therefore we assume
+that seeds are kept in a constant temperature of 22\textdegree C during the
+emergence period.
 
 
 \section{Direct problem}
-Plants have strong and fast responses to environmental signals, like
-temperature. Temperature affects metabolic processes like photosynthesis and
-respiration so it is a major determinant of growth, which is an important crop
-trait (see previous section). The main idea here is to control temperature and therefore indirectly
-control growth to achieve a particular phenotype that is relevant for
-crop/agricultural purposes. In particular we consider the problem of reaching a
-specific biomass after a particular period of time by manipulating the
-temperature in the growth space of a plant (e.g. growth chamber). This could be
-relevant for growers that have specific requirements both in terms of time and
-crop attributes. The optimal control problem then becomes to find an optimal
-temperature function $T^*(t)$ over a period $[t_0, t_f]$ that minimises the
-difference between the final biomass of the plant (as predicted by the FM) and a
-target biomass $m_0$:
+Here we seek to design a control scheme that modulates temperature to reach a
+specific biomass after a particular period of time. This is relevant to growers,
+for example, that have specific requirements both in terms of time and crop
+attributes.
+
+Given the characteristic of the problem at hand we formulate is as an optimal
+control problem, i.e. find a time-profile of temperature function, $T^*(t)$,
+over a period $[t_0, t_f]$ that minimises the difference between the final
+biomass of the plant (as predicted by the FM) and a target biomass $m_0$:
 $$
 J = m_{T^*}(t_f) - m_0
 $$
 where $m_{T*}(t)$ is the temperature dependent biomass trajectory predicted from
-the FM. We further have some simple upper and lower bounds on the value of the
-temperature function $T_l < T(t) < T_u$. Here we consider a single plant but this
-is still relevant for crops (populations of plants) if we assume that the
-temperature is homogeneous inside the growth space.
+the FM. To reflect physical constraings, we impose upper and lower bounds on the
+temperature $T_l < T(t) < T_u$. Additionally, here we consider the case of a
+``single plant control''. Notably, this approach can be extended, with
+appropriate modifications, to the control of crops.
 
-\begin{figure}
+\begin{figure}[tb]
 \centering
 \includegraphics[scale=0.25]{figures/directPFig/ocProb}
-\caption{Direct problem of climate control. For the \emph{direct problem} we try to find a temperature function or sequence of temperature values in the optimisation formulation in order for the final biomass value as predicted by the FM (using this temperature function as input) to reach a specific predefined value, $m_0$.}
+\caption{Direct problem of climate control. For the \emph{direct problem} we try
+  to find a temperature function or sequence of temperature values in the
+  optimisation formulation in order for the final biomass value as predicted by
+  the FM (using this temperature function as input) to reach a specific
+  predefined value, $m_0$.}
 \label{fig:directP}
 \end{figure}
 
-We can convert the optimal control into a standard non-linear optimisation
-problem by discretising the time domain $[t_0, t_f]$ into $k$ intervals and
-assuming a constant temperature value inside each interval \citep{kraft_converting_1985}.
+As conventional in optimal control, we can convert the optimal control into a
+standard non-linear optimisation problem by discretising the time domain
+$[t_0, t_f]$ into $k$ intervals and assuming a constant temperature value inside
+each interval \citep{kraft_converting_1985}.
 \begin{definition}[biomass-only problem]
 The \emph{biomass-only problem} is the problem of finding a sequence of
 temperature values, $T_{1, k}=T_1, \dots, T_k$, that minimises the square of the
+% why did we choose the square of the difference if we are considering a single point?
 difference between the final biomass value of the plant at $t_f$,
 $m_{T_{1, k}}(t_f)$, as predicted by the FM, for the sequence $T_{1, k}$.
 \begin{align*}
@@ -189,87 +219,105 @@ $m_{T_{1, k}}(t_f)$, as predicted by the FM, for the sequence $T_{1, k}$.
 & T_l < T_{i} < T_u; \; \; \; i=1 \dots k
 \end{align*}
 \end{definition}
-Note that we sometimes write $T_{i, k}$ for the sequence $T_1, \dots, T_k$.
+Note that we use $T_{i, k}$ and $T_1, \dots, T_k$ interchangeably for a sequence of
+$k$ temperature values.
 
-An extension to this is where we also try to minimise the control effort.
+Since repeated, large switchings of the temperature introduce wear and tear of
+the actuators and use energy, we extend our control problem to take into account
+the control effort as well.
+
 \begin{definition}[biomass+control effort problem]
-The \emph{biomass+control effort} problem is an extension to the
-\emph{biomass-only problem} where the sought sequence of temperatures
-$T_{1, k}=T_1, \dots, T_k$ minimises both the distance to the target biomass,
-$m_0$, and the control effort defined as the average jump between successive
-temperatures in the sequence, $\underline{T}$.
+  The \emph{biomass+control effort} problem is an extension to the
+  \emph{biomass-only problem} where the sought sequence of temperatures
+  $T_{1, k}=T_1, \dots, T_k$ minimises both the distance to the target biomass,
+  $m_0$, and the control effort defined as the average jump between successive
+  temperatures in the sequence, $\underline{T}$.
 $$ \argmin_{T_1, \dots T_k} \; (m_{T_{1, k}}(t_f) - m_0)^2 \; + \; \frac{1}{k} \sum_{i=2}^{k} T_i - T_{(i-1)}$$
 \end{definition}
+% what about multi-objective optimisation instead of single-objective with
+% linear combination of two?
 The bound constraints are the simple lower/upper bounds as before. 
 
 \subsection{Results}
-In this
-section we solve the two formulations of the optimisation problems (direct problem) using the \texttt{fmincon} function for constrained non-linear optimisation from the Matlab optimisation toolbox for
-some choices of $m_0$, $t_f$, and $k$. While we vary $m_0$ to explore different instances of the problem, we generally leave $t_f$ and $k$ constant ($t_f=512h$, $k=4$). There are methods that adapt $k$ that we could have used that are implemented in more sophisticated tools (mesh refinement, AMIGO tool; \citep{balsa-canto_amigo2_2016}). The final time is dictated by the bolting time of the plant under the range of temperatures that we consider since the FM only considers vegetative growth (before bolting). 
+In this section we solve the two formulations of the optimisation problems
+(direct problem) using the \texttt{fmincon} function for constrained non-linear
+optimisation from the Matlab optimisation toolbox for some choices of $m_0$,
+$t_f$, and $k$. While we vary $m_0$ to explore different instances of the
+problem, we generally leave $t_f$ and $k$ constant ($t_f=512h$, $k=4$). There
+are methods that adapt $k$ that we could have used that are implemented in more
+sophisticated tools \citep[mesh refinement, AMIGO
+tool;][]{balsa-canto_amigo2_2016}). The final time is dictated by the bolting
+time of the plant under the range of temperatures that we consider since the FM
+only considers vegetative growth (before bolting). Bolting time is more than
+$512h$ for all the temperature values in the range that we consider
+($[10, 30]$).
 
-We use a performance metric, $\mathrm{log}(\sqrt{L(T_{1, k}, t_f, m_0)} /
-m_0)$, to assess particular optimisations for different problem instances
-(specific $k$, $t_f$, and $m_0$) that states the final value of the biomass
-objective function $L(T_{1, k}, t_f, m_0))=(m_{T_{1, k}}(t_f) -
-m_0)^2$ as a percentage of the target biomass.
+We use a performance metric, $\mathrm{log}(\sqrt{L(T_{1, k}, t_f, m_0)} / m_0)$,
+to assess particular optimisations for different problem instances (specific
+$k$, $t_f$, and $m_0$) that states the final value of the biomass objective
+function $L(T_{1, k}, t_f, m_0))=(m_{T_{1, k}}(t_f) - m_0)^2$ as a percentage of
+the target biomass.
 
-\begin{definition}[controllability]
-A biomass-only or biomass+control effort problem instance (specific $m_0$,
-$t_f$) is \emph{controllable} if there exists a $k$ and a particular sequence of
-temperature $T_{1, k}=T_1, \dots, T_k$ such that the ratio of the loss function
-to the target biomass, $m_0$, is less than a tolerance value, $\epsilon$.
+\begin{definition}[$\epsilon$-reachable]
+  A target biomass value,$m_0$, defining a particular instance of the
+  biomass-only or biomass+control effort problems is $\epsilon$-\emph{reachable}
+  if there exist a $k$ and a particular sequence of temperature
+  $T_{1, k}=T_1, \dots, T_k$ such that the ratio of the performance metric to the
+  target biomass, $m_0$, is less than a tolerance value, $\epsilon$.
 $$
 \frac{\sqrt{L(T_{1, k}, m_0, t_f)}}{m_0} < \epsilon
 $$
 \end{definition}
 In the following we will assume that a specific sequence of temperatures that
-satisfies our tolerance, $\epsilon$, exists if the particular optimisation algorithm we
-use can converge to that sequence.
+satisfies our tolerance, $\epsilon$, exists if the particular optimisation
+algorithm we use can converge to that sequence.
 
 Figure~\ref{fig:directPRes} shows results of the optimisation procedure for both
 the biomass-only and biomass+control effort problems defined in the previous
 section for a range of target biomasses. For the biomass-only problem there is a
-controllable range of biomasses $[0.03, 0.25]$ (Figure~\ref{fig:directPRes}A)
-for a tolerance $\epsilon=0.1$ , $k=4$, and $t_f=512$h. The upper and lower bound
-constraint for the temperature values are set to 10 \textdegree C and 30
+set of reachable target biomasses $[0.03, 0.25]$ (Figure~\ref{fig:directPRes}A)
+for a tolerance $\epsilon=0.1$ , $k=4$, and $t_f=512$h. The upper and lower
+bound constraints for the temperature values are set to 10 \textdegree C and 30
 \textdegree C respectively. The optimisation converges to different solutions on
 different runs (Figure~\ref{fig:directPRes}B and C, D, E for details of
 particular solutions for $m_0=0.05$, $m_0=0.1$, and $m_0=0.15$ respectively). It
-is also interesting to explore if the optimisation increases the controllable
-range compared to a naive exhaustive simulation of the FM with constant
-temperature inputs in the constrained space [10 \textdegree C, 30 \textdegree
-C]. Exhaustive simulation of the FM in the space [10 \textdegree C, 30
-\textdegree C] with a $0.5$ \textdegree C step gives final (at $t_f=512$h)
-biomasses between $0.0093$g at 10 \textdegree C and $0.1806$g at 17.5
-\textdegree C while more than one temperature input can give the same (or very
-close) final biomass (orange line, Figure~\ref{fig:directPRes}B).
+is also interesting to explore if the optimisation increases the reachable set
+compared to a naive exhaustive simulation of the FM with constant temperature
+inputs in the constrained space [10 \textdegree C, 30 \textdegree C]. Exhaustive
+simulation of the FM in the space [10 \textdegree C, 30 \textdegree C] with a
+$0.5$ \textdegree C step gives final (at $t_f=512$h) biomasses between $0.0093$g
+at 10 \textdegree C and $0.1806$g at 17.5 \textdegree C while more than one
+temperature input can give the same (or very close) final biomass (orange line,
+Figure~\ref{fig:directPRes}B).
 
-\begin{figure}
-\centering
-\includegraphics[width=\linewidth]{figures/directResFig/res}
-\caption{
-  Results for both biomass-only and biomass+control effort formulations of the
-  direct problems over a range of target biomasses with $k=4$ and $t_f=512$. A
-  The performance metric for the biomass-only problem formulation over a range
-  of target biomasses from 0.01 to 0.4. The other environmental inputs are constant: CO2, 420ppm; light intensity, 120$\mu\mathrm{mol} \cdot m^{-2} \cdot s^{-1}$; 12:12-h light/dark cycle. For the first 139 hours of simulations the plants are still seeds and are assumed to be kept in a constant temperature of 22\textdegree C. The controllable range is under the
-  dotted line $[0.03, 0.25]$. B Comparison between the
-  solutions obtained with the optimisation and a naive exhaustive simulation
-  with constant temperatures over the interval [10 \textdegree C, 30 \textdegree
-  C]. For the optimisation solutions per $m_0$ we give the two most commonly
-  occurring temperatures in the solution space (10 runs of the optimisation per
-  $m_0$). C, D, E Four example solutions (temperature sequences) and
-  corresponding biomass time series (as obtained from FM simulation) for target
-  biomasses $m_0=0.05$ (C), $m_0=0.1$ (D), and $m_0=0.15$ (E) in the
-  controllable range. F Performance metric for the biomass+control effort
-  problem formulation over a range of target biomasses from 0.01 to 0.4. The
-  controllable region is $[0.03, 0.21]$ G Same as B but for the biomass+control
-  effort problem formulation H, I, J Similar to C, D, E but for the
-  biomass+control effort formulation.
-}
+
+\begin{figure}[p]
+  \centering \resizebox{1.06\linewidth}{!}{
+    \includegraphics[width=\linewidth]{figures/directResFig/res}}
+  \caption{ Results for both biomass-only and biomass+control effort
+    formulations of the direct problems over a range of target biomasses with
+    $k=4$ and $t_f=512$. A The performance metric for the biomass-only problem
+    formulation over a range of target biomasses from 0.01 to 0.4. The other
+    environmental inputs are constant: CO2, 420ppm; light intensity,
+    120$\mu\mathrm{mol} \cdot m^{-2} \cdot s^{-1}$; 12:12-h light/dark
+    cycle. For the first 139 hours of simulations the plants are still seeds and
+    are assumed to be kept in a constant temperature of 22\textdegree C. The
+    reachable set is under the dotted line. B Comparison between the solutions
+    obtained with the optimisation and a naive exhaustive simulation with
+    constant temperatures over the interval [10 \textdegree C, 30 \textdegree
+    C]. For the optimisation solutions per $m_0$ we give the two most commonly
+    occurring temperatures in the solution space (10 runs of the optimisation
+    per $m_0$). C, D, E Four example solutions and corresponding biomass time
+    series (as obtained from FM simulation) for target biomasses $m_0=0.05$ (C),
+    $m_0=0.1$ (D), and $m_0=0.15$ (E). F Performance metric for the
+    biomass+control effort problem formulation over a range of target
+    biomasses. G Same as B but for the biomass+control effort problem
+    formulation H, I, J Similar to C, D, E but for the biomass+control effort
+    formulation.}
 \label{fig:directPRes}
 \end{figure}
 
-For the biomass+control effort problem we find a smaller controllable range
+For the biomass+control effort problem we find a smaller reachable set
 $[0.03, 0.21]$ compared to the biomass-only problem
 (Figure~\ref{fig:directPRes}F) with the same parameters. The optimisation
 procedure though in this case mostly converges to the same solution at different
@@ -278,18 +326,18 @@ runs and the solutions mostly keep the temperature constant
 for $m_0=0.05$, $m_0=0.1$, and $m_0=0.15$ respectively). Comparing the solutions
 to the naive exhaustive search as before we can see the optimisation converges
 to constant temperature solutions that are very close to the ones given by the
-simulation with a similar controllable range. In cases where two constant
-temperature inputs give the same final biomass the optimisation cannot
-distinguish between the two and can converge to either (for example,
-Figure~\ref{fig:directPRes}H and temperature distributions in G).
+simulation with a similar reachable set. In cases where two constant temperature
+inputs give the same final biomass the optimisation cannot distinguish between
+the two and can converge to either (for example, Figure~\ref{fig:directPRes}H
+and temperature distributions in G).
 
 Finally, we can compare the results of the optimal strategy with a random
 strategy (as a control) where the sequence of temperatures, $T_1, \dots, T_k$ is
 picked at random (Figure~\ref{fig:compsAllDir}). For 100 simulation runs for
-both optimal and random strategies the optimal strategy performs significantly
+both optimal and random strategies, the optimal strategy performs significantly
 better for target biomasses $m_0=0.05$ and $m_0=0.1$.
 
-\begin{figure}
+\begin{figure}[tb]
 \centering
 \includegraphics[width=\linewidth]{figures/directResFig/compsAll}
 \caption{
@@ -305,32 +353,39 @@ better for target biomasses $m_0=0.05$ and $m_0=0.1$.
 
 \section{Growth space inhomogeneities experiment}
 \label{sec:exp}
-In the direct problem formulation and the entire premise of this work we have
-the assumption that we can perfectly control the environmental conditions inside
-the growth space such that all the growing plants can grow in perfectly
-homogeneous conditions. Based on our experience of growing plants in academic
-growth spaces, which are specifically designed to reduced experimental technical
-variability, this assumptions is rarely true. To test this we conducted an
-experiment in a growth room designed to test the difference in growth (biomass)
-of two sets of \textit{Arabidopsis thaliana} plants grown in two different
-locations on a shelf (Figure~\ref{fig:expRes}E) in a typical growth room. The
-first group of plants is grown in the middle of the shelf and the second on the
-side of the shelf.
+We have so far assumed that we can perfectly control the environmental
+conditions inside the growth chamber such that all the plants are exposed to the
+same temperature. In actual growth spaces, this is rarely possible. To quantify
+the effect of temperature inhomogeneity on plant growth we conducted an
+experiment designed to test the difference in growth (biomass) of two sets of
+\textit{Arabidopsis thaliana} plants grown in two different locations on a shelf
+(Figure~\ref{fig:expRes}E). The first group of plants is grown in the middle of
+the shelf and the second on the side of the shelf.
 
-\begin{figure}
+% In the direct problem
+% formulation and the entire premise of this work we have the assumption that we
+% can perfectly control the environmental conditions inside the growth space such
+% that all the growing plants can grow in perfectly homogeneous conditions. Based
+% on our experience of growing plants in academic growth spaces, which are
+% specifically designed to reduced experimental technical variability, this
+% assumptions is rarely true. To test this we conducted an experiment in a growth
+% room designed to test the difference in growth (biomass) of two sets of
+% \textit{Arabidopsis thaliana} plants grown in two different locations on a shelf
+% (Figure~\ref{fig:expRes}E) in a typical growth room. The first group of plants
+% is grown in the middle of the shelf and the second on the side of the shelf.
+
+\begin{figure}[tb]
 \centering
 \includegraphics[width=\linewidth]{figures/exp/expRes.eps}
-\caption{
-  Results of experiment designed to investigate growth inhomogeneities resulting
-  from environmental inhomogeneities in a controlled growth room. A Mean biomass
-  for the two groups (middle, side) for the two samples (23 and 27 days) and
-  fitted exponential curves. B Full distribution for the two samples (23 and 27
-  days) C Average temperature time series over the three sensors placed along
-  the positions of the middle and side groups. D Average light time series
-  averaged over the three sensors places along the positions of the middle and
-  side groups E Experimental setup showing the positions of the plants and
-  sensors used to get the environmental data in C, D.
-}
+\caption{ Results of experiment designed to investigate growth inhomogeneities
+  resulting from environmental inhomogeneities in a controlled growth room. A
+  Mean biomass for the two groups (middle, side) for the two samples (23 and 27
+  days) and fitted exponential curves. B Full distribution for the two samples
+  (23 and 27 days) C Average temperature time series over the three sensors
+  placed along the positions of the middle and side groups. D Average light time
+  series averaged over the three sensors places along the positions of the
+  middle and side groups E Experimental setup showing the positions of the
+  plants and sensors used to get the environmental data in C, D.  }
 \label{fig:expRes}
 \end{figure}
 
@@ -352,20 +407,34 @@ differences are amplified during the exponential growth of the plants.
 \section{Indirect problem}
 In the direct problem formulation we assumed perfect control inside the growth
 space of a crop such that the temperature is homogeneous and all the plants are
-exposed to the same conditions. Despite progress in the technology of growth
-chambers this assumption is rarely true even in academic growth environments
-(see previous section, for example). This is problematic because it means growth
-inhomogeneities along the population. We therefore turn into a related problem
-where we try to reduce as much as possible temperature and therefore growth
-inhomogeneities in a population of plants by controlling their positions in a
-growth space during development. This, again, could be relevant for growers
-where there are requirements for homogeneity or even in academic settings where
-technical variability is expected to be minimal.
+exposed to the same conditions. This is rarely true even in academic growth
+environments (see previous section, for example). Here we address the problem of
+controlling plant growth acting on the position of plants in a linear array: a
+linear temperature gradient is imposed on such an array. As in this case we can
+only change the temperature the plant is growing indirectly, \ie by changing its
+position in the linear array, we call this problem ``indirect''. This
+formulation more closely resembles industrially relevant problems.
+
+% In the direct problem formulation we assumed perfect control inside the growth
+% space of a crop such that the temperature is homogeneous and all the plants are
+% exposed to the same conditions. Despite progress in the technology of growth
+% chambers this assumption is rarely true even in academic growth environments
+% (see previous section, for example). This is problematic because it means growth
+% inhomogeneities along the population. We therefore turn into a related problem
+% where we try to reduce as much as possible temperature and therefore growth
+% inhomogeneities in a population of plants by controlling their positions in a
+% growth space during development. This, again, could be relevant for growers
+% where there are requirements for homogeneity or even in academic settings where
+% technical variability is expected to be minimal.
 
 \begin{figure}
 \centering
 \includegraphics[width=\linewidth]{figures/indirectPFig/indirectOC.eps}
-\caption{Indirect problem of climate control. In the \emph{indirect problem} we try to find a position function (map from time and plant id to position in a linear array) such that the final biomasses of the plants as predicted by the FM (using the position dependent temperature of the plants as input) to be as close to each other as possible (minimum Gini-index).}
+\caption{Indirect problem of climate control. In the \emph{indirect problem} we
+  try to find a position function (map from time and plant id to position in a
+  linear array) such that the final biomasses of the plants as predicted by the
+  FM (using the position dependent temperature of the plants as input) to be as
+  close to each other as possible (minimum Gini-index).}
 \label{fig:indirectP}
 \end{figure}
 
@@ -384,10 +453,11 @@ $$
 Here we write $m_i(t_f)$ for the biomass of $i$-th plant at the final time $t_f$
 and we use the Gini index (denoted by $G$) as our non-uniformity metric.
 
-Like the direct problem we can turn the above into an optimisation problem by
-diving the time domain $[t_0, t_f]$ into $k$ intervals and assuming that the
-positions of the plants are constant inside each interval. The problem then
-becomes to find the a sequence of $n \cdot k$ values,
+As in the case of the direct problem we can turn the above into an optimisation
+problem by discretising the time domain $[t_0, t_f]$ into $k$ intervals and
+assuming that the positions of the plants are constant inside each interval. Our
+objective is to obtain by $t_f$ a set of plants with similar (satisfactory)
+biomass. The problem then becomes to find the a sequence of $n \cdot k$ values,
 $$
 P = \begin{bmatrix} 
     p_{11} & p_{12} & \dots \\
@@ -403,22 +473,21 @@ $$
 \end{align*}
 
 The positioning of the plant indirectly determines the temperature function,
-$T(t)$, over $[t_0, t_f]$ for the plants. Unlike the direct problem, however,
-the decision variables of the optimisation problem are not continuous but rather
-discrete. We therefore cannot use standard gradient-based optimisation
-techniques. In the results in the following sections we use a technique from
-combinatorial optimisation (see next section) that uses some heuristics to
-search the space of all solutions while following our objective function from
-above.
+$T(t)$, over $[t_0, t_f]$ for the plants. Unlike the direct problem the decision
+variables of the optimisation problem are discrete. We therefore cannot use
+standard gradient-based optimisation techniques. In the results in the following
+sections we use a technique from combinatorial optimisation (see next section)
+that uses some heuristics to search the space of all solutions while following
+our objective function from above.
 
-A constraint that we have overlooked in our formulation above is the non-overlap
-constraint. Since only one plant can occupy each position at any interval we
-have a further constraint that for any interval $j$ all the values in the
-sequence $p_{1j}, \dots, p_{nj}$ should be unique. In order to not have to deal with
-this extra constraint we make a change to the formulation of the problem such
-that the solutions of the combinatorial optimisation procedure are guaranteed to
-satisfy our non-overlap constraint without having the constraint explicitly in
-the optimisation procedure. In particular suppose that we have a permutation
+A constraint that we have overlooked in the formulation above is the need to
+have one plant, and only one, in each position at every single time point. We
+can formalise this as: for any interval $j$ all the values in the sequence
+$p_{1j}, \dots, p_{nj}$ should be unique. In order to not have to deal with this
+extra constraint we make a change to the formulation of the problem such that
+the solutions of the combinatorial optimisation procedure are guaranteed to
+satisfy this ``non-overlap constraint'' without having the constraint explicitly
+in the optimisation procedure. In particular suppose that we have a permutation
 matrix, $\Pi(n)$, that lists all the possible permutation of $n$ numbers:
 
 $$
@@ -448,21 +517,21 @@ of $n$ plants.
 The number of all possible permutations for $n$ numbers is given by $n!$. The
 order of permutations in $\Pi$ is important here as we need to make sure that
 solutions that are close together in the permutation index space are also close
-together in the positions space. Here we assume we have that and moreover that
-every permutation listed in $\Pi$ is one flip away from the permutation above
-it. For the instances of the problems we dealt with this solution was
-adequate. However, for larger instances the search space might become
-prohibitively large ($n!$) in which case we can go back to the previous
-formulation of the problem and introduce an overlap penalty in the objective
-function.
+together in the positions space. Here we assume that every permutation listed in
+$\Pi$ is one flip away from the permutation above it. Therefore consecutive
+points in permutation space are adjacent in position space as well. For the
+instances of the problems we dealt with this solution was adequate. However, for
+larger instances the search space might become prohibitively large ($n!$) in
+which case we can go back to the previous formulation of the problem and
+introduce an overlap penalty in the objective function.
 
 \subsection{Results} 
 In this section we explore solutions to the permutation-index problem defined in
 the previous section using combinatorial optimisation techniques. In particular
-we use a Matlab implementation (MEIGO tool; \citep{banga2014})of the Variable
-Neighbourhood Search algorithm (VNS; \citep{mladenovic1997variable}).
+we use a Matlab implementation \citep[MEIGO too;][]{banga2014} of the Variable
+Neighbourhood Search algorithm \citep[VNS;][]{mladenovic1997variable}.
 
-\begin{figure}
+\begin{figure}[tb]
 \centering
 \includegraphics[width=\linewidth]{figures/indirectResFig/indRes}
 \caption{
@@ -520,13 +589,13 @@ have that even though switching the plant positions will require significant
 energy even at sophisticated growth environments.  %related work
 
 
-%, only one with some kind of crop %trait in mind (photosynthesis rate; and only
-one for indoor %farming with LEDs %Even the one that considers photosynthesis
-only does so to exploit regularities in the photosynthesis to minimise energy
-consumption. For example, observation that temperature increase does not
-increase photosynthesis rate at low light so no need to use energy to increase
-temperature.  %No focus on energy but more on crop traits although we do
-consider control effort (energy related) in the first problem.
+% %, only one with some kind of crop %trait in mind (photosynthesis rate; and only
+% one for indoor %farming with LEDs %Even the one that considers photosynthesis
+% only does so to exploit regularities in the photosynthesis to minimise energy
+% consumption. For example, observation that temperature increase does not
+% increase photosynthesis rate at low light so no need to use energy to increase
+% temperature.  %No focus on energy but more on crop traits although we do
+% consider control effort (energy related) in the first problem.
 
 %discussion of results
 In order to address the climate control problem we start with a \emph{direct
@@ -578,12 +647,12 @@ implementation for Arabidopsis plants given the limitations of the model-only
 approach outlined above. Application of such techniques for more practically
 relevant crops will also be very attractive and there is a number of models to
 back such an application for commercial crops (potato models,
-\citep{fleisher2017potato}; tomato model, \citep{heuvelink1999evaluation}; wheat
-models, \citep{martre2015multimodel}). Finally, another possible application of,
+\cite{fleisher2017potato}; tomato model, \cite{heuvelink1999evaluation}; wheat
+models, \cite{martre2015multimodel}). Finally, another possible application of,
 for example, the indirect problem formulation might be in academic settings
 where technical variability is expected to be minimal and there is an increase
 in the use of automated phenotyping and growth platforms (PHENOPSIS
-\citep{granier_phenopsis_2006}; platforms in the European Plant Phenotyping
+\cite{granier_phenopsis_2006}; platforms in the European Plant Phenotyping
 Network, \url{https://eppn2020.plant-phenotyping.eu/}).
 
 \singlespace
