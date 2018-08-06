@@ -1,61 +1,41 @@
-Understanding the links between biological processes at multiple scales, from
-molecular regulation to populations and evolution, is a major challenge in
-understanding life. As systems become more complex we need models to describe
-our understanding and help our thinking when trying to explain and make
-predictions across scales.  This approach has also been proposed in attempts to
-engineer crop traits starting from genetics or from genomes
-\citep{welch_merging_2005, yin_applying_nodate, yin_modelling_2010,
-  parent_can_2014, wu_connecting_2016, chenu_integrating_2018}, where simpler
-models have demonstrated both the potential of crop modelling in general and the
-significant demands of detailed models for empirical data that varies in
-availability \citep{hammer_models_2006,asseng_uncertainty_2013}. For
-micro-organisms, comprehensive models link the metabolic and molecular level
-with the cellular \citep{karr_whole-cell_2012} and population growth scales
-\citep{weise_mechanistic_2015}, whereas contemporary work in more complex
-organisms has necessarily focused more narrowly \citep{buckley_modelling_2013,
-  lynch_steep_2013, zhu_e-photosynthesis:_2013,klose_systematic_2015,
-  le_novere_quantitative_2015, hepworth_absence_2018}.
-
-The concentration of plant science research on the laboratory model species
-\emph{Arabidopsis thaliana} offers an opportunity for broad understanding that
-includes mechanistic models
-\citep{chew_mathematical_2014,voss_modelling_2014}. The Framework Model (FMv1)
-represented vegetative growth of Arabidopsis in lab conditions
-\citep{chew_multiscale_2014}, starting from four independent models that
-represent photosynthesis and carbon storage \citep{rasse_leaf_2006}, plant
-structure and carbon partitioning among organs
-\citep{christophe_model-based_2008}, flowering phenology
-\citep{chew_augmented_2012} and the circadian clock gene circuit and its output
-to photoperiodic flowering \citep{salazar_prediction_2009}. Later updates
-focussed on plant phenotypes controlled by the clock, such as tissue elongation
-and starch metabolism \citep[FMv2;][]{chew_linking_2017}, or temperature and
-organ-specific inputs to flowering
-\citep{kinmonth-schultz_mechanistic_2018}. The Framework Models align with
-community efforts to link understanding of crop plant processes at multiple
-scales, for benefits in agriculture \citep{wu_connecting_2016,
-  zhu_plants_2016}. Among the limitations of the Framework Models, growth was
-limited to the vegetative stage, ending upon flower induction. Without
-reproduction, the models had no seed yield or link to evolutionary
-fitness. Without seed dormancy, they lacked a major determinant of Arabidopsis
-life history in the field. Their representation of the circadian clock was also
-unnecessarily detailed for many studies outside chronobiology.
-
-Other models have considered reproductive success through growth, including for
+As we have seen in the Introduction plant models are rarely comprehensive enough
+to reconstruct the organism and evolutionary ecology models usually abstract the
+organism away considering only its development as a numerical variable
+(phenology).The first version of the Framework Model
+\citep[FMv1;][]{chew_multiscale_2014} is an attempt at reproducing a `digital
+Arabidopsis' inspired by functional-structural models that consider molecular
+mechanisms as well as development. It only represents vegetative growth, which
+limits it applicability to ecological studies (Section~\ref{subsec:fm}). Other
+models have considered reproductive success through growth, including for
 Arabidopsis. One simplified approach relates growth and fitness only to the
 duration of the developmental period and not to its timing in the year, ignoring
-environmental influences \citep{prusinkiewicz_evolution_2007}. On the other
-hand, ecological phenology models of the Arabidopsis life cycle consider natural
-environmental conditions but ignore physical growth and development
-\citep{chuine_phenology_2001, chuine_why_2010,burghardt_modeling_2015}. We apply
-a declarative agent-based modelling approach that facilitates model composition,
-to develop FM-life, an extension of the Framework Model to the whole Arabidopsis
-life cycle. FM-life includes a simpler model of vegetative growth, FM-lite,
-without the clock circuit, and a new model of inflorescence growth including
-reproduction. We introduce a clustering approximation, in order to simulate
-FM-life tractably at the population scale over decades. Testing the FM-life
-model with contrasting environmental and genetic inputs shows that ecological
-questions can increasingly be informed by mechanistic understanding of growth
-processes \citep{millar_intracellular_2016, doebeli_towards_2017}.
+environmental influences \citep{prusinkiewicz_evolution_2007}. On the other hand
+recent ecology models have taken a more systems view considering the phenology
+of the entire lifecycle of Arabidopsis plants in a natural setting and even
+scaled this view to the population level using individual-based models
+\citep{burghardt_modeling_2015}. However, the organism is only represented in
+the usual ecological way as a numerical variable to represent its conceptual
+development over time ignoring physical aspects of growth and development.
+
+Here we combine the two approaches to present a population level model where the
+organism is present. In particular in this chapter we do the following:
+\begin{itemize}
+\item Present \emph{FM-life}, an extension of the Framework Model to the whole
+  Arabidopsis life cycle represented in Chromar. FM-life includes a simpler
+  model of vegetative growth, FM-lite, without the clock circuit and with
+  modifications for natural weather conditions, and a new model of inflorescence
+  growth including reproduction. As well as growth, timing of the developmental
+  stages is given by phenology models (Section~\ref{sec:compModels}).
+\item Scale FM-life to the population level by introducing a clustering
+  approximation in order to simulate FM-life tractably at the population scale
+  over decades (Section~\ref{sec:pop}).
+\item Show simulation results (ecological measure of interest) of the
+  population-level model with contrasting environmental and genetic inputs to
+  highlight that ecological questions can increasingly be informed by mechanstic
+  understanding of growth processes \citep{millar_intracellular_2016,
+    doebeli_towards_2017} (Section~\ref{sec:results}.
+\end{itemize}
+
 
 \section{Phenology models in Chromar}
 \label{phenology-models-in-chromar}
@@ -84,7 +64,7 @@ where the expression inside the square brackets is used to indicate
 conditional activity of the rule. The rule is active only when the
 expression evaluates to true.
 
-\section{The component models}
+\section{FM-life: the component models}
 \label{sec:compModels}
 The models presented here represent the full life cycle in three stages: seed
 dormancy (A, left panel, Figure~\ref{fig:overview}), vegetative growth up to
@@ -544,8 +524,8 @@ photosynthesis. Seeds are not directly represented, so a birth function \(b(m)\)
 is required to calculate the number of seeds for a given fruit mass \emph{m} at
 seed dispersal time, as described below.
 
-\section{Whole life cycle model, FM-life}
-\label{whole-life-cycle-model-fm-life}
+\section{From the lifecycle to the population}
+\label{sec:pop}
 The Chromar framework allows us simply to concatenate the rules of
 timing and growth components of the three models above, to represent the
 whole life cycle. Then given an initial state with the genetic
@@ -668,7 +648,7 @@ from the dataset and assumed that is constant throughout the day (swvl
 parameters in the ERA dataset).
 
 \section{Results}
-\label{results}
+\label{sec:results}
 
 The population of FM-life models (see Methods) allows us to test how growth
 processes that alter reproductive success affect the life history strategies of
