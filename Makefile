@@ -63,4 +63,4 @@ clean:
 
 
 # Include dependency files.
--include $(PDFS:%.pdf=$(DEPSDIR)/%.P)
+#-include $(PDFS:%.pdf=$(DEPSDIR)/%.P)

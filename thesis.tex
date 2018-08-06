@@ -1,4 +1,4 @@
-\documentclass[phd]{infthesis}
+\documentclass[phd, logo]{infthesis}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -6,7 +6,7 @@
 \usepackage{microtype}
 \usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
 \usepackage[english=british,autopunct=false]{csquotes}
-\usepackage[natbib=true,style=authoryear-comp,maxbibnames=6]{biblatex}
+\usepackage[natbib=true,style=authoryear-comp,maxnames=3,maxbibnames=6]{biblatex}
 \usepackage{graphicx}
 \usepackage{textcomp}
 \usepackage{wrapfig}
@@ -21,12 +21,14 @@
 \usepackage{tabularx}
 \usepackage{mathpartir}
 \usepackage{fancyvrb}
+\usepackage{multirow}
 
 \frenchspacing
 
+
 % Bibliography
-\addbibresource{thesis.bib}
-\bibliography{thesis}
+\addbibresource{thesis2.bib}
+\bibliography{thesis2}
 
 % Text
 \newcommand{\ie}{i.e.\xspace}
@@ -109,7 +111,11 @@
 %% First, the preliminary pages
 \begin{preliminary}
 
-\maketitle
+  \maketitle
+
+  \begin{acknowledgements}
+Thanks to...
+    \end{acknowledgements}
 
 %% Next we need to have the declaration.
 \standarddeclaration
@@ -128,25 +134,37 @@
 
 \end{preliminary}
 
+\chapter{Introduction}
+\label{chp:intro}
+\input{chapters/intro}
+
 \chapter{Background and Related Work}
 \label{chp:relWork}
-\input{relWork}
+\input{chapters/relWork}
 
 \chapter{Chromar by example}
 \label{chp:chromarEx}
-\input{chromarEx}
+\input{chapters/chromarEx}
 
 \chapter{Chromar: formal definition}
 \label{chp:chromarForm}
-\input{chromarForm}
+\input{chapters/chromarForm}
 
 \chapter{Implemented Chromar}
 \label{chp:chromarImpl}
-\input{chromarImpl}
+\input{chapters/chromarImpl}
+
+\chapter{Framework Models}
+\label{chp:fms}
+\input{chapters/fms}
 
 \chapter{Optimal control}
 \label{chp:oc}
-\input{oc}
+\input{chapters/oc}
+
+\chapter{Conclusions}
+\label{chp:concl}
+\input{chapters/concl}
 
 
 \singlespace
