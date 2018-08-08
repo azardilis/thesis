@@ -1,0 +1,261 @@
+\documentclass[phd]{infthesis}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[british]{babel}
+\usepackage{microtype}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage[english=british,autopunct=false]{csquotes}
+\usepackage[natbib=true,style=authoryear-comp,maxbibnames=6]{biblatex}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{wrapfig}
+\usepackage{xfrac}
+\usepackage{xspace}
+\usepackage{mathcommon}
+\usepackage[sc]{mathpazo}
+\usepackage{hyperref}
+\usepackage{expl3}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{mathpartir}
+\usepackage{fancyvrb}
+\usepackage{inconsolata}
+\usepackage{multirow}
+
+\frenchspacing
+
+% Bibliography
+\addbibresource{thesis2.bib}
+\bibliography{thesis2}
+
+% Text
+\newcommand{\ie}{i.e.\xspace}
+\newcommand{\eg}{e.g.\xspace}
+
+% Referencing
+\newcommand{\chp}[1]{\S\ref{chp:#1}}
+\newcommand{\sct}[1]{\S\ref{sec:#1}}
+\newcommand{\ssec}[1]{\S\ref{subsec:#1}}
+\newcommand{\eqn}[1]{Eq.~\ref{eq:#1}}
+\newcommand{\eqns}[2]{Eq. \ref{eq:#1} and \ref{eq:#2}}
+\newcommand{\lem}[1]{Lemma~\ref{lemma:#1}}
+\newcommand{\lems}[2]{Lemmas \ref{lemma:#1} and \ref{lemma:#2}}
+\newcommand{\thm}[1]{Th.~\ref{thm:#1}}
+\newcommand{\fig}[1]{Fig.~\ref{fig:#1}}
+\newcommand{\diagram}[1]{diagram~\ref{eq:#1}}
+\newcommand{\app}[1]{Appendix~\ref{app:#1}}
+\newcommand{\mcite}[1]{\textcolor{gray}{#1}} % missing cite
+\newcommand{\defn}[1]{Def.~\ref{def:#1}}
+\newcommand{\prop}[1]{Prop.~\ref{prop:#1}}
+
+% Math
+\renewcommand{\tuple}[1]{(#1)}
+\DeclareMathOperator*{\expn}{exp}
+\renewcommand*{\exp}[1]{e^{\,#1}} % \mathrm{e}^{#1}}
+\renewcommand{\qedsymbol}{\ensuremath{\blacksquare}}
+\newcommand{\partialto}{\rightharpoonup}
+\newcommand{\id}{\vec{1}} % identity function
+\newcommand{\mr}[1]{\mathrm{#1}}
+
+\newcommand{\den}[1]{\llbracket #1 \rrbracket}
+\newcommand{\m}[1]{\{\!| #1 |\!\}}
+\newcommand{\M}[1]{\mathcal{#1}}
+\newcommand{\MS}[0]{\mathrm{M}}
+\newcommand{\SQ}[0]{\mathrm{S}}
+\newcommand{\s}[1]{\underline{#1}}
+\newcommand{\G}[0]{\Gamma}
+\newcommand{\D}[0]{\Delta}
+\newcommand{\mytt}{t\!t}
+\newcommand{\myff}{f\!\!f}
+
+\newcommand{\V}{\mathrm{V}}
+
+\newcommand{\sel}{\mathrm{sel}}
+\newcommand{\fold}{\mathrm{fold}}
+
+\newcommand{\ms}{\mathrm{ms}}
+
+
+\newtheorem{mydef}{Definition}
+\def\dotminus{\mathbin{\ooalign{\hss\raise1ex\hbox{.}\hss\cr
+  \mathsurround=0pt$-$}}}
+\setlength{\tabcolsep}{8pt}
+\renewcommand{\arraystretch}{1.0}
+
+\newcommand{\match}{m}
+\newcommand{\up}[1]{\uparrow\! #1}
+
+\newcommand{\n}{\mathrm{n}}
+
+% Other stuff
+\newcommand{\maybe}[1]{\textcolor{gray}{#1}}
+\newcommand{\todo}[1]{\textcolor{red}{TODO: #1}}
+
+% rules
+\newcommand{\ar}[2]{\mr{#1} \! = \! {#2}}
+
+\setlength{\tabcolsep}{8pt}
+\renewcommand{\arraystretch}{1.2}
+
+\begin{document}
+\chapter{Conclusions}
+% summary
+No complex system can be understood by extrapolation of the properties of its
+elementary components. In order to understand a complex system, like an
+organism, one needs to consider explanations at various levels of detail. This
+is especially true in biological systems where entities (processes and so on)
+and their organisation give rise to properties of processes at the next level of
+detail and they in turn to the next until you get to the level of a living
+entity, the organism. In order to understand the organism (and consequently
+life) we therefore need to understand the links between the explanations at the
+various levels of detail.
+
+The importance of organisation between components has been stressed before and
+it is in fact the fundamental concept of systems theory. While the focus in
+Biology has been traditionally on single components the systems view has found
+its way into mainstream biological thinking with the systems biology
+movement. The stress on organisation and its constructive nature also leads to
+questions about representation. The most widely used technical languages for the
+representation of physical systems come from the dynamics world. Since the
+questions there are usually different, abstracting a system to its properties
+through variables and ignoring organisation is usually adequate. The
+constructive organisation of biological systems though poses different
+requirements although the value of abstraction still remains. We present
+\emph{Chromar} a language that combine organisational aspects through the
+explicit representation of discrete entities, agents, and non-organisational
+aspects through abstract properties of these entities, attributes. The concept
+of abstraction is there in extensions to the expression language used for the
+dynamics of the attributes. Observables recognise the need for explanations at
+different levels by allowing an explicit functional link between abstract
+quantifiable properties and more explicit representations. Fluents, again, allow
+abstraction via the description of system properties using time-dependent
+deterministic value for describing parts of the system we do not wish to model
+mechanistically.
+
+In plant research the focus has always been on the model species
+Arabidopsis. Functional-structural models have focused on the constructive
+organisation of plant organs (development) as well as functional aspects like
+metabolism. The Framework Model is inspired by these but adds more breadth by
+explicitly including a genetic circuit and phenology models to time the
+conceptual development towards flowering. The FM covers one part of plant
+development but does not extend to reproduction, which means that it has limited
+applicability in ecological studies. Ecological studies on the other hand
+consider the full lifecycle but of an abstract version of plants where its
+construction and physical development are absent. We presented \emph{FM-life}
+an extension to the FM to the full lifecycle including reproduction and its
+scale-up to the population level via a clustering approoach to tractable
+simulate population of plants over multiple decades in different genotype x
+environment scenarios.
+
+Finally, we presented another more engineering oriented use of multi-scale plant
+model as devices for optimising plant traits. Instead of the more traditional
+genome engineering approach we focused on engineering the environment during
+their development to achieve specific growth-related traits.
+
+After this brief summary of the work presented in thid thesis, we next go
+through and dicuss each aspect of our work in the context we have set above to
+understand its limitations, implications that follow, and possible future work
+that it suggests.
+
+
+
+\section{Chromar and representations of multi-scale biology}
+For the organisational parts of biology there is not much choice. We need
+discrete objects relations and dynamics that add/create objects and
+relate/unrelate objects.
+
+Identify objects
+Apart from these other modules can be identified
+
+Shortcomings of Chromar:
+in organisational aspects
+Most basic structure + dynamics
+No explicit relation although they can be encoded
+Connections
+
+Non-organisational aspects
+Simple, again, but useful for a large range of application
+Metric quantities and others
+
+For the non-organisational parts the choice is greater since the
+non-organisational parts are the abstractions that the modeller uses. Depending
+on the system a different abstraction might be useful in understanding and
+interpeting the process.
+
+made the tie between non-organisational and organisational aspects
+stronger. through fluents and observables
+abstract vs non-abstract spaces
+Make the variables more first-class
+
+Biology is modular, the modules might be objects that we can see
+
+Unities can be treated as undivided wholes or
+as the interaction of their components (see Varela)
+
+which suggests --->
+--->
+
+
+\subsection{Multi-scale models that combine}
+What does the Chromar experience suggest?
+Organisational aspects through Chromar or an object-based lang to capture either
+things that we consider objects or abstract objects like processes (see
+Barabasi)
+The non-organisational aspects can be captured in any relevant abstraction
+depending on the level of understanding Can be even treated as undivided wholes
+if needed
+
+Practically will need either mappings between formalisms or more pragmatically
+something like mois cis\_interface
+
+
+\subsection{Practical considerations}
+None of these are important if people cannot use these things
+Given the above library of models with 
+
+
+
+\section{Organism-centred evolutionary ecology}
+effect of one mechanism on context? This theme is also important for the
+previous section, abstract then mechanisms can be added later. It might be
+interesting to see if we understand the effects of a single mechanism on
+higher-levels of organisation.
+Not always at the mechanism level -- see Marr's levels
+
+Since we're plant biologist and the plant is where we have mechanims information
+we would like to see the effect on ecology and a plant centred
+
+With phenology we kind of understand at hte first level of understanding, going
+to the second level of mechanism or of how this is realised we need the organism
+
+
+Experimental validation?
+
+
+\section{Multi-scale organism models for engineering}
+Finally,
+for these I'm not sure we need the organism. The organism is there for the
+fundamental questions
+We can engineer the environemnt
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\printbibliography[heading=bibintoc]
+\end{document}
