@@ -100,6 +100,12 @@
 
 \begin{document}
 \chapter{Conclusions}
+After a brief summary of the work presented in this thesis, we next go
+through and dicuss each aspect of our work in the context we have set above to
+understand its limitations, implications that follow, and possible future work
+that it suggests.
+
+\section{Summary}
 % summary
 No complex system can be understood by extrapolation of the properties of its
 elementary components. In order to understand a complex system, like an
@@ -153,10 +159,6 @@ model as devices for optimising plant traits. Instead of the more traditional
 genome engineering approach we focused on engineering the environment during
 their development to achieve specific growth-related traits.
 
-After this brief summary of the work presented in this thesis, we next go
-through and dicuss each aspect of our work in the context we have set above to
-understand its limitations, implications that follow, and possible future work
-that it suggests.
 
 \section{Chromar and representations of multi-scale biology}
 Biology is modular. This includes "visibly" differentiated substructures like
@@ -185,73 +187,123 @@ is probably impractical in many cases. Even when considering the elementary
 components of a module and their organisation, certain aspects of the
 functioning of a module are still more practically captured through some
 abstraction to pick out properties of interest that perhaps are important for
-the links to the next level of detail.
+the links to the next level of detail. The abstraction that one uses to
+understand the functioning of a module will depend on the level of understanding
+and practical considerations. For example, we might not want to describe the
+mechanism of a particular process ('how') but only 'what' it does at a more
+descriptive level.  We will call these the \emph{non-organisational} or
+\emph{abstract} aspects of a system (or its model).
+
+Given that in multi-scale explanations of systems require representation of both
+non-organisational and organisational aspects, the question of the technical
+language used for this representation is interesting. For the organisational
+parts since we are considering discrete entities, we need collections of objects
+\citep{fontana_barrier_1996}. Other aspects of the organisation possibly also
+then need the description of relations on these collections of objects
+\citep{rashevsky_topology_1954, rosen_relational_1958}. The constructive nature
+of this organisation means that we need a way to describe the
+creation/destruction of objects and the creation or deletion of pairings of
+objects in the defined relations. In Chromar we have simple representations of
+organisational aspects where objects, agents, can be defined along with their
+creation/destruction. Explicit definition of relations is not possible but we
+have seen that different kinds of relations on objects exist in object-based
+languages (Section~\ref{sec:objectLangs}). Implicit representation is possible
+through agent attributes.
+
+For the non-organisational aspect the question of representation is more
+difficult since the point of abstrction is to use the most convenient or
+practical explanation for a particular module. Chromar allows agents (modules)
+to have attributes, which are lists of typed values. While attributed objects
+(colours and so on) have been used in languages before, in Chromar these take an
+`elevated' status where they could stand for entire models. Their dynamics come with
+discrete transitions, which is the same way the dynamics of objects
+(deletion/creation) are defined. This is very general and could satisfy a range
+of applications and we have seen that the Dynamical Grammars of
+\citet{mjolsness2006stochastic} also allow the description in terms of the more
+familiar ODEs. 
+
+What if we wanted to use the most convenient abstraction for the abstract parts
+of each module though? Pragmatic approaches like multi-model simulators
+\citep{erbm_mois_2015,cis_2018} allow that through concurrent running of
+executables representing the simulation of each module. The organisation of the
+modules, for example variable communication, is usually represented externally
+in a configuration file. While this achieves the goal of simulation, the
+resulting multi-model does not achieve the second goal of models that we have
+identified regarding understanding since the organisation is opaque.
+
+What the above suggest for possible future work is a system that handles both
+the organisational aspects in an object-based language and the
+non-organisational aspects possibly in many languages.
+
+%Like Chromar we have discrete objects containing models (abstractions of its
+%functioning but unlike chromar there is no restriction on the dynamics, these
+%can be written in any language
+
+synchronisation or the connections, interactions are defined using rules as is
+already the case + other organisational aspects also handled by chromar like
+construction rekations etc.
 
 
-Language question 
+
+Since Chromar combines
+the abstract with non-abstract spaces we recognised the need for a way to
+connect the two views. This is done through enriched expressions that combine
+attributes with observables that give functional links between abstract and more
+detailed views and fluents that give another way for abstraction of functions
+that we do not wish to characterise in organisational terms and rules. This is
+crucial in a system like the one we point to especially if the modules are at
+different levels and have both organisational and abstract views. One could
+imagine for example making observables first-class and allowing them to be
+attributes.
+
+Consider for example the model in Figure~\ref{} expressed 
+%synchronisation and more details
+
+This perhaps reminds us of Rashevsky and godin
+This will need mappings between calculi or more practically something like the 
 
 
+%This is the key!!!!!
 
-For the organisational parts of biology there is not much choice. We need
-discrete objects relations and dynamics that add/create objects and
-relate/unrelate objects.
+% made the tie between non-organisational and organisational aspects
+% stronger. through fluents and observables
+% abstract vs non-abstract spaces
+% Make the variables more first-class
+% So that they represent whole models perhaps and their connection over multiple
+% level of explanation the abstract to the more concrete..enriched expressions
+% suggest a way that this could be done
+% could be combined
 
-Shortcomings of Chromar:
-in organisational aspects
-Most basic structure + dynamics
-No explicit relation although they can be encoded
-Connections
+% show how examples to see the challenges to advance their resolution
+% refer back to how things in the previous chapter lead to the realisation
+% discussed here
+% If I had more time + future
 
-Inside the modules
-Non-organisational aspects
-Simple, again, but useful for a large range of application
-Metric quantities and others
+% (mention database ideas that could mean borrowing ideas from databases for, say,
+% efficient implementation etc.)
+% + Laurent paper
+% observables over a single agent
+% which suggests --->
+% --->
 
-For the non-organisational parts the choice is greater since the
-non-organisational parts are the abstractions that the modeller uses. Depending
-on the system a different abstraction might be useful in understanding and
-interpeting the process.
-
-made the tie between non-organisational and organisational aspects
-stronger. through fluents and observables
-abstract vs non-abstract spaces
-Make the variables more first-class
-
-So that they represent whole models perhaps and their connection over multiple
-level of explanation the abstract to the more concrete..enriched expressions
-suggest a way that this could be done
-could be combined
-
-show how examples to see the challenges to advance their resolution
-refer back to how things in the previous chapter lead to the realisation
-discussed here
-If I had more time + future
-
-(mention database ideas that could mean borrowing ideas from databases for, say,
-efficient implementation etc.)
-+ Laurent paper
-observables over a single agent
-which suggests --->
---->
-
-There are ways (see Ricardo's work to abstract a system that includes some form
-of organisation and one level of detail to another.
-Observables are not like that
+% There are ways (see Ricardo's work to abstract a system that includes some form
+% of organisation and one level of detail to another.
+% Observables are not like that
 
 
-\subsection{Multi-scale models that combine}
-What does the Chromar experience suggest?
-Organisational aspects through Chromar or an object-based lang to capture either
-things that we consider objects or abstract objects like processes (see
-Barabasi)
-The non-organisational aspects can be captured in any relevant abstraction
-depending on the level of understanding Can be even treated as undivided wholes
-if needed
+%\subsection{Multi-scale models that combine}
+% What does the Chromar experience suggest?
+% Organisational aspects through Chromar or an object-based lang to capture either
+% things that we consider objects or abstract objects like processes (see
+% Barabasi)
+% The non-organisational aspects can be captured in any relevant abstraction
+% depending on the level of understanding Can be even treated as undivided wholes
+% if needed
 
-Practically will need either mappings between formalisms or more pragmatically
-something like mois cis\_interface
+% Practically will need either mappings between formalisms or more pragmatically
+% something like mois cis\_interface
 
-mois cis etc. combination of models is not a model!!
+% mois cis etc. combination of models is not a model!!
 
 
 \subsection{Practical considerations}
@@ -277,13 +329,13 @@ to the second level of mechanism or of how this is realised we need the organism
 Experimental validation?
 
 
-\section{Multi-scale organism models for engineering}
-Finally,
-for these I'm not sure we need the organism. The organism is there for the
-fundamental questions
-We can engineer the environemnt etc.
+% \section{Multi-scale organism models for engineering}
+% Finally,
+% for these I'm not sure we need the organism. The organism is there for the
+% fundamental questions
+% We can engineer the environemnt etc.
 
-Why do we use a multi-scale detail model?
+% Why do we use a multi-scale detail model?
 
 
 
