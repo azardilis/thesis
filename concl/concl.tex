@@ -231,7 +231,7 @@ in a configuration file. While this achieves the goal of simulation, the
 resulting multi-model does not achieve the second goal of models that we have
 identified regarding understanding since the organisation is opaque.
 
-\begin{figure}[p]
+\begin{figure}[tb]
   \centering
   \includegraphics[width=0.9\textwidth]{figures/hypothetical.eps}
   \caption{A hypothetical system inspired by Chromar that combines
@@ -266,15 +266,16 @@ like we have seen with Chromar. The object rules can add/delete or
 relate/unrelate objects. Rules can also be used for the interaction of the
 internal dynamics of each module. For example, if a state variable from one
 module is needed to compute the state variable for another, this interaction can
-be captured by synchronsing them through a rule. Internal dynamics are rules
-referring only to single modules.
+be captured by synchronsing them through a rule. Internal dynamics are captured
+trough rules referring only to single modules.
 
 Unlike Chromar, however, the abstractions in each module or the indepedent ones
 can be written in any language and explicit relations can be encoded. In order
-for this to happen we will probably need mappings between the mathematical
+to achieve this we will either need formal mappings between the mathematical
 interpetations of the abstractions used in each module as suggested by
-\citet{mjolsness_prospects_2018} or more pragmatically by using the simulation
-synchronisation through message passing of tool like \citet{cis_2018}.
+\citet{mjolsness_prospects_2018} or a more pragmatic system using simulation
+synchronisation, for example through message passing, which is the approach
+taken by \citet{cis_2018}.
 
 The system of organisation of processes reminds us of the graph of process
 interactions of \citet{rashevsky_topology_1954}, who was one of the first to
@@ -285,19 +286,39 @@ main representation structure used in another tool for simulation of plant
 systems based on data-flows on graphs
 \citep[OpenAlea;][]{pradal_openalea:_2008}.
 
-Finally, the 
+\subsection{Practical considerations}
+None of these are important if people cannot use these things Given the above
+library of models with
+
+\subsection{Database ideas}
+For the observables we use an analogy of the state of the system (multiset of
+agent values) to a database. The first part of the observables are defined with
+a `select' statement that picks out parts of the state in a similar way to the
+select statement in database query languages. Similar techniques appear already
+in trace-query languages where we have observables over state traces instead of
+single states \citep{laurent_trace_2018}. The left-hand sides of rules can
+similarly be thought as select statements as they pick out subsets of the state
+where the transformation represented by the rule can be applied.
+
+This connection can be exploited to allow the adoption of techniques from
+database research for rule-based systems. One area could be to use techniques
+from database research to increase the performance of language
+implememntations. We highlighted some possible ways our implementation could be
+improved by avoiding recomputing the matches of each rule at every step of the
+simulation. This is similar to the \emph{view maintenance problem}, a well
+studied problem in database theory. Views are query results over a database that
+need to be kept consistent under changes to the underlying database. There are
+efficient solutions to the problem for databases with duplicates (database is
+taken as a multiset) that could be exploited in the calculation of our matches
+to avoid the current naive recomputation at each step
+\citep{griffin_incremental_1995}.
+
+Apart from practical results a large amount of theory work also becomes
+available, for example for query languages on multisets, which are ubiquitous in
+the object-based modelling languages \citep{libkin_query_1997,
+  buneman_comprehension_1994}.
 
 
-
-
-
-
-
-%synchronisation and more details
-
-
-
-%Incidentally 
 %This is the key!!!!!
 
 % made the tie between non-organisational and organisational aspects
@@ -339,12 +360,6 @@ Finally, the
 % something like mois cis\_interface
 
 % mois cis etc. combination of models is not a model!!
-
-
-\subsection{Practical considerations}
-None of these are important if people cannot use these things
-Given the above library of models with 
-
 
 
 \section{Organism-centred evolutionary ecology}
