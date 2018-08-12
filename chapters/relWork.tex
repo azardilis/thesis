@@ -30,37 +30,37 @@ leaves, for example, if new ones keep appearing?  In those cases one might be
 better off with a language that allows the description of the objects
 themselves, their interactions, and organisation. Unsurprisingly such languages
 have been developed for scientific fields that deal with parts of the natural
-world where structures are dynamic and self-organising. A whole strand of work
-on languages of increasing complexity exist for the description of biochemical
-systems starting from simple molecular reactions. The field of plant development
-also has seen an independent strand of work on languages with explicit
-description of objects.  Both these strands of work have seen a heavy
-interaction and inspiration from Computer Science where there exist many
-formalisms in the theory of computation for the description of object behaviour
-and interaction.
+world where structures are dynamic and self-organising. Languages of increasing
+complexity exist for the description of biochemical systems starting from simple
+molecular reactions. The field of plant development also has seen an independent
+strand of work on languages with explicit description of objects. Both these
+strands of work have seen a heavy interaction and inspiration from Computer
+Science where there exist many formalisms in the theory of computation for the
+description of object behaviour and interaction.
 % especially in concurrent computation but also in sequential
 
 %we need names for the two kinds of languages -- make the distinction so we can
 %refer to them later
-Here we are interested in understanding a plant or particular aspects of a plant
-at the organism level starting from genomes and molecular mechanisms. In order
-to understand the links between all relevant processes we need models with
-explicit representation of processes at multiple levels. Apart from the
-scientific challenges that this presents there are also technical and social
-challenges, among which is the choice of representation (language) for
-describing our models. Since we are trying to recreate an organism in silico and
-especially one where development is plastic and happens throughout its life
-history, we need to be able to describe dynamics of discrete objects. At the
-same time we also have the need for abstraction through quantifiable properties
-since the complexity of the task is large. 
+% Here we are interested in understanding a plant or particular aspects of a plant
+% at the organism level starting from genomes and molecular mechanisms. In order
+% to understand the links between all relevant processes we need models with
+% explicit representation of processes at multiple levels. Apart from the
+% scientific challenges that this presents there are also technical and social
+% challenges, among which is the choice of representation (language) for
+% describing our models. Since we are trying to recreate an organism in silico and
+% especially one where development is plastic and happens throughout its life
+% history, we need to be able to describe dynamics of discrete objects. At the
+% same time we also have the need for abstraction through quantifiable properties
+% since the complexity of the task is large. 
 
 There are languages in both the dynamics and structure space that combine
-aspects of both worlds. The language we describe and that is a big part of this
-thesis is situated in this space too. It comes from the biochemistry tradition
-and has discrete objects at its core but at the same time also has attributes to
-abstract away some internal structure of these objects. It further has features
-for (i) linking the abstract (attributes) and the concrete (observables) and
-(ii) explicitly using time, which is inspired, again, by the dynamics world.
+aspects of both worlds. Chromar, the language we describe and that is a big part
+of this thesis is situated in this space too. It comes from the biochemistry
+tradition and has discrete objects at its core but at the same time also has
+attributes to abstract away some internal structure of these objects. It further
+has features for (i) linking the abstract (attributes) and the concrete
+(observables) and (ii) explicitly using time, which is inspired, again, by the
+dynamics world.
 
 Since language design is as much art as it is science it can sometimes be hard
 to properly situate a new language (Chromar) in the space of already existing
@@ -73,22 +73,6 @@ particular requirements for structure representation, we will only deal with
 languages coming from the discrete world or from the dynamics world that include
 some support for defining discrete organisation as well.
 
-Concretely, in this chapter we will do the following:
-\begin{itemize}
-
-\item Introduction of two modelling examples that have representation
-  requirements that are typical of the multi-scale comprehensive models that we
-  are interested in in this thesis.
-\item An overview and comparison of languages coming from (i) the discrete world
-  with an emphasis on languages from the biochemistry strand of work since
-  Chromar is a direct product of these and (ii) the dynamics world that have
-  some aspect of structural organisation. In order to place these languages and
-  later be able to compare them we will place them all in a feature space. The
-  features are related to their characteristics in regards to capturing complex
-  organisation, dynamics, but also meta-features like readability. The above
-  examples will serve to illustrate the features and limitations of each
-  formalism.
-\end{itemize}
 While there are attempts for formal comparisons between languages
 \citep{felleisen1991expressive}, here the design space is so large that such an
 attempt is probably impossible. We instead will do our comparison informally
@@ -100,6 +84,24 @@ space.
 A more comprehensive overview of the above dichotomy between dynamics and
 structure appears in \citet{fontana1996barrier}.
 
+% Concretely, in this chapter we will do the following:
+% \begin{itemize}
+
+% \item Introduction of two modelling examples that have representation
+%   requirements that are typical of the multi-scale comprehensive models that we
+%   are interested in in this thesis.
+% \item An overview and comparison of languages coming from (i) the discrete world
+%   with an emphasis on languages from the biochemistry strand of work since
+%   Chromar is a direct product of these and (ii) the dynamics world that have
+%   some aspect of structural organisation. In order to place these languages and
+%   later be able to compare them we will place them all in a feature space. The
+%   features are related to their characteristics in regards to capturing complex
+%   organisation, dynamics, but also meta-features like readability. The above
+%   examples will serve to illustrate the features and limitations of each
+%   formalism.
+% \end{itemize}
+
+
 \section{Examples}
 \label{sec:examples}
 In this section we will introduce two examples that we will use throughout our
@@ -110,12 +112,12 @@ representation of the models in each formalism
 \subsection{Root apical meristem and whole-plant effects}
 \label{subsec:rootDev}
 Plant development happens at sites of meristematic activity. In the root this
-site is at root cap and it is called Root Apical Meristem (RAM). In root
-development this raises the question about the mechanism through which this gives
-rise to the root architecture but also how the meristematic cells maintain their
-position close to the root cap throughout development. The hormone auxin and its
-distribution of concentration along the root architecture has been pinpointed as
-a possible mechanism to explain both of these phenomena.
+site is at the cap and it is called Root Apical Meristem (RAM). In root
+development this raises the question about the mechanism through which this
+gives rise to the root architecture but also how the meristematic cells maintain
+their position close to the root cap throughout development. The hormone auxin
+and its distribution of concentration along the root architecture has been
+pinpointed as a possible mechanism to explain both of these phenomena.
 
 Here we will consider auxin dynamics in a growing 1-D array of root cells
 proposed by \citet{mironova_plausible_2010} as a possible mechanism to explain
@@ -237,8 +239,8 @@ different species interact to change the number of objects of the corresponding
 species in the state of the system. The state of the system is an unstructured
 collection (multiset) of copies (molecules) of each species. Qualitatively,
 applying a reaction to a state (multiset) means removing from the state the
-elements that appear in the lhs of the reaction and adding the elements that
-appear on ths rhs of the reaction.
+elements that appear in the left-hand side (lhs) of the reaction and adding the
+elements that appear on ths right-hand side (rhs) of the reaction.
 
 There is an equivalent graphical representation where the system is given as a
 bipartite graph representing species as places (round nodes) and reactions as
@@ -311,8 +313,8 @@ $d$, and so on:
 There are two problems with the above description. The first is that it is not
 very compact. It grows with the number of cells since we have to write the
 diffusion reaction for every pair of cells in both directions and
-production/destruction reactions for every cell. The second is that it is
-impossible to describe the creation of new cells because we need to create a new
+production/destruction reactions for every cell. The second is that it is hard
+to see how to describe the creation of new cells because we need to create a new
 auxin species for the new cell and new reactions, but the notation provides no
 way to express such a possibility. We could try to make a cell species but then
 we would have no way of linking the cell objects with the auxin objects and we
@@ -326,7 +328,7 @@ the soil.
 
 \subsection{Structured}
 \label{subsec:structLangs}
-Extensions to simple reactions add support for adding organisation to the
+Extensions to simple reactions add support for organisation to the
 unstructured multisets of objects in PNs. Organisation can be thought of as
 explicitly adding relations over the collections of objects. There are many
 relations that could be represented and the ones in this thread are,
@@ -363,11 +365,13 @@ allowed dynamics might not be sensible any more as they only make sense for a
 particular cell-inspired interpretation of the relation (see discussion in
 \citet{artale_part-whole_1996}).
 
-Semantics are given, like PNs, with similar interpretations as
-CTMCs. As states become more complex, however, practically drawing trajectories
-from the stochastic process becomes harder as finding the number of matches from
-the lhs of a rule to the state is more complex than simple multiplication of the
-multiset multiplicities of the lhs elements.
+Semantics are given, like PNs, with similar interpretations as CTMCs. The
+states, $S$, in this case are nested multisets and the transition rates between
+them are given by appropriate counting of the matches of the nested multisets in
+rule lhs's in the state. As states become more complex, however, practically
+drawing trajectories from the stochastic process becomes harder as finding the
+number of matches from the lhs of a rule to the state is more complex than
+simple multiplication of the multiset multiplicities of the lhs elements.
 
 Going to our examples, it looks possible to represent parts of the root
 development + auxin dynamics. For example, we could have a $\mathrm{Cell_i}$
@@ -399,7 +403,7 @@ state (\eg size of entire root), and representation of the surrounding
 environment also appear here.
 
 \subsubsection*{Links}
-\label{ssec:links}
+\label{subsec:links}
 Another organisational principle sometimes considered explicitly is that of
 complexation inspired by protein complexes. Kappa \citep{danos_formal_2004}
 considers the state of the system as a graph, for example:
@@ -425,8 +429,8 @@ our example:
 We, again, have the same problem we noted above regarding properties that cannot
 easily be represented by discrete objects, like cell properties, observables
 over states, and time. We note though that the simulator of Kappa, KaSim
-\citep{KaSimManual2014}, has facilities for observation of states, which can
-be used inside rules.
+\citep{kasimmanual2018}, has facilities for observation of states, which can be
+used inside rules.
 
 Other formalisms allow for more than one relation, for example bigraphs
 \citep{milner1999communicating} and the more biologically relevant stochastic
@@ -440,18 +444,21 @@ object-only language.
 \label{subsec:structDynLangs}
 Going beyond the object world, other extensions to these rule-based languages
 try to combine traditional features of object-based formalisms with dynamical
-features to represent more abstract quantifiable properties of the objects.
-It is interesting to note that adding attributes allows one to implicitly represent
-relations based on attribute selections on the left-hand side of rules.
+features to represent more abstract quantifiable properties of the objects.  It
+is interesting to note that adding attributes allows one to implicitly represent
+relations based on attribute selections on the left-hand side of rules (see
+discussion in \ssec{cpns} and next chapter).
 
 \subsubsection*{Coloured Petri Nets}
+\label{subsec:cpns}
 % description
-As the name implies Coloured Petri Nets are an extension to Petri Nets (Section)
-that allows distinctions between objects of each species (colouring of objects)
-by allowing them to have an associated data value adhering to the type (colour
-set) of their species~\citep{jensen_coloured_1987}. For example, for our root
-development system instead of having a simple $\mathrm{Cell}$ species we can
-have a $\mathrm{Cell}$ species with associated parameters (\eg position in the
+As the name implies Coloured Petri Nets are an extension to Petri Nets
+(Section~\ssec{pns}) that allows distinctions between objects of each species
+(colouring of objects) by allowing them to have an associated data value
+adhering to the type (colour set) of their
+species~\citep{jensen_coloured_1987}. For example, for our root development
+system instead of having a simple $\mathrm{Cell}$ species we can have a
+$\mathrm{Cell}$ species with associated parameters (\eg position in the
 array). Qualitatively CPNs work in the same way as simple PNs. Applying a
 reaction moves tokens between places. Since we have more complex type of objects
 the transitions have inscriptions to bind object colour values to variables
@@ -502,18 +509,18 @@ root. This means that the user has to manually keep track of this function and
 update the global information.
 
 For both of the transitions we consider we used some colours with $\mr{real}$
-types. Since the semantics of CPNs are given via unfolding to their simple PNs,
-the problem here is that in many cases the unfolded simple Petri Net has an
-infinite number of reactions. This means that in order to do the unfolding at
-all, the types have to be finite sets, which further means that real values are
-not allowed. This is also reflected in the implementation of Coloured Petri Net
-tools where one can define a Stochastic Coloured Petri Net but the definition is
-unfolded before it is run~\citep{heiner_snoopyunifying_2012}.Petri Net tools
-further have a graphical interface for defining the models, although there is a
-hybrid approach that allows mixing the graphical definition with programming
-language constructs (ML language)~\cite{jensen_coloured_1987}. While graphical
-notations are intuitive for smaller models, we find that for larger models
-they become hard to read.
+types. Since the semantics of CPNs are given with translations to simple PNs via
+enumeration of the corresponding simple transitions, the unfolded simple Petri
+Net has in many cases an infinite number of reactions. This means that in order
+to do the unfolding at all, the types have to be finite sets, which further
+means that real values are not allowed. This is also reflected in the
+implementation of Coloured Petri Net tools where one can define a Stochastic
+Coloured Petri Net but the definition is unfolded before it is
+run~\citep{heiner_snoopyunifying_2012}. Petri Net tools further have a graphical
+interface for defining the models, although there is a hybrid approach that
+allows mixing the graphical definition with programming language constructs (ML
+language)~\cite{jensen_coloured_1987}. While graphical notations are intuitive
+for smaller models, we find that for larger models they become hard to read.
 
 Finally, following the root development example there is no way to easily
 represent the water availability in the surrounding soil.
@@ -541,10 +548,10 @@ completely textual form.
 
 Similar limitations to the CPNs (discussed above) regarding time dependent
 values (\eg for representing water in the soil) and observational abstraction
-over parts of the state (\eg size of the entire root) also appear here. The
-availability of richer types for parameters would also work well with a more
-expressive expression language perhaps utilising a general-purpose programming
-language, like CPN tools do with ML.
+over parts of the state (\eg size of the entire root) remain. The availability
+of richer types for parameters would also work well with a more expressive
+expression language to represent their dynamics perhaps utilising a
+general-purpose programming language, like CPN tools do with ML.
 
 \subsubsection*{Dynamical Grammars}
 Dynamical Grammars of \citet{mjolsness2006stochastic} have a truly hybrid
@@ -580,12 +587,10 @@ the root in an abstract (non-mechanistic) way.
 \end{align*}
 However, if we are, as it is usually the case, taking the water values from a
 table then it might be hard to find a mathematical description that fits the
-differential equation framework. Moreover mixing these two paradigms
-(object-based and differential equations for the dynamics) might in some cases
-put an extra mental burden on the user, especially if they are not familiar with
-dynamical systems theory. Rules on discrete objects, operating on the objects or
-their properties, correspond nicely to biological events and intuitive
-descriptions of biological processes.
+differential equation framework. Mixing these two paradigms (object-based and
+differential equations for the dynamics), while powerful, means that sometimes
+rules do not correspond naturally to the conceptual view of biological events as
+instantaneous flows of matter.
 
 We note that there is no possibility for expressing observational abstractions
 over parts of the state and a similar scheme to the one we used in the CPN
@@ -619,7 +624,7 @@ application of rules in cases where more than one is applicable.
 
 % examples - limitations
 The ordered parametric L-systems seem to work well for our root development
-example since the cells along the root are ordered in an ordered sequence. The
+example since the cells along the root are in an ordered sequence. The
 'next-to' relation then need no further machinery (implicit representation) to
 be represented. The diffusion rule will look like this, again using a
 $\mr{Cell}$ object with similar parameters as before:
@@ -644,29 +649,57 @@ followed their evolution through adding features like adding extra structure on
 the objects and then adding features that are more traditionally from the
 dynamics world. Here, instead, we focus on languages that have dynamics at their
 heart but have some features for representing (dynamic) structure as
-well. Modelica is an object-oriented language combining traditional dynamics
-representation with structure \citep{fritzson_modelicaunified_1998}. Later
-extensions also added dynamic structure \citep{nytsch-geusen_mosilab:_2005}.
-\todo{others?}
+well.
 
-We next focus in more detail on Simile, which has been used before in Biology.
+Modelica is an object-oriented language (or language standard) combining
+traditional dynamics representation with structure
+\citep{fritzson_modelicaunified_1998} with various implementations
+\citep{otter_modeling_1996, li_hybrid_2007}. Dynamics are given as either
+non-causal relations between variables or differential equations. While it is
+object-based, the objects are intended for handling model complexity instead of
+representation of domain entities. This is also reflected by the fact that the
+object organisation is static. Later extensions
+\citep{nytsch-geusen_mosilab:_2005} or inspired languages
+\citep{zimmer2008introducing} add dynamic structure. The module dynamics are
+given by boolean triggered transitions between model modes representing
+different versions of the model with possibly different structure. This, again,
+reflects the fact that modules are intended for structuring a model instead of
+representation and they seem very far off from conceptual views of biological
+systems especially if one is talking about the dynamics of populations of
+objects. If we wanted, for example, to represent the root example with cells as
+Modelica (+ dynamic structure) modules we would need one mode for each
+population size. It is also very hard to see how to represent relations between
+objects that affect the structure changes.
+
+System dynamics is another popular approach to capturing continuous dynamics of
+variables through the visual notation of stocks and flows. Stocks are state
+variables and dynamics are given as flows between them. Recent commercial
+projects integrating a modelling language based on systems dynamics with an
+integrated development environment have started adding some discrete features as
+well to combine dynamics with object-based representations \citep[Ventity,
+AnyLogic;][]{yeager_entity-based_2014, borshchev2004system}. These have some
+characteristics in comon with the Modelica family of languages but the object
+dynamics are first-class and are represented through some language abstraction
+that allows their definition. We next focus in more detail on one of these,
+Simile, which has been used in Biology before.
+
 
 \subsection{Simile}
 \label{subsec:simile}
 %description
 Simile is another graphical language that has similarities to our approach
 \citep{muetzelfeldt_simile_2003}. Simile is used mainly in the domains of
-ecology and agricultural sciences but has also been used in systems biology (for
-the whole-plant model \citep{chew_multiscale_2014} that was the inspiration for
-our example in Section~\ssec{plantDev}) to exactly solve the kind of limitations
-we noted in the object-only based languages. External inputs are also supported,
-which is particularly important for adding weather data to crop models. In
-Simile there are two levels of definition of a model. At the first level we have
-continuous variables with rate equations and at the second level we have
-discrete objects with discrete dynamics -- adding/removing. The objects are
-grouped based on their types, and their behaviour is given at the population
-level. The dynamics of the two types of entities, continuous variables and objects, are
-not integrated as is the case in CPNs and CSMMR.
+ecology and agricultural sciences but has also been used in systems biology
+systems biology (for the whole-plant model \citep{chew_multiscale_2014} that was
+the inspiration for our example in Section~\ssec{plantDev}) to exactly solve the
+kind of limitations we noted in the object-only based languages. External inputs
+are also supported, which is particularly important for adding weather data to
+crop models. In Simile there are two levels of definition of a model. At the
+first level we have continuous variables with rate equations and at the second
+level we have discrete objects with discrete dynamics -- adding/removing. The
+objects are grouped based on their types, and their behaviour is given at the
+population level. The dynamics of the two types of entities, continuous
+variables and objects, are not integrated as is the case in CPNs and CSMMR.
 
 %semantics?
 There is an obvious interpretation of the first-level continuous variables as a
@@ -684,16 +717,19 @@ examples, let us start with the plant development example (Section~\ssec{plantDe
 \begin{center}
   \includegraphics[scale=0.6]{figures/simileGrowth.eps}
 \end{center}
-We have a population of Leaf objects and a single Cell object representing
-what we called $\mathrm{Cell}$ in our rules. Each Leaf in the population has a
-mass that grows as a continuous variable. In order to define the use of carbon
-for growth from the carbon variable in the Cell object we have to work at the
+We have a population of Leaf objects and a single Cell object representing what
+we called $\mathrm{Cell}$ in our rules. Each Leaf in the population has a mass
+that grows as a continuous variable. In order to define the use of carbon for
+growth from the carbon variable in the Cell object we have to work at the
 population level by summing the contribution of each Leaf. The population of
-Leaf objects also grows (see creation box). The description is at the level of
-objects instead of at the level of events, like in rule-based languages, which
-means that the dynamics are distributed across the model. Having the dynamics at
-the rules sometimes seems more natural as they correspond more naturally to the
-conceptual view of systems.
+Leaf objects also grows (see creation box). This concise description is at the
+level of objects instead of at the level of events, like in rule-based
+languages, which means that the dynamics are distributed across the
+model. Having the dynamics at the rule instead of the at the object level
+sometimes seems more natural as they correspond more intuitevely to the
+conceptual view of biological events. Even with mental models of processes, one
+usually speaks about the dynamics of the system as interactions of components
+instead of the behaviour of each component individually.
 
 Object relations can also be encoded through conditions to restrict the dynamics
 to a subset of the object types, similarly to conditional expressions available
@@ -712,10 +748,13 @@ the next-to relation information (identifiers) updated.
 
 %general meta-level limitations
 Finally, like CPNs, the graphical notation of Simile becomes, in our experience,
-problematic for models with more than a few variables, thereby requiring further
-visualisation tools. While CPNs have graphical elements for species and
-transitions, Simile represents all variables and interactions graphically
-further adding to the complexity of the representation.
+problematic for models with more than a few variables. While CPNs have graphical
+elements for species and transitions, Simile represents all variables and
+interactions graphically further adding to the complexity of the
+representation. This could, however, be mitigated by model hierarchy. Since the
+representation of objects in Simile, which could correspond to entire models,
+encourages model composition, further visual tools that allow hiding unnecessary
+nested models could be used to handle model complexity.
 
 \section{Pragmatic approaches}
 When modellers are confronted with complexity in models like the ones we have
@@ -817,7 +856,7 @@ the construction or combination of models.
 \subsubsection*{Agent-based frameworks}
 In Agent-based modelling (ABM) simulation frameworks, the description of the
 process/model happens declaratively through the description of the behaviour of
-classes of agents (see for example \cite{solovyev2010spark} used in systems
+classes of agents (see for example \cite{solovyev_spark:_2010} used in systems
 biology).
 
 While initially this looks similar to the object-based formalisms we have seen
@@ -865,7 +904,7 @@ compartments along with model information, like units and so on.
 As models started becoming more complex it faced the same limitations we noted
 in the Introduction and in the Petri Net section regading dynamic organisation
 among others. This led to the development of multiple extensions to the original
-format \citep[SBML L3];[]{sbmlL3} to handle the increased complexity. For
+format \citep[SBML L3;][]{sbmlL3} to handle the increased complexity. For
 example, the `Dynamic Structures' package adds support for defining dynamic
 structures and the `Hierarchical Model Composition' package adds support for
 hierarchy representation. The L3 specification was put to the test for the
