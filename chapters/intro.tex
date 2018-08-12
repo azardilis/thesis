@@ -2,12 +2,13 @@
 % next chapter
 %somehow need to include the word constructive more, that's key
 Life is produced and sustained through the organisation of entities at various
-levels that interact to construct other autonomous entities. Organisation and
-structure are therefore fundamental and defining properties of all living
-systems. Some go as far as to say that (self-)organisation and the resulting
-self-maintenance are the only common and defining characteristics of living
-organisms and that they are primary to even natural selection in shaping the
-forms of life that we see \citep[sometimes referred to as structuralism, for
+levels (\eg molecules, membranes) that interact to construct other autonomous
+entities (such as cells). Organisation and structure are therefore fundamental
+and defining properties of all living systems. Some go as far as to say that
+(self-)organisation and the resulting self-maintenance are the only common and
+defining characteristics of living organisms and that they are more important
+than even natural selection in shaping the forms of life that we see
+\citep[sometimes referred to as structuralism, for
 example;][]{thompson1942growth, kauffman1992origins}. Even if we do not take
 such an extreme view, it is still true that if we want to understand life we
 have to understand the organisation that sustains it and the links between
@@ -20,16 +21,17 @@ environment.
 % other less fundamental question could possibly be answered but at the core
 % we need this
 This view of organisation as a fundamental and defining principle of Biology
-makes the subject distinct from other natural sciences, like Physics for example
-and precludes a natural mode of enquiry, which is abstraction. The nature of the
-questions is different. How can we abstract the details of an organism if those
-details are exactly what makes the organism alive and in fact what we are trying
-to understand? Since abstraction or at least complete abstraction is not
-available, in order to answer biological questions we have to take a more
-holistic and multi-scale view of the natural systems of interest.
+makes, in my opinion, the subject distinct from other natural sciences, like
+Physics for example and precludes a natural mode of enquiry, which is
+abstraction. The nature of the questions is different. How can we abstract the
+details of an organism if those details are exactly what makes the organism
+alive and in fact what we are trying to understand? Since abstraction or at
+least complete abstraction is not available, in order to answer biological
+questions we have to take a more holistic and multi-scale view of the natural
+systems of interest.
 
 %reductionist vs system (organisation)
-Despite the importance of organisation in understanding life, historically the
+Despite the importance of organisation in understanding life,a common
 focus in Biology has been on understanding individual mechanisms at the
 molecular level. The reductionist view of life is that if cell is the main unit
 of life then if we understand all the processes inside the cell we will
@@ -75,10 +77,10 @@ mental models of the processes are not adequate tools to aid our
 understanding. A useful tool in these cases is formal models where the systems
 are represented using some formal language based on a mathematical
 interpretation, either directly or indirectly. An interesting view is that of
-formal models as machines that turn the assumptions that we put in into them to
+formal models as machines that turn the assumptions that we put into them to
 conclusions \citep{gunawardena_models_2014}. The unique advantage of formal
 models compared to informal ones (mental models) in Biology is that this machine
-is guaranteed to be correct therefore providing a good tool for testing our
+is guaranteed to function reliably therefore providing a good tool for testing our
 hypotheses (assumptions) just like an experiment would. Mental models however do
 not provide this guarantee and we therefore do not know if the fault is in our
 assumption or in the animation of the model in our heads.
@@ -150,26 +152,27 @@ Therefore, the \emph{aims} of this thesis are:
   and act in a dynamic natural environment.
 \item Use the above language to create such multi-scale plant models from the
   organism to the ecosystem.
-\item Use the models for answering questions in ecological models using the
+\item Employ the models for answering questions in ecological models using the
   mechanistic understanding that comes from including a model of the organism in
   ecological studies.
 \end{itemize}
 
-In the rest of this chapter we will first give an overview of modelling in the
-plant domain starting from plant science and going to ecology and crops . We
+In the rest of this chapter I will first give an overview of modelling in the
+plant domain starting from plant science and going to ecology and crops. We
 will then overview the language question in multi-scale models that relates to
 the organisation view of living organisms we noted above. Finally, we give the
 contributions of this thesis in reference to the outlined aims.
 
 \section{From plants to crops and ecosystems}
-Traditional plant biology research has been focused on understanding molecular
-mechanisms at the foundation of important plant processes like
-photosynthesis. Unlike mammalian systems, however, the effect of environmental
-conditions is usually taken into account since plants are highly dependent on
-those. The importance for crop traits also led to attempts at linking molecular
-knowledge to organism traits, like growth. We can think of these kind of questions
-of how a particular phenotypic trait arises from a molecular mechanism as the
-\emph{how} questions (top part of cycle in Figure~\ref{fig:circle}.
+Much contemporary work in plant biology research has been focused on
+understanding molecular mechanisms at the foundation of important plant
+processes like photosynthesis. Unlike mammalian systems, however, the effect of
+environmental conditions is usually taken into account since plants are highly
+dependent on those. The importance for crop traits also led to attempts at
+linking molecular knowledge to organism traits, like growth. We can think of
+these kind of questions of how a particular phenotypic trait arises from a
+molecular mechanism as the \emph{how} questions (top part of cycle in
+Figure~\ref{fig:circle}.
 
 \begin{figure}[tb]
   \centering
@@ -252,7 +255,8 @@ had no seed yield or link to evolutionary fitness. Without seed dormancy, they
 lacked a major determinant of Arabidopsis life history in the field. Their
 representation of the circadian clock was also unnecessarily detailed for many
 studies outside chronobiology. These limitations mean that going beyond the
-organism to the population level to answer ecological questions is not possible.
+organism to the population level to answer ecological questions is not
+practically possible without extra effort.
 
 \subsection{Crop modelling}
 %main point here is to give a feeling of how crop models are used, usually, for
@@ -265,14 +269,14 @@ understanding the effect of interventions to either plant genetics or crop
 management on plant performance, which is usually growth related.
 
 % traditional crop models
-Traditionally in crop models the entire crop is seen as one big plant. The
-challenges relate exactly to this assumption. For example, computing light
-interception of the canopy has to take into account the geometry and assumed
-configuration and positioning of plants in the field. The constructive
-organisation of plants is absent and plant processes, like photosynthesis, are
-scaled to the entire crop. Genetics or molecular mechanisms are represented, if
-at all, in a phenomenological way. For example, a mutant might have a different
-set of photosynthesis parameters and so on.
+Crop models often regard the entire crop as as one big plant. The challenges
+relate exactly to this assumption. For example, computing light interception of
+the canopy has to take into account the geometry and assumed configuration and
+positioning of plants in the field. The constructive organisation of plants is
+absent and plant processes, like photosynthesis, are scaled to the entire crop
+\citep{monteith_light_1965}. Genetics or molecular mechanisms are represented,
+if at all, in a phenomenological way. For example, a mutant might have a
+different set of model parameters and so on \citep{parent_can_2014}.
 
 Since the goal in this models is prediction, as long as these models come
 reasonably close to the behaviour of the crop under different environmental
@@ -285,9 +289,9 @@ under multiple environmental inputs.
 %important for later
 Other approaches start from a whole-plant model and then try to extrapolate to
 the entire crop. The usual representation is of the plant as multiple reservoirs
-of nutrients with flows between them. Growth, which is the main goal usually, is
-calculated as a function of the levels in these nutrient pools (see
-Figure~\ref{fig:plantFlow}).
+of nutrients with flows between them \citep{france_mathematical_1984}. Growth,
+which is the main goal usually, is calculated as a function of the levels in
+these nutrient pools (see Figure~\ref{fig:plantFlow}).
 
 \begin{figure}[tb]
 \centering  
@@ -354,7 +358,7 @@ survive to reproduction.
 Yet species have a natural geographic range that spans a wide range of climatic
 conditions. For example, Arabidopsis in Europe grows naturally all the way from
 Spain to Northern Finland. The hypothesis is then that the mechanisms that
-control these developmental events must be under selective pressure to adapt to
+control these developmental events might be under selective pressure to adapt to
 different climates. A lot of work in evolutionary ecology of plants is focused
 on understanding the molecular mechanisms involved in plant adaptation through
 the control of developmetal events. The assumption is then that these mechanisms
@@ -375,16 +379,16 @@ consecutive) developmental events are sometimes studied together
 The hypothesis in phenology is that plants sense and integrate environmental
 signals until they reach the optimal condition for triggering the transition to
 the next developmental stage. There are experimental evidenence of this
-integration but evidence on the mechanism are still behind altough there are is
+integration but evidence on the mechanism are still behind although there are is
 some work pointing to the clock as a possible mechanism.
 
 Phenology models are usually phenomenological and make no attempt to represent
 the mechanism for sensing and integration of the environmental effects. Instead,
 they use numerical quantities to represent the progress towards the transition,
 which is an integral over time of the values of envrironmental indicators that
-affect the particular stage under consideration. For example, if we know that
-temperature affects a developmental stage, a phenology model might use a
-temperature sum to track the progress towards the transition:
+affect the particular stage under consideration \citep{chuine_plant_2013}. For
+example, if we know that temperature affects a developmental stage, a phenology
+model might use a temperature sum to track the progress towards the transition:
 $$
 d(t) = \sum_{i}^{t} T(i) - T_b
 $$
@@ -492,7 +496,7 @@ reason Rashevsky's student, Robert Rosen, was called the Newton of Biology
 
 While we appreciate the organisation is important, especially at multi-scale
 representations abstraction through quantifiable properties is also needed
-especially at a more complex systems where we do not have the capacity or the
+especially with more complex systems where we do not have the capacity or the
 desire to model everything mechanistically.
 
 For complex models like the ones we have seen above from plant, crop, and
@@ -536,7 +540,7 @@ reference to the aims and dicussion above, specifically our contributions are:
   at the same time maintaining the naturalness of a domain-specific language.
 \item An extension of the Framework Model (FM; \ssec{fm}) to the full-lifecycle
   including reproduction and see dormancy along with modifications that allow
-  its operation realistic weather ranges. This is combined with full-lifecycle
+  operation in realistic weather ranges. This is combined with full-lifecycle
   phenology models from ecology to provide a population level model that
   includes the organism (through the FM). This allows simulation experiments for
   determining ecological properties in different genotype x environment
