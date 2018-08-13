@@ -210,7 +210,7 @@ languages (Section~\ref{sec:objectLangs}). Implicit representation is possible
 through agent attributes.
 
 For the non-organisational aspect the question of representation is more
-difficult since the point of abstrction is to use the most convenient or
+difficult since the point of abstraction is to use the most convenient or
 practical explanation for a particular module. Chromar allows agents (modules)
 to have attributes, which are lists of typed values. While attributed objects
 (colours and so on) have been used in languages before, in Chromar these take an
@@ -254,10 +254,10 @@ modules to describe aspects of their functioning that we want to capture in a
 convenient abstraction. This is like the attributes of agents in Chromar, which
 can represent entire models. Different levels of explanation can be combined
 with observables, for example a variable in one level might be a function of the
-state at another level. Other dynamics can be defined independent of any module,
+state at another level. Other dynamics can be defined independently of any module,
 like Chromar does with fluents. Both of these can coexist with the dynamics of
 state variables inside each module, in a similar way that attribute dynamics are
-given using enriched epxressions, which combine regular expressions,
+given using enriched expressions, which combine regular expressions,
 observables, and fluents.
 
 Both the organisational and non-organisational dynamics can be given with rules,
@@ -284,7 +284,7 @@ topological structures of \citet{godin_multiscale_1998}, which is the main
 representation structure used in another tool for simulation of plant systems
 based on data-flows on graphs \citep[OpenAlea;][]{pradal_openalea:_2008}.
 
-\todo{refer to work on previous chapters that motivated observables etc.}
+%\todo{refer to work on previous chapters that motivated observables etc.}
 
 \subsection{Practical considerations}
 While there is a lot of work on theoretical aspects of modelling languages,
@@ -294,10 +294,10 @@ projects. Some exceptions exist, for example Kappa (\ssec{links}) has seen
 a continuous development of a suite of practical tools for its use for a number
 of years \citep[Kappa platform;][]{boutillier2018kappa}.
 
-Chromar could similaryl benefit from practical tools to overcome practical
+Chromar could similarly benefit from practical tools to overcome practical
 hurdles to its use. This will be especially important for systems like the one
 we outlined in the previous section that allows the combination of multiple
-modules. In comprehensive models it is becoming rare that one person would write
+modules. In comprehensive models it is becoming rare that a single person writes
 the entire model. A practical modelling tool that combines model definition with
 a library of existing modules would be very powerful. Drawing from the ideas in
 the previous section, one could imagine a (possibly visual) interface where
@@ -378,21 +378,68 @@ the object-based modelling languages \citep{libkin_query_1997,
 
 
 \section{Organism-centred evolutionary ecology}
-Effect of one mechanism on context? This theme is also important for the
-previous section, abstract then mechanisms can be added later. It might be
-interesting to see if we understand the effects of a single mechanism on
-higher-levels of organisation.
-Not always at the mechanism level -- see Marr's levels
+It is not necessary to model everything at the mechanism level ('how' level). If
+the intension is to understand at an abstract level what a particular process
+does as a computational unit and especially if there is lack of data (or
+knowledge) then a more phenomenological description at some abstract level is
+adequate and probably even preferable \citep[see levels of description of
+Marr;][Chapter 1]{marr_vision:_1982}. For example the theory of syntax of
+\citet{chomsky_aspects_2014} is a purely computational description of language
+and does not describe how this is physically realised in neurons in the brain.
 
-Since we're plant biologists and the plant is where we have mechanims information
-we would like to see the effect on ecology.
+Similarly, many models in plant ecology and evolution abstract away the organism
+and have an abstract view of the population as a whole. Understanding the
+mechanism though is also important and the connections between the abstract
+computational view of a process and its physical realisation is vital in
+answering the 'how' questions of life (see Introduction,
+Figure~\ref{fig:circle}). As more knowledge of the mechanism becomes available
+for plants, it becomes attractive to replace the abstract with the mechanistic to
+get a more mechanistically-founded view of evolutionary processes, as we have
+seen in Chapter~\ref{chp:fms}.
 
-With phenology we kind of understand at the first level, going
-to the second level of mechanism (how this is realised) we need the organism.
+On the opposite side of this however, connecting a low-level mechanism up the
+scales to the population level might help understand and answer 'why' questions
+about the evolution of the mechanism too. If evolution is a population process
+\citep{doebeli_towards_2017} then modelling a mechanism in detail in the context
+of the organism and the population might explain its evolution
+\citep[\enquote{Nothing in biology makes sense except in light of population
+  genetics}][]{lynch_origins_2007}.
+
+As we go from individual detailed mechanisms to the population level it is also
+important to experimentally test our undestanding and hypotheses that we
+formalise in models. While probably impractical for larger species, the short
+length of the Arabidopsis lifecycle might make population experiments of
+different genetic backgrounds in natural conditions
+possible. \citep{rubin_circadian_2018}, for example, do field experiments
+(natural weather conditions) with populations of circadian clock mutant
+Arabidopsis plants to see the effect on developmental timing and shoot
+architecture. This includes traits like total fruit mass that could be used as
+proxies for reproductive success therefore allowing validation of multi-scale
+models and the evolutionary hypotheses they suggest.
+
+% Experimental validation? From genes to populations?
+
+% Effect of one mechanism on context? This theme is also important for the
+% previous section, abstract then mechanisms can be added later. It might be
+% interesting to see if we understand the effects of a single mechanism on
+% higher-levels of organisation.
+% Not always at the mechanism level -- see Marr's levels
+
+% Since we're plant biologists and the plant is where we have mechanims information
+% we would like to see the effect on ecology.
+
+% Next, including population genetics and genomic variation should give
+% understanding of the evolution of the clock gene circuit
+
+% With phenology we kind of understand at the first level, going
+% to the second level of mechanism (how this is realised) we need the organism.
 
 
-Experimental validation? From genes to populations?
 
+
+% Apart from helping with the how questions by adding mechanism to higher level
+% processes, they can also help with why question when considering a particular
+% mechanism in detail.
 
 % \section{Multi-scale organism models for engineering}
 % Finally,
