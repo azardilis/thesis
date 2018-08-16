@@ -20,6 +20,7 @@ development over time ignoring physical aspects of growth and development.
 Here we combine the two approaches to present a population level model where the
 organism is present. In particular in this chapter we do the following:
 \begin{itemize}
+\item Present \emph{FM-lite}...
 \item Present \emph{FM-life}, an extension of the Framework Model to the whole
   Arabidopsis life cycle represented in Chromar. FM-life includes a simpler
   model of vegetative growth, FM-lite, without the clock circuit and with
@@ -166,6 +167,14 @@ configuration of the organs at germination is as introduced by
 \citet{chew_multiscale_2014}. Note that the genotype attribute is passed from
 seed to emerged plant unchanged.
 
+
+\begin{figure}[tb]
+  \centering
+  \includegraphics[width=\textwidth]{figures/phenInd/seed.eps}
+  \caption{Indicative runs of the seed dormancy model}
+  \label{fig:seedInd}
+\end{figure}
+
 \subsection{Vegetative growth model (FM-lite) (B)}
 \label{vegetative-growth-model-fm-lite-b}
 For the vegetative stage we introduce a simplified version of FMv1
@@ -209,6 +218,15 @@ flowering plant, \(\mr{FPlant}\), follows:
 $$
 \mr{Plant}(\ar{gntp}{a}, \ar{dev}{d}, \ar{wc}{w}) \xrightarrow{1.0} \mr{\ FPlant}(\ar{gntp}{a}) \, \, \lbrack d > D_{f} \rbrack
 $$
+
+\begin{figure}[tb]
+  \centering
+  \includegraphics[width=\textwidth]{figures/phenInd/plant.eps}
+  \caption{Indicative runs of the seed dormancy model}
+  \label{fig:vegInd}
+\end{figure}
+
+
 
 \subsubsection*{Growth}
 As in FMv1 \citep{chew_multiscale_2014}, the growth component includes a carbon
@@ -427,6 +445,13 @@ reaches \(D_{s}\):
 Note that the genotype attribute of the parent plant is transferred to
 the seeds unchanged.
 
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{figures/phenInd/fplant.eps}
+  \caption{Indicative runs of the seed dormancy model}
+  \label{fig:reprInd}
+\end{figure}
+
 \subsubsection*{Growth}
 \label{growth-1}
 
@@ -538,6 +563,13 @@ conditions that the plant is exposed to during growth. The growth
 components predict growth at the individual organ level with these
 environmental conditions and therefore give us the environmentally
 determined seed number given by the \(b(m)\) function.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{figures/reprInd/reprSim.eps}
+  \caption{Indicative runs of the growth component of the reproductive stage model}
+  \label{fig:reprGInd}
+\end{figure}
 
 \subsection{Population level model and plotting conventions}
 \label{population-level-model-and-plotting-conventions}
@@ -771,6 +803,29 @@ the HH genotype: G x E interaction favoured the HH genotype despite its
 smaller number of potential life cycles. Thus, modelling the growth
 processes not only distinguished among the potential life cycle
 strategies within a genotype but also between the genotypes.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{figures/popExps/pops.eps}
+  \caption{Populations}
+  \label{fig:pops}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{figures/paramDistrs/psisCorVal.eps}
+  \caption{Dormancy level correlation with lineage length.}
+  \label{fig:psisCorVal}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\textwidth]{figures/paramDistrs/psisCorOul.eps}
+  \caption{Dormancy level correlation with lineage length.}
+  \label{fig:psisCorOul}
+\end{figure}
+
+
 
 \subsection{Oulu}
 \label{oulu}
