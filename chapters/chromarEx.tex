@@ -2,7 +2,7 @@ In this chapter we will introduce Chromar (formally introduced in the next
 chapter) by means of examples. The example serve two purposes: to introduce the
 features of the languages but also as a means of comparing Chromar to the related
 languages in the previous chapter by seeing how Chromar features handle the
-modelling requirements that they present.
+modelling requirements that the examples present.
 
 Chromar has the following main ideas, which we will explore in this chapter
 through the examples:
@@ -51,9 +51,14 @@ through the examples:
 \end{itemize}
 
 The examples from the previous section are extensions to the examples that
-appear in the papers describing Chromar \citep{honorato-zimmer_chromar_2017,
+appear in the articles describing Chromar \citep{honorato-zimmer_chromar_2017,
   honorato-zimmer_chromar_2018}. Therefore the following text is also in part
-comes from the same sources.
+comes from the same sources. Note that the author order follows the traditional
+alphabetical order of computer science literature. Ricardo Honorato-Zimmer
+participated in the meetings/discussions of ideas with Prof Gordon Plotkin who
+was my primary supervisor for this part of the work while Prof Andrew Millar was
+secondary.
+
 
 \section{Plant development in a field}
 \label{sec:plantDev}
@@ -82,23 +87,21 @@ For the \textit{carbon assimilation} from one particular leaf we need to
 increase the carbon concentration of the central Cell. The bigger the leaf the
 faster it contributes to the production of carbon:
 \[\mathrm{Leaf}(\mathrm{mass}=m), \: \mathrm{Cell}(\mathrm{carbon}=c) \:
-\xrightarrow{f(m)} \: \mathrm{Leaf}(\mathrm{mass}=m), \:
-\mathrm{Cell}(\mathrm{carbon}=c+1)\]
-We can read this rule as saying that for
+  \xrightarrow{f(m)} \: \mathrm{Leaf}(\mathrm{mass}=m), \:
+  \mathrm{Cell}(\mathrm{carbon}=c+1)\] We can read this rule as saying that for
 any two Leaf and Cell agents, the Leaf agent remains the same and the Cell agent
 increases its carbon content by one. Note that we assign the values of the
-attributes 
-the left-hand side of the rule to the variables $m$ and $c$, so that we can
-refer to them in the right-hand side of the rule and the rate expression. Since
-the $\mathrm{age}$ is not used in the rest of the rule, it can be omitted (see
-\textit{Missing attributes} syntactic extension, Section~\ref{}). If
-we were to write this in a traditional reaction notation we would have to write
-a reaction for every possible Leaf agent which leads to the compactness problem
-we have noted earlier (indeed, there would be infinitely many such
-possibilities). The implicit `for-all' in the pattern on the left-hand side
-allows the rule to be applied to new leaves when they are
-created. For example if the state of the system has two leaves, the central
-cell, and the rosette agent:
+attributes the left-hand side of the rule to the variables $m$ and $c$, so that
+we can refer to them in the right-hand side of the rule and the rate
+expression. Since the $\mathrm{age}$ is not used in the rest of the rule, it can
+be omitted (see \textit{Missing attributes} syntactic extension,
+\sct{syntaxExt}). If we were to write this in a traditional reaction notation we
+would have to write a reaction for every possible Leaf agent which leads to the
+compactness problem we have noted earlier (indeed, there would be infinitely
+many such possibilities). The implicit `for-all' in the pattern on the left-hand
+side allows the rule to be applied to new leaves when they are created. For
+example if the state of the system has two leaves, the central cell, and the
+rosette agent:
 \begin{align*}
 \m{ \mathrm{Leaf}(\ar{age}{1}, \ar{mass}{10}), \:
 \mathrm{Leaf}(\ar{age}{2}, \ar{mass}{5}),
@@ -164,17 +167,17 @@ There are two problems with the above definition:
   tracking, and check that its value is indeed what it should be.
 \end{itemize}
 
-We next introduce two new notational features
+I next introduce two new notational features
 to solve these problems.
 
 \textit{Fluents}
 
-To solve the first problem time-dependent values we call \textit{Fluents}. These
-can be constructed through a combination of a small set of primitives and
-general expressions, taken from Reactive Programming (FRP) constructs in
-\citep{wan_functional_2000} (our Fluents are usually called Behaviours in FRP). For
-example we could write a fluent for light, which is a function from time to the
-Booleans, and another one for temperature that depends on light:
+To solve the first problem I introduced time-dependent values called
+\textit{Fluents}. These can be constructed through a combination of a small set
+of primitives and general expressions, taken from Reactive Programming (FRP)
+constructs in \citep{wan_functional_2000} (Fluents are usually called Behaviours
+in FRP). For example we could write a fluent for light, which is a function from
+time to the Booleans, and another one for temperature that depends on light:
 \begin{align*}
 & light = \mathbf{repeatEvery} \; 24.0 \; (\mathrm{True} \; \mathbf{when} \; (6 < \mathbf{time} < 18) \; \mathbf{else} \; \mathrm{False}) \\
 & temp = 21.0 \; \mathbf{when} \; light \; \mathbf{else} \; 16.0
@@ -198,12 +201,13 @@ not have data or do not want to model more mechanistically using rules.
 
 \textit{Observables}
 
-To solve the second problem, we introduce functions of the state of the system
+To solve the second problem, I introduced functions on the state of the system
 called \textit{observables}. Observables are constructed using a combination of
 database-inspired $\mathbf{select}$ and $\mathbf{aggregate}$ operations: % we
 think of our state as a kind of database where we have a collection of agents
-rather than the more usual (and very similar) collection of records. The $
-\mathbf{select}$ operation selects agents of a particular type from %specifies a
+rather than the more usual (and very similar) collection of records. The
+$ \mathbf{select}$ operation selects agents of a particular type
+from %specifies a
 part of the state, producing a binding of each such agent's attribute values;
 the $\mathbf{aggregate}$ operation then folds the resulting collection of
 attribute value bindings into a single value, using a specified combining
@@ -232,7 +236,7 @@ to count the number of leafs in a state, and then divide $lm$ by $nl$.
 
 Whenever an observable is used, one obtains its `fresh' value, even when the
 underlying state has changed (\eg, by creating new leaves, in this case). For
-example our \textit{leaf growth} rule now becomes:
+example the \textit{leaf growth} rule now becomes:
 %
 \begin{align*}
 &\mathrm{Leaf}(\mathrm{age} \!= \!i, \mathrm{mass} \!= \!m),\:
@@ -267,16 +271,16 @@ assimilation rate as it reduces the photosynthetically active area.
 Going to the field where we have multiple plants we need some way of knowing
 first which agents belong to the same plant and second the location of the
 plant. We do not have an explicit way of representing these relations but we can
-again use our attributes to encode them. We will use one identifier for the plant
-and one for the patch. Every agent now has a further attribute to store this
-information. For example, the $\mr{Leaf}$ agent type becomes:
+again use our attributes to encode them. I will use one identifier for the plant
+and one for the patch of land. Every agent now has a further attribute to store
+this information. For example, the $\mr{Leaf}$ agent type becomes:
 $\mathrm{Leaf}(\mr{pos}:(\mr{int}, \mr{int}), \mathrm{age}:\mathrm{int},
 \mathrm{mass}:\mathrm{real})$. The first element of the $\mr{pos}$ tuple is the
-plant identifier and the second is the identifier of the patch it belongs to. We
+plant identifier and the second is the identifier of the patch it belongs to. I
 further assume that we are in a suitably powerful programming language (\eg our
-Haskell embedding) that we have (or can define) the functions $\mr{pid}$ to
-select the first element of the tuple (plant id) and $\mr{cid}$ to select the second
-element of the tuple (patch id).
+Haskell embedding) that I have (or can define) the functions $\mr{pid}$ to
+select the first element of the tuple (plant id) and $\mr{cid}$ to select the
+second element of the tuple (patch id).
 
 The metabolic rules stay the same but add a further condition that the
 agents on the lhs belong to the same plant. For example, maintenance respiration
@@ -292,9 +296,9 @@ now becomes:
 We assume that competition between plant affects the amount of light they
 receive, which in turn affects the photosynthesis rate. The assimilation rule
 will therefore change so that the light fluent is modulated by a competition
-index, which will be an observable on the global state of an entire patch. Here
-we assume that we are in our Haskell embedding and we have access to the full
-power of the language. We define the following Haskell functions:
+index, which will be an observable on the global state of leaves in an entire
+patch. Here we assume that we are in our Haskell embedding and we have access to
+the full power of the language. We define the following Haskell functions:
 \begin{align*}
 & \mr{comp} \: p = f (\mathbf{select} \; \mathrm{Leaf}(\mathrm{pos}=p' ,
   \mathrm{mass} = m) \; ; \; \mathbf{aggregate} \; (c: \mathrm{real}. \,
@@ -386,7 +390,7 @@ For the active transport of auxin in the cell by PIN proteins we have,
 Note that instead of modelling $\mr{PIN}$ concentration and its effect on auxin
 directly, we do so implicitly through a function that modulates the
 amount of auxin being transported. Unlike diffusion, which is bidirectional,
-active transport takes place in the direction from root shoot to cap.
+active transport takes place in the direction from shoot to root cap.
 
 The production of the division factor is affected by the difference in auxin
 concentration between neighbouring cells,
@@ -462,9 +466,9 @@ fluent here to model a process that while relevant for our process we do not
 wish to model in detail and mechanistically via rules.
 
 \section{Comparison to related work}
-Havign seen the properties of Chromar in action in this chapter and of other
+Having seen the properties of Chromar in action in this chapter and of other
 languages in the same design space in the previous chapter, we can compare their
-features. Here we will discuss properties relating to general usability features
+features. Here I will discuss properties relating to general usability features
 that can be understood without the formal definitions. Comparison and discussion
 related to more technical parts is done at the point where these are introduced
 (see next Chapters for formal definition of Chromar and its embedding in
@@ -500,6 +504,54 @@ Relations \newline (explicit) & No & Yes \newline (hierarchy) & No \newline
     \label{tab:comp}
   \end{tabular}}
 \end{center}
+
+\subsection{Declarative modelling}
+A distinction exists in programming languages between imperative and declarative
+styles. In the imperative style a computer program consists of a series of
+instruction of how the described process should be computer. On the other hand
+in more declarative languages the programmer defines what the program should do
+but not how that should be done. Mainstream programming languages follow the
+imperative style, which has prevailed, perhaps since computer hardware is
+inherently imperative \citep{backus2007can}.
+
+A similar distinction appears in modelling where some models use a declarative
+style while others are more imperative mixing the what with the how. The usual
+mathematical languages used in the description of physical processes, like
+differential equations, for example, are declarative statements about how
+functions of time (and/or space) on the described quantities relate to the rates
+of change of these functions. On the other hand, as we have seen, many models
+are represented as programs in imperative languages, which means that the
+represented biological knowledge is coupled with the how the process should be
+simulated along with other statements relating to particular choices for the
+representation of the state of the system (Models as programs
+\sct{pragmaticApproaches}). While libraries or frameworks provide ways to
+separate to an extent the biology from the implementation of the simulation (see
+\sct{simFrameworks}), this is not guaranteed.
+
+If we accept the view that models should serve as both tools for simulation as
+well as tools for thought for our understanding then procedural representations
+are not adequate. Chromar follows the declarative style. Rules correspond to
+biological events and the user declares how the state changes during the
+event. The simulation need not be defined as the intepretation as a CTMC gives
+that without any extra effort. Here I gave a particular implementation of the
+language as an embedded language inside Haskell using the Haskell expressions as
+an expression language. While Haskell follows the declarative style, certain
+properties of the biology might still be obscured depending on how much of the
+model lives in the rules and how much in the expressions implementing changes to
+the agent attributes. Different choices can easily be made though, for example
+we could restrict the expressions to small set of mathematical expressions
+\citep[perhaps a subset of MathML][]{ausbrooks2003mathematical} if the increased
+power of a general-purpose programming language is not required.
+
+Another common advantage of the declarative style over a more procedural style
+is model composability. This exists in Chromar too and it is crucial for the
+more comprehensive multi-models that we are interested in in this work. In
+Chromar composing two models is just a matter of concatenating their rule
+sets. An example of this is the multi-model lifecycle model of Arabidopsis I
+present in Chapter~\ref{chp:fms}. This is not as straighforward in procedural
+model implementations where the whole simulation and representation would have
+to be altered.
+
 
 \subsection{Basic Chromar}
 The idea of extending simple objects with fields to represent some of their

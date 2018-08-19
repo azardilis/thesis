@@ -1,13 +1,24 @@
-In the previous chapter we gave some example illustrating how Chromar works. In
-this chapter we formally introduce the syntax and semantics of Chromar.  Most of
-the work in this chapter appears in \citet{}.
+In the previous chapter I gave some example illustrating how Chromar works. In
+this chapter I formally introduce the syntax and semantics of Chromar. Formal
+definition of programming languages is a common practice in the computer science
+world. It has the many of the same advantages over informal, natural language
+descriptions as we have noted earlier regarding formal against informal
+descriptions of biological models. The formal description acts as a tool for the
+language designer to understand and design the language by making design choices
+explicit and understanding the relation between different features of the
+language. This usually also then makes the implementation process easier but the
+language is not tied to that implementation.
+
+Most of the work in this chapter appears in the articles describing Chromar
+\citep{honorato-zimmer_chromar_2017, honorato-zimmer_chromar_2018}.
+
 
 \section{Abstract syntax of basic Chromar}
 \label{sec:syntax}
-We next define the abstract syntax of basic Chromar.
+I next define the abstract syntax of basic Chromar.
 
-Regarding notation, we write $\s{a}$ for a possibly empty sequence of objects,
-whose typical elements are given by mathematical expressions $a$. We write
+Regarding notation, I write $\s{a}$ for a possibly empty sequence of objects,
+whose typical elements are given by mathematical expressions $a$. I write
 $\s{a}.i$ for the $i$th element of the sequence and $|\s{a}|$ for its length,
 and write the empty sequence as $\varepsilon$ and use commas for the composition
 of sequences.  We assume we have a countable set of names $N$ ranged over by
@@ -490,7 +501,7 @@ We begin with the syntax of extended Chromar and then proceed to its semantics.
 \subsection{Abstract syntax of extended Chromar}
 \label{sec:extSyntax}
 
-The grammar and typing rules are given in Figure~\ref{fig:extSyntax}, and we
+The grammar and typing rules are given in Figure~\ref{fig:extSyntax}, and I
 discuss them next. The discussion begins with enriched expressions and then
 moves on to agents, rules, and models. These are much as in basic Chromar, but
 adapted to allow enriched expressions; in particular there is a new syntactic
@@ -1022,6 +1033,15 @@ alleviate some of the computational cost \citep{voliotis_stochastic_2016}.
 \end{figure}
 
 \section{Conclusion}
-Here we defined the formal syntax and semantics of Chromar.
+Here I defined the formal syntax and semantics of Chromar. This process of
+definition uncovered and made explicit several design choices that were implicit
+in the informal version of the language in my head. It furthermore made the
+extensions and implementation of enriched expression possible by clarifying its
+relation to the basic parts of the language. The abstract nature of Chromar
+(parametric to expression and types) was also made easier by this formal
+definition. In the next chapter I make particular choices regarding these
+(Haskell expressions and types respectively) but the availability of the formal
+abstract definition of this chapter means that other choices can be made with
+less effort.
 
 
