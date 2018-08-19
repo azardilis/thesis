@@ -107,7 +107,19 @@ structure appears in \citet{fontana1996barrier}.
 In this section we will introduce two examples that we will use throughout our
 language space overview to illustrate their limitations and the motivation
 for their extensions with new features. We will not attempt a full
-representation of the models in each formalism
+representation of the models in each formalism.
+
+This will form as an overview of modelling requirements in the field through
+some simple examples that illustrate general requirements. This is not meant to
+be a comprehensive overview of structurally complex biological models. In fact,
+while the below highlight some important aspects, there is an entire range of
+models in the plant domain that have much more detailed structure and
+organisation. Examples are biophysical 3-D representations of meristem tissues
+at the cell level in Arabidopsis \citep{gruel_epidermis-driven_2016,
+  willis_cell_2016}. While these have for example the same requirement for the
+representation of relations (\eg between cells), the size and complexity of the
+system might provide some extra practical challenges that we do not consider
+here.
 
 \subsection{Root apical meristem and whole-plant effects}
 \label{subsec:rootDev}
@@ -140,7 +152,7 @@ abstract model) and the surrounding environment.
 More precisely we will consider the following dynamics
 (Figure~\ref{fig:rootDev}):
 \begin{itemize}
-\item Auxin flow from the shoot. Since we're only considering an abstract shoot
+\item Auxin flow from the shoot. Since we are only considering an abstract shoot
   we can think of auxin flow from the shoot as auxin being produced in the first
   cell of the root.
 \item Auxin degradation through cell expansion.
