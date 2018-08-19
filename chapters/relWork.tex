@@ -1,5 +1,5 @@
 Formal models of physical systems serve two roles (i) documentation and
-communication of our understanding and (ii) formal analysis (simulation). The
+communication of our understanding and (ii) formal analysis (and/or simulation). The
 most common language for describing the natural world is dynamical systems
 theory. It has a long tradition in Physics starting from Newton and Poincare. It
 relies on a conceptual abstraction where instead of describing the objects that
@@ -111,13 +111,14 @@ representation of the models in each formalism
 
 \subsection{Root apical meristem and whole-plant effects}
 \label{subsec:rootDev}
-Plant development happens at sites of meristematic activity. In the root this
-site is at the cap and it is called Root Apical Meristem (RAM). In root
-development this raises the question about the mechanism through which this
-gives rise to the root architecture but also how the meristematic cells maintain
-their position close to the root cap throughout development. The hormone auxin
-and its distribution of concentration along the root architecture has been
-pinpointed as a possible mechanism to explain both of these phenomena.
+Cell production for plant development happens at sites of meristematic
+activity. In the root this site is behind the root cap and it is called the Root
+Apical Meristem (RAM). In root development this raises the question about the
+mechanism through which this gives rise to the root architecture but also how
+the meristematic cells maintain their position close to the root cap throughout
+development. The hormone auxin and its distribution of concentration along the
+root architecture has been pinpointed as a possible mechanism to explain both of
+these phenomena.
 
 Here we will consider auxin dynamics in a growing 1-D array of root cells
 proposed by \citet{mironova_plausible_2010} as a possible mechanism to explain
@@ -533,7 +534,8 @@ considered (subsections~\ssec{structLangs} and~\ssec{pns}). Parameters can take
 part in rules either passively by influencing rates rules, conditions and so on
 but can also be actively changed. The addition of parameters gives it a very
 similar flavour to CPNs. However, a CSMMR model, unlike a CPN model, is given
-stochastic interpretation directly as a CTMC.
+stochastic interpretation directly as a CTMC, without unfolding to a simpler
+form.
 
 Using a CSMMR agent type similar to the CPN $\mr{Cell}$ colourset for the root
 development example (\ssec{rootDev}), we can write the following
@@ -625,7 +627,7 @@ application of rules in cases where more than one is applicable.
 % examples - limitations
 The ordered parametric L-systems seem to work well for our root development
 example since the cells along the root are in an ordered sequence. The
-'next-to' relation then need no further machinery (implicit representation) to
+'next-to' relation then needs no further machinery (implicit representation) to
 be represented. The diffusion rule will look like this, again using a
 $\mr{Cell}$ object with similar parameters as before:
 $$
@@ -640,7 +642,7 @@ be hard to write, for example, the rule for leaf growth that requires
 information from both the leaves and cell objects.
 
 Similar limitations regarding observational abstraction of parts of the state,
-time-dependent value representation also appear here.
+time-dependent value representation also apply here.
 
 \section{Dynamics to structure}
 \label{sec:dyns}

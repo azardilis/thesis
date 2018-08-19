@@ -31,11 +31,11 @@ questions we have to take a more holistic and multi-scale view of the natural
 systems of interest.
 
 %reductionist vs system (organisation)
-Despite the importance of organisation in understanding life,a common
-focus in Biology has been on understanding individual mechanisms at the
-molecular level. The reductionist view of life is that if cell is the main unit
-of life then if we understand all the processes inside the cell we will
-understand life as everything else follows.
+Despite the importance of organisation in understanding life,a common focus in
+Biology has been on understanding individual mechanisms at the molecular
+level. The reductionist view of life is that if the cell is the main unit of
+life then if we understand all the processes inside the cell we will understand
+life, as everything else follows.
 
 There were, however, even if on the fringes or often completely outside
 mainstream biology, few historical (and perhaps independent) threads of work
@@ -157,11 +157,13 @@ Therefore, the \emph{aims} of this thesis are:
   ecological studies.
 \end{itemize}
 
-In the rest of this chapter I will first give an overview of modelling in the
-plant domain starting from plant science and going to ecology and crops. We
-will then overview the language question in multi-scale models that relates to
-the organisation view of living organisms we noted above. Finally, we give the
-contributions of this thesis in reference to the outlined aims.
+In the rest of this chapter I will first give a simplified overview of modelling
+in the plant domain starting from plant science and going to ecology and
+crops. My objective here is to locate and motivate the challenges for modelling
+languages, rather than a comprehensive survey of the state of the art in plant
+models. I will then overview the language question in multi-scale models that
+relates to the organisation view of living organisms we noted above. Finally, we
+give the contributions of this thesis in reference to the outlined aims.
 
 \section{From plants to crops and ecosystems}
 Much contemporary work in plant biology research has been focused on
@@ -180,15 +182,16 @@ Figure~\ref{fig:circle}.
   \caption{Plant biology research is usually concerned with the top part of the
     cycle and the 'how' of organisms. Evolution and ecology are concerned with
     the why although they usually use a limited view of the 'how' to make
-    hypotheses about the 'why' \citep{millar_intracellular_2016}.}
+    hypotheses about the 'why' \citep[adapte
+    from][]{millar_intracellular_2016}.}
   \label{fig:circle}
 \end{figure}
 
-In the fields of ecology and evolution on the other hand, the question are more
-on they \emph{why} organisms evolved the way they have (bottom part of cycle in
-Figure~\ref{fig:circle}. This is usually done by observing genetic variation and
-with some knowledge of the how this affect organism behaviour make evolutionary
-hypotheses on the why.
+In the fields of ecology and evolution on the other hand, the question can also
+address more on they \emph{why} organisms evolved the way they have (bottom part
+of cycle in Figure~\ref{fig:circle}. This is usually done by observing genetic
+variation and with some knowledge of the how this affect organism behaviour make
+evolutionary hypotheses on the why.
 
 Multi-scale plant models that go beyond the organism can be seen as tools for
 understanding (evolutionary ecology) and tools for engineering (crop
@@ -359,14 +362,15 @@ Yet species have a natural geographic range that spans a wide range of climatic
 conditions. For example, Arabidopsis in Europe grows naturally all the way from
 Spain to Northern Finland. The hypothesis is then that the mechanisms that
 control these developmental events might be under selective pressure to adapt to
-different climates. A lot of work in evolutionary ecology of plants is focused
-on understanding the molecular mechanisms involved in plant adaptation through
-the control of developmetal events. The assumption is then that these mechanisms
-reflect adaptation to different environments and therefore hint towards the
-'why' questions. \citet{mendez-vigo_altitudinal_2011} characterise the variation
-in four flowering related genes across large geographical regions to investigate
-their involvement in the variation of flowering related traits across the
-region. Other studies focus on seed dormancy related genes
+different climates, , which can then be tested by experimental growth under
+multiple environments. A lot of work in evolutionary ecology of plants is
+focused on understanding the molecular mechanisms involved in plant adaptation
+through the control of developmetal events. The assumption is then that these
+mechanisms reflect adaptation to different environments and therefore hint
+towards the 'why' questions. \citet{mendez-vigo_altitudinal_2011} characterise
+the variation in four flowering related genes across large geographical regions
+to investigate their involvement in the variation of flowering related traits
+across the region. Other studies focus on seed dormancy related genes
 \citep{chiang_dog1_2011} or more broadly on general characterisation of genetic
 variation for multiple traits across the natural habitats of Arabidopsis
 \citep{atwell_genome-wide_2010}. The developmental events are correlated since
@@ -416,7 +420,7 @@ the entire generation affects the next generation and so on.
 \subsubsection*{System models}
 In order to be useful in evolutionary ecology other work has incorporated
 genetics and fitness into the simple phenology models of the kind we have seen
-above. \citet{chuine_phenology_2001}, for exaple, propose a model that combines
+above. \citet{chuine_phenology_2001}, for example, propose a model that combines
 fitness with traditional phenology models to predict the distribution of a
 species. The model is simple, the phenology part predicts the timing and the
 fitness, given as probabilities of survival under different weather stresses,
@@ -517,11 +521,11 @@ details in some of the issues we highlighted above using illustrative examples.
 \section{Contributions}
 The work of this thesis is concerned primarily with whole plant models that go
 beyond the organism, languages for their description, and their applications. In
-reference to the aims and dicussion above, specifically our contributions are:
+reference to the aims and dicussion above, specifically my contributions are:
 % This need to be refutable, like a contract for the thesis
 
 \begin{itemize}
-\item A notation, we call \emph{Chromar}, for describing systems like the ones
+\item A notation, called \emph{Chromar}, for describing systems like the ones
   we hinted to above at the intersection of plant biology models in a natural
   environment. The language follows the structuralist tradition and is therefore
   object-based, which means that it can capture certain important aspects of the
@@ -539,13 +543,13 @@ reference to the aims and dicussion above, specifically our contributions are:
   properties to come from the host language, which increases expresiveness while
   at the same time maintaining the naturalness of a domain-specific language.
 \item An extension of the Framework Model (FM; \ssec{fm}) to the full-lifecycle
-  including reproduction and see dormancy along with modifications that allow
-  operation in realistic weather ranges. This is combined with full-lifecycle
-  phenology models from ecology to provide a population level model that
-  includes the organism (through the FM). This allows simulation experiments for
-  determining ecological properties in different genotype x environment
-  scenarios that are mechanistically founded and a step towards organism-centred
-  models of evolution.
+  of Arabidopsis Thaliana, including reproduction and see dormancy along with
+  modifications that allow operation in realistic weather ranges. This is
+  combined with full-lifecycle phenology models from ecology to provide a
+  population level model that includes the organism (through the FM). This
+  allows simulation experiments for determining ecological properties in
+  different genotype x environment scenarios that are mechanistically founded
+  and a step towards organism-centred models of evolution.
 \item An application of the Framework Model with an engineering perspective,
   like in case of crop models. Instead of taking the traditional approach to
   engineer genomes, as we have seen, we take an alternative approach that aims
