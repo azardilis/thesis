@@ -59,17 +59,22 @@ model as devices for optimising plant traits. Instead of the more traditional
 genome engineering approach we focused on engineering the environment during
 their development to achieve specific growth-related traits.
 
-
 \section{Chromar and representations of multi-scale biology}
-Biology is modular. This includes "visibly" differentiated substructures like
-the cell or organs, for example, given in spatial terms but also other entities
-that form units in a non-spatial way that could be identified by the strength of
-the interactions between their components or their functional goal. For example,
-one might identify functional units in reaction networks
-\citep{ederer_approach_2003} and hierarchical modules in metabolic networks
-\citep{ravasz_hierarchical_2002}. These modules are organised either by
-interaction -- more so the case in non-spatial modules -- or by physical forces
--- more the case in spatially distinguished modules like cells
+The `structuralists' that we have overviewed in Chapter~\ref{chp:intro} and were
+the proponents of organisation and the systems view regarded biology (and life)
+as inherently modular with this being a defining (if not the most defining)
+characteristic of living systems. Whether biology is inherently modular is
+debated \citep{hartwell1999molecular}. %need better ref here!!
+Neverthless treating as such is a
+justifiable choice to advance understanding. Modules includes "visibly"
+differentiated substructures like the cell or organs, for example, given in
+spatial terms but also other entities that form units in a non-spatial way that
+could be identified by the strength of the interactions between their components
+or their functional goal. For example, one might identify functional units in
+reaction networks \citep{ederer_approach_2003} and hierarchical modules in
+metabolic networks \citep{ravasz_hierarchical_2002}. These modules are organised
+either by interaction -- more so the case in non-spatial modules -- or by
+physical forces -- more the case in spatially distinguished modules like cells
 \citep['Biological and Physical systems' section]{simon1962architecture}.
 
 As we have pointed out, in order to understand complex biological systems, like
@@ -78,20 +83,22 @@ level of detail we can identify different modules, which can either be treated
 as undivided wholes or as organisations of their elementary components/modules
 \citep{varela_autopoiesis:_1974}. The links between the functioning of modules
 at different levels of detail are crucial for fundamental questions in
-Biology. We will call these aspects of biology that deal with modules, their
+biology. We will call these aspects of biology that deal with modules, their
 organisation (interaction), and hierarchy as the \emph{organisational} aspects
 of systems. Importantly this organisation changed dynamically.
 
-Explicitly representing these links in organisational terms in detail, however,
-is probably impractical in many cases. Even when considering the elementary
-components of a module and their organisation, certain aspects of the
-functioning of a module are still more practically captured through some
+Explicitly representing the functioning of modules in organisational only terms
+in detail, however, is probably impractical in many cases. Even when considering
+the elementary components of a module and their organisation, certain aspects of
+the functioning of a module are still more practically captured through some
 abstraction to pick out properties of interest that perhaps are important for
 the links to the next level of detail. The abstraction that one uses to
 understand the functioning of a module will depend on the level of understanding
-and practical considerations. For example, we might not want to describe the
-mechanism of a particular process ('how') but only 'what' it does at a more
-descriptive level.  We will call these the \emph{non-organisational} or
+and practical considerations.
+%For example, we might not want to describe the
+%mechanism of a particular process ('how') but only 'what' it does at a more
+%descriptive level.
+We will call these the \emph{non-organisational} or
 \emph{abstract} aspects of a system (or its model).
 
 Given that in multi-scale explanations of systems require representation of both
@@ -112,7 +119,7 @@ attributes. While possible, this puts an extra burden on the user to first
 decide on a representation of the relation through agent attributes and then to
 maintain this relation consistent when the state changes when rules are
 applied. This burden increases if one needs to keep track of more than one
-dynamics relation. This might suggest ways our notation could be
+dynamic relation. This might suggest ways our notation could be
 extended. Ideally the language would track such relations and have a special
 notation for the most common types of relations -- for example in biology the
 `connects-to' and `nested-in' relations seem natural, as we have seen
@@ -142,7 +149,9 @@ modules, for example communicating the level of variables (interaction), is
 usually represented externally in a configuration file. While this achieves the
 goal of simulation, the resulting multi-model does not achieve the second goal
 of models that we have identified regarding understanding since the organisation
-is opaque.
+is opaque. The connections are merely identification of variables and it is not
+clear how these affect each other. Furthermore these connections are written in
+a static way, which encourages larger modules that are guaranteed to be static.
 
 \begin{figure}[tb]
   \centering
@@ -166,13 +175,15 @@ organisational aspects are represented by discrete objects that have types
 (colours in the diagram). Non-organisational aspects exist as part of these
 modules to describe aspects of their functioning that we want to capture in a
 convenient abstraction. This is like the attributes of agents in Chromar, which
-can represent entire models. Different levels of explanation can be combined
-with observables, for example a variable in one level might be a function of the
-state at another level. Other dynamics can be defined independently of any module,
-like Chromar does with fluents. Both of these can coexist with the dynamics of
-state variables inside each module, in a similar way that attribute dynamics are
-given using enriched expressions, which combine regular expressions,
-observables, and fluents.
+can represent entire models (rectangles attached to objects,
+Figure~\ref{fig:hyp}). Different levels of explanation can be combined with
+observables, for example a variable in one level might be a function of the
+state at another level (dotted line between objects and variables in abstract
+models, Figure~\ref{fig:hyp}). Other dynamics can be defined independently of
+any module, like Chromar does with fluents ($f$, Figure~\ref{fig:hyp}). Both of
+these can coexist with the dynamics of state variables inside each module, in a
+similar way that attribute dynamics are given using enriched expressions, which
+combine regular expressions, observables, and fluents.
 
 Both the organisational and non-organisational dynamics can be given with rules,
 like we have seen with Chromar. The object rules can add/delete or
@@ -205,22 +216,37 @@ based on data-flows on graphs \citep[OpenAlea;][]{pradal_openalea:_2008}.
 
 \subsection{Practical considerations}
 While there is a lot of work on theoretical aspects of modelling languages,
-practical aspects related to the practical use of these languages are often
-overlooked. This might be because these are usually tied to short-lived research
-projects. Some exceptions exist, for example Kappa (\ssec{links}) has seen
-a continuous development of a suite of practical tools for its use for a number
-of years \citep[Kappa platform;][]{boutillier2018kappa}.
+practical aspects related to the practical use of these languages can be
+overlooked especially in more theoretical (modelling) lanuguages from computer
+science. This might be because these are usually tied to short-lived research
+projects or because there is too much focus on theoretical aspects of these
+languages. Some exceptions exist, for example Kappa (\ssec{links}) has seen a
+continuous development of a suite of practical tools for its use for a number of
+years \citep[Kappa platform;][]{boutillier2018kappa}.
 
 Chromar could similarly benefit from practical tools to overcome practical
-hurdles to its use. This will be especially important for systems like the one
-we outlined in the previous section that allows the combination of multiple
+hurdles to its use. For example, in the current implementation one would have to
+have familiarity with Haskell to write Chromar rules and have the Haskell
+ecosystem (compiler and so on) installed to compile models or access the
+simulator. Other languages have used more mainstream and familiar languages,
+like Python \citep[Kappa or L-systems in Python;][]{lopez_programming_2013,
+  boudon2012py} but that still leaves the cost of having a working installation,
+which is sometimes prohibitive.
+
+Having these practical tools will be especially important for systems like the
+one we outlined in the previous section that allows the combination of multiple
 modules. In comprehensive models it is becoming rare that a single person writes
 the entire model. A practical modelling tool that combines model definition with
-a library of existing modules would be very powerful. Drawing from the ideas in
-the previous section, one could imagine a (possibly visual) interface where
-existing or new modules can be connected like jigsaw puzzle pieces similar to
-the way programs are defined in visual programming languages like Scratch
-\citep{maloney_scratch_2010}.
+a library of existing modules would be very powerful. This is the approach taken
+by simulation frameworks (see \sct{simFrameworks}) in general-purpose
+programming languages like CHASTE \citep[suite of software for heart
+simulation][]{mirams2013chaste} or APSIM \citep[crop
+modelling][]{keating_overview_2003}. Drawing from the ideas in the previous
+section and the above framework examples, one could imagine a (possibly visual)
+interface where existing or new modules can be connected like jigsaw puzzle
+pieces similar to the way programs are defined in visual programming languages
+like Scratch \citep{maloney_scratch_2010}. This perhaps could work on the web,
+like the Kappa platform, to lower the adaptation curve.
 
 \subsection{Database ideas}
 For the observables we use an analogy of the state of the system (multiset of
@@ -307,13 +333,18 @@ and does not describe how this is physically realised in neurons in the brain.
 
 Similarly, many models in plant ecology and evolution abstract away the organism
 and have an abstract view of the population as a whole. Understanding the
-mechanism though is also important and the connections between the abstract
-computational view of a process and its physical realisation is vital in
-answering the 'how' questions of life (see Introduction,
-Figure~\ref{fig:circle}). As more knowledge of the mechanism becomes available
-for plants, it becomes attractive to replace the abstract with the mechanistic to
-get a more mechanistically-founded view of evolutionary processes, as we have
-seen in Chapter~\ref{chp:fms}.
+mechanism though is also important. This has always been true but recent
+advances in understanding, the availability of detailed datasets across scales
+along with developments in computational tools (\eg high-performance computing)
+make this practically achievable \citep{zhu_plants_2016,
+  marshall-colon_crops_2017}.
+
+The connections between the abstract computational view of a process and its
+physical realisation is vital in answering the 'how' questions of life (see
+Introduction, Figure~\ref{fig:circle}). As more knowledge of the mechanism
+becomes available for plants, it becomes attractive to replace the abstract with
+the mechanistic to get a more mechanistically-founded view of evolutionary
+processes, as we have seen in Chapter~\ref{chp:fms}.
 
 On the opposite side of this however, connecting a low-level mechanism up the
 scales to the population level might help understand and answer 'why' questions
@@ -325,15 +356,19 @@ of the organism and the population might explain its evolution
 
 As we go from individual detailed mechanisms to the population level it is
 always important to experimentally test our understanding and hypotheses that we
-formalise in models. While probably impractical for larger species, the short
-length of the Arabidopsis lifecycle might make population experiments of
-different genetic backgrounds in natural conditions
-possible. \citet{rubin_circadian_2018}, for example, do field experiments
+formalise in models.
+
+While common for crop species, they usually only consider only one
+generation. The short length of the Arabidopsis lifecycle along with detailed
+molecular and genetic data might make it possible to make experiments to see the
+links between genomes and the population over multiple generations in natural
+condtions.  \citet{rubin_circadian_2018}, for example, do field experiments
 (natural weather conditions) with populations of circadian clock mutant
-Arabidopsis plants to see the effect on developmental timing and shoot
-architecture. This study includes traits like total fruit mass that could be
-used as proxies for reproductive success therefore allowing validation of
-multi-scale models and the evolutionary hypotheses they suggest.
+Arabidopsis plants to observe the effect on developmental timing and shoot
+architecture. This study is again for a single generation but includes traits
+like total fruit mass that could be used as proxies for reproductive success
+therefore allowing validation of multi-scale models and the evolutionary
+hypotheses they suggest.
 
 % Experimental validation? From genes to populations?
 
