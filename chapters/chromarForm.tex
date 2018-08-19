@@ -37,9 +37,9 @@ typed attribute names.
 
 We may say that basic Chromar is \emph{abstract} in that no choice is made of an
 expression language and its types; the same holds of extended Chromar
-(Section~\ref{sec:extSyntax}).  In contrast, in a \emph{concrete} realisation of
+(\sct{extSyntax}).  In contrast, in a \emph{concrete} realisation of
 the language a particular choice is made.  For example, the Haskell embedding of
-extended Chromar (Section~\ref{sec:impl}) provides such a concrete realisation,
+extended Chromar (\sct{impl}) provides such a concrete realisation,
 where the expressions and types are the Haskell expressions and types.
 
 A \emph{base type environment} $\G = \s{id:b}$ is a sequence of variable type
@@ -475,7 +475,7 @@ matches.
 \section{Extended Chromar} 
 \label{sec:extChromar} 
 We now extend basic Chromar to include the fluent and observable features that
-were introduced informally in Section~\ref{sec:overview}. Observables and
+were introduced informally in \sct{overview}. Observables and
 fluents extend the given set of (\emph{ordinary}) expressions, $e \in E$, to give
 what we call \emph{enriched expressions} $e_r$. These consist of ordinary
 expressions, fluents and observables, and any combinations of them. Enriched
@@ -1031,6 +1031,18 @@ alleviate some of the computational cost \citep{voliotis_stochastic_2016}.
   discrete approximation of the fluent.}
 \label{fig:fluentSamp}
 \end{figure}
+
+\subsection{Simulation efficiency}
+\label{subsec:simEff}
+In terms of simulation, our implementation is simple and follows the steps we
+presented in \sct{semantics}. One area of improvement could be in the reaction
+generation step where we currently generate all the active reactions at every
+step. In practice we do not need to completely regenerate the reactions at every
+step since only a subset of them changes between steps. The performance gains
+will depend on the efficiency of calculating the change in the reactions set
+after a change in the state. This idea was already used, to great effect, in the
+implementation of Kappa \cite{danos_scalable_2007}.
+
 
 \section{Conclusion}
 Here I defined the formal syntax and semantics of Chromar. This process of

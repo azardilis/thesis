@@ -584,11 +584,32 @@ limitations we noted for the simple reactions in PNs.
 Attributes can be used to encode relations like the `next-to' relation in the
 root development example.  However, whenever we use them to encode binding we
 would probably be better off using a language that represents these directly
-such as Kappa~\cite{danos2008} or BioNetGen~\cite{blinov2004bionetgen}.
+such as Kappa~\cite{danos2008} or BioNetGen~\cite{blinov2004bionetgen}. In
+general Chromar rule left-hand sides are simple and can only select using types,
+which means the only relations we can encode directly are products of types (we
+can think of types as sets containing all the agents of that type). This is
+often unproblematic, for example in our Plant system (from \sct{overview})
+\textit{all} $\mathrm{Leaf}$ agents interact with \textit{all} $\mathrm{Cell}$
+(only one in this case) agents so writing the left-hand at the type level works
+because the rules are then applicable to exactly the pairs of agents we want,
+$\{ (\mathrm{Leaf}_1, \mathrm{Cell}), (\mathrm{Leaf}_2, \mathrm{Cell}), \dots
+\}$.
+
+In other cases though, the relation we want is some subset of the product of the
+types. For example in our array of cells example the diffusion rule is not
+applicable to all pairs of $\mathrm{Cell}$s so writing
+$\mathrm{Cell}(\dots), \mathrm{Cell}(\dots)$ on the left-hand side gives us more
+pairs than we want.  In that case we had to encode the relation through
+identifiers and the next-to relation pairs were stored inside our agents. The
+selection was then restricted using attribute conditional expressions. While it
+works in this simple example, it might become problematic in large models when
+multiple relations are present, for example.
+
 However, note that in the dividing cell and diffusion model of the previous
-section we use colours in other ways that can't be easily represented as
-binding.  In particular, the division of the contents of a cell would be hard to
-express in any of the object-only languages.
+section we use colours in other ways that cannot be easily represented as
+binding, or any relation offered by other object-only languages. In particular,
+the division of the contents of a cell would be hard to express in any of the
+object-only languages.
 
 
 \subsection{Extended Chromar}
@@ -602,6 +623,16 @@ syntax~\citep{buneman_comprehension_1994}, a collection query language similar t
 practical database query languages, considers other types of collections,
 including multisets. These are, however, not used in the modelling world.
 
+Observables could be developed further and made into first-class entities in
+the language, for example by making them attributes of types. For instance in
+our plant growth example we would keep our initial $\mathrm{Ros}$ type and use
+our observable primitives to define its $n$ attribute instead of defining the
+observables outside our agents. First-class observables would work particularly
+well with an extension for a native representation of levels (the `nested-in'
+relation we noted earlier), in which case the idea of the agent attributes at a
+higher level being observables of agents at a lower-level would be both
+intuitive and powerful.
+
 Fluents allow the convenient expression of changing values, which is
 important as models become more comprehensive and start reaching outside their
 domain, for example traditional plant biology models reaching out to the outside
@@ -613,6 +644,7 @@ chapter also allow observables for result reporting. However, the lifting of
 fluents and observables to first-class entities and their combination with
 expression coming (potentially) from a general purpose programming language is
 new and makes for a very powerful extension to the language.
+
 
 \subsection{Haskell}
 Our embedding in a programming language increases expressive power, and fits
