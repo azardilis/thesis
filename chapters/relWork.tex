@@ -122,7 +122,7 @@ system might provide some extra practical challenges that we do not consider
 here.
 
 \subsection{Root apical meristem and whole-plant effects}
-\label{subsec:rootDev}
+\label{sec:rootDev}
 Cell production for plant development happens at sites of meristematic
 activity. In the root this site is behind the root cap and it is called the Root
 Apical Meristem (RAM). In root development this raises the question about the
@@ -166,7 +166,7 @@ More precisely we will consider the following dynamics
 
 
 \subsection{Plant development in a field}
-\label{subsec:plantDev}
+\label{sec:plantDev}
 The example considers a very abstract view of plant development, but has
 nevertheless enough details to demonstrate the main features of our
 notation. Our model is inspired by the Framework Model (FM) of
@@ -184,7 +184,7 @@ preference in the transfer, thus we have an all-to-all communication. Similarly
 to the FM, in our model all the molecular processes in our model reside in a
 central plant `cell' which allows us to keep the leaves as carbon sinks and
 track their growth, while avoiding the per-leaf molecular processes and their
-communication (see Figure~\ref{fig:fm}).
+communication (see Figure~\ref{fig:fmsField}).
 
 \begin{figure}
 \centering
@@ -199,7 +199,7 @@ communication (see Figure~\ref{fig:fm}).
   competition for carbon between the leaves, but also increasing the production
   of carbon by providing new green areas for photosynthesis. B The simple plant
   model embedded in a 2-D field.}
-\label{fig:fm}
+\label{fig:fmsField}
 \end{figure}
 
 The processes that affect growth are as follows: we think of \textit{carbon
@@ -308,7 +308,7 @@ Given a PN $(\Sigma, R)$ and an initial state we can get a CTMC:
 PNs have been used widely for describing chemical reactions and other simple
 systems. For systems like the ones in our examples they pose some limitations
 though. Suppose for example that we wanted to write reactions for the diffusion
-of auxin along the root (see first example: \ref{sec: rootDev}). We could write
+of auxin along the root (see first example  \sct{rootDev}). We could write
 the following reactions for the auxin molecules in each cell, where
 $\mathrm{A}_1$ is an auxin molecule in the first cell, $\mathrm{A}_2$ is an
 auxin molecule in the second cell, with the diffusion occurring at rate
@@ -466,7 +466,7 @@ discussion in \ssec{cpns} and next chapter).
 \label{subsec:cpns}
 % description
 As the name implies Coloured Petri Nets are an extension to Petri Nets
-(Section~\ssec{pns}) that allows distinctions between objects of each species
+(\ssec{pns}) that allows distinctions between objects of each species
 (colouring of objects) by allowing them to have an associated data value
 adhering to the type (colour set) of their
 species~\citep{jensen_coloured_1987}. For example, for our root development
@@ -542,7 +542,7 @@ represent the water availability in the surrounding soil.
 CSMMR~\citep{oury_coloured_2011} is an extension to
 SMMR~\citep{oury_multi-level_2013} that adds parameters to agents, motivated by
 the limitations we have noted in the object-only languages that we have
-considered (subsections~\ssec{structLangs} and~\ssec{pns}). Parameters can take
+considered (\ssec{structLangs} and \ssec{pns}). Parameters can take
 part in rules either passively by influencing rates rules, conditions and so on
 but can also be actively changed. The addition of parameters gives it a very
 similar flavour to CPNs. However, a CSMMR model, unlike a CPN model, is given
@@ -550,7 +550,7 @@ stochastic interpretation directly as a CTMC, without unfolding to a simpler
 form.
 
 Using a CSMMR agent type similar to the CPN $\mr{Cell}$ colourset for the root
-development example (\ssec{rootDev}), we can write the following
+development example (\sct{rootDev}), we can write the following
 for the diffusion (to the right) of auxin along the root:
 $$
 \mr{Cell}_{\mr{id}=i, \mr{a}=a}, \mr{Cell}_{r=k, a=a'} \xrightarrow{}
@@ -648,7 +648,7 @@ $$
 
 L-systems might be not be as good in cases where the structure of the system is
 not linear or cannot (easily) be linearised as a string. Take, for example, the
-dynamics from our plant development example (Section~\ssec{plantDev}). The
+dynamics from our plant development example (\sct{plantDev}). The
 leaves in that case and the 'cell` are not linearly related. It would therefore
 be hard to write, for example, the rule for leaf growth that requires
 information from both the leaves and cell objects.
@@ -705,7 +705,7 @@ Simile is another graphical language that has similarities to our approach
 \citep{muetzelfeldt_simile_2003}. Simile is used mainly in the domains of
 ecology and agricultural sciences but has also been used in systems biology
 systems biology (for the whole-plant model \citep{chew_multiscale_2014} that was
-the inspiration for our example in Section~\ssec{plantDev}) to exactly solve the
+the inspiration for our example in \sct{plantDev}) to exactly solve the
 kind of limitations we noted in the object-only based languages. External inputs
 are also supported, which is particularly important for adding weather data to
 crop models. In Simile there are two levels of definition of a model. At the
@@ -727,7 +727,7 @@ change (\eg new object in population).
 
 %limitations through examples
 In order to illustrate how Simile features capture the modelling requirements from our
-examples, let us start with the plant development example (Section~\ssec{plantDev}),
+examples, let us start with the plant development example (\sct{plantDev}),
 \begin{center}
   \includegraphics[scale=0.6]{figures/simileGrowth.eps}
 \end{center}

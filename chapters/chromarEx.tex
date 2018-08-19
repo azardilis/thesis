@@ -584,14 +584,15 @@ limitations we noted for the simple reactions in PNs.
 Attributes can be used to encode relations like the `next-to' relation in the
 root development example.  However, whenever we use them to encode binding we
 would probably be better off using a language that represents these directly
-such as Kappa~\cite{danos2008} or BioNetGen~\cite{blinov2004bionetgen}. In
-general Chromar rule left-hand sides are simple and can only select using types,
-which means the only relations we can encode directly are products of types (we
-can think of types as sets containing all the agents of that type). This is
-often unproblematic, for example in our Plant system (from \sct{overview})
-\textit{all} $\mathrm{Leaf}$ agents interact with \textit{all} $\mathrm{Cell}$
-(only one in this case) agents so writing the left-hand at the type level works
-because the rules are then applicable to exactly the pairs of agents we want,
+such as Kappa~\citep{danos_rule-based_2008} or
+BioNetGen~\citep{blinov_bionetgen:_2004}. In general Chromar rule left-hand
+sides are simple and can only select using types, which means the only relations
+we can encode directly are products of types (we can think of types as sets
+containing all the agents of that type). This is often unproblematic, for
+example in our Plant system (\sct{plantDev}) \textit{all} $\mathrm{Leaf}$
+agents interact with \textit{all} $\mathrm{Cell}$ (only one in this case) agents
+so writing the left-hand at the type level works because the rules are then
+applicable to exactly the pairs of agents we want,
 $\{ (\mathrm{Leaf}_1, \mathrm{Cell}), (\mathrm{Leaf}_2, \mathrm{Cell}), \dots
 \}$.
 
@@ -682,8 +683,8 @@ language)~\citep{jensen_coloured_1987}.
 In conclusion, extended Chromar and its concrete realisation in Haskell give a
 highly expressive language that is particularly good for the description of
 models with a simple structure, such as the Plant example in
-Section~\ref{sec:plantDev} and the root development example in
-Section~\ref{sec:rootDev}. The main ideas of Chromar --- two levels of dynamics
+\sct{plantDev} and the root development example in
+\sct{rootDev}. The main ideas of Chromar --- two levels of dynamics
 (attribute and agent levels), a flexible system of observation, and a
 combination of domain-specific and general programming languages --- should
 carry to other frameworks or languages, for example ones with connection and

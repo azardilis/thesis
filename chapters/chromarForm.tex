@@ -37,10 +37,10 @@ typed attribute names.
 
 We may say that basic Chromar is \emph{abstract} in that no choice is made of an
 expression language and its types; the same holds of extended Chromar
-(\sct{extSyntax}).  In contrast, in a \emph{concrete} realisation of
-the language a particular choice is made.  For example, the Haskell embedding of
-extended Chromar (\sct{impl}) provides such a concrete realisation,
-where the expressions and types are the Haskell expressions and types.
+(\sct{extSyntax}).  In contrast, in a \emph{concrete} realisation of the
+language a particular choice is made.  For example, the Haskell embedding of
+extended Chromar (\sct{extChromar}) provides such a concrete realisation, where
+the expressions and types are the Haskell expressions and types.
 
 A \emph{base type environment} $\G = \s{id:b}$ is a sequence of variable type
 bindings, and an \emph{agent type environment} $\D = \s{id:at}$ is a sequence of
@@ -475,9 +475,9 @@ matches.
 \section{Extended Chromar} 
 \label{sec:extChromar} 
 We now extend basic Chromar to include the fluent and observable features that
-were introduced informally in \sct{overview}. Observables and
-fluents extend the given set of (\emph{ordinary}) expressions, $e \in E$, to give
-what we call \emph{enriched expressions} $e_r$. These consist of ordinary
+were introduced informally in Chapter~\ref{chp:chromarEx}. Observables and
+fluents extend the given set of (\emph{ordinary}) expressions, $e \in E$, to
+give what we call \emph{enriched expressions} $e_r$. These consist of ordinary
 expressions, fluents and observables, and any combinations of them. Enriched
 expressions give access to the current state and time, and so we take the value
 of an enriched expression with type $b$ to be a function from states and times
