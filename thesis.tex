@@ -105,7 +105,50 @@
 \title{A modelling language for biology with applications}
 \author{Argyris Zardilis}
 
-\abstract{ This is the abstract}
+\abstract{
+
+  Understanding the links between biological processes at multiple scales, from
+  molecular regulation to populations and evolution along with their
+  interactions with the environment, is a major challenge in understanding
+  life. Apart from understanding this is also becoming important in attempts to
+  engineer traits, for example in crops, starting from genetics or from genomes
+  and at different environmental conditions (genotype x environment ->
+  trait). As systems become more complex relying on intuition alone is not
+  enough and formal modelling becomes necessary for integrating data across
+  different processes and allowing us to test hypotheses. The more complex the
+  systems become, however, the harder the modelling process becomes and the
+  harder the models become to read and write. In particular intuitive formalisms
+  like Chemical Reaction Networks are not powerful enough to express ideas at
+  higher levels, for example dynamic environments, dynamic state spaces, and
+  abstraction relations between different parts of the model. Other formalisms
+  are more powerful (for example general purpose programming languages) but they
+  lack the readability of more domain specific approaches.
+
+  The first contribution of this thesis is a modelling language with stochastic
+  semantics, Chromar, that extends the visually intuitive formalisms of
+  reactions, in which simple objects, called agents, are extended with
+  attributes. Dynamics are given as stochastic rules that can operate on the
+  level of agents (removing/adding) or at the level of attributes (updating
+  their values). Chromar further allows the seamless integration of time and
+  state functions with the normal set of expressions – crucial in multi-scale
+  plant models for describing the changing environment and abstractions between
+  different scales.  This leads to models that are both formal enough for
+  simulations and easy to read and write.
+
+  The second contribution of this thesis is a whole-life-cycle multi-model of
+  the growth and reproduction of Arabidopsis Thaliana, FM-life, expressed in a
+  declarative way in Chromar. It combines phenology models from ecology to time
+  developmental processes and physical development, which allows to scale to the
+  population and address ecological questions at different genotype x
+  environment scenarios. This is a step in the path for mechanistic links
+  between genotype x environment and higher-level crop traits.
+
+  Finally, I show a way of using optimal control techniques to engineer traits
+  of plants by controlling their growth environmental conditions. In particular
+  we explore (i) a direct problem where the control is temperature – assuming
+  homogeneous growth conditions and (ii) indirect problem where the control is
+  the position of the plants -- assuming inhomogeneous growth conditions.
+}
 
 % Abstract
 \begin{document}
@@ -115,10 +158,8 @@
 
   \maketitle
 
-  \begin{frontenv}{Lay Summary}{\LARGE}
-  % All biochemical processes obey the laws of thermodynamics.
-  % In the microscopic world,
-  % statistical mechanics has established
+\begin{frontenv}{Lay Summary}{\LARGE}
+    
 \end{frontenv}\newpage
 
   \begin{acknowledgements}
