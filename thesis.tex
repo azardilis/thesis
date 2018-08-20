@@ -158,8 +158,46 @@
 
   \maketitle
 
-\begin{frontenv}{Lay Summary}{\LARGE}
-    
+  \begin{frontenv}{Lay Summary}{\LARGE}
+    Living organisms are often viewed as hierarchical. Entities at one level
+    (\eg cells) function and organise giving rise to properties of entities at
+    the next level (\eg tissues) and they in turn to the next until we get to
+    the level of a living organism. If we want to understand life, which is the
+    most fundamental question in biology, we need to understand the processes
+    and the links between them across these levels. As the systems we are trying
+    to understand become more complex, holding all the interactions in our heads
+    as mental models becomes difficult (or impossible). One way to solve this is
+    by using formal models written in some technical language (\eg mathematical
+    equations). The advantage is that these can be manipulated in predefined
+    ways, for example setting them in motion inside a computer, without the
+    danger of missing anything. When trying to understand all the scales that
+    make up an organism though, some of these languages become hard to read and
+    write and can no longer serve as documentations of our understanding.
+
+    In this thesis I first present a formal language, \emph{Chromar}, which has
+    some features that make writing a class of multi-scale models easier. Some
+    of these features include mixing discrete with continuous entities, for
+    example you can describe how cells and how they are created or destroyed
+    (discrete) but you can also describe how the size of the cell changes
+    (continuous). It also allows the mixing of deterministic with stochastic
+    dynamics.
+
+    I then use this language to describe in a model the whole lifecycle (from
+    seed to seed) of the plant Arabidopsis Thaliana, a commonly used organism in
+    plant research, by combining or extending existing models. Such a model
+    allows then multiple generations and the observation over time of
+    populations of plants in environmental conditions of our choice. We can then
+    compare populations of different types of plants in different scenarios and
+    ask which type is more succesful in reproducing in some conditions. This
+    might give us some hints on why some types of plants adapted to specific
+    locations.
+
+    Finally, since there are now solutions that allow more precise control over
+    the surrounding environment (think more precise and controlled greenhouses),
+    one might ask if it is possible to find and use optimal environmental
+    conditions (\eg temperature) to achieve specific trais of plants? Here I use
+    one of these comprehensive plant models along with other mathematical
+    techniques to address this question.
 \end{frontenv}\newpage
 
   \begin{acknowledgements}

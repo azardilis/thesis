@@ -599,7 +599,7 @@ $\{ (\mathrm{Leaf}_1, \mathrm{Cell}), (\mathrm{Leaf}_2, \mathrm{Cell}), \dots
 In other cases though, the relation we want is some subset of the product of the
 types. For example in our array of cells example the diffusion rule is not
 applicable to all pairs of $\mathrm{Cell}$s so writing
-$\mathrm{Cell}(\dots), \mathrm{Cell}(\dots)$ on the left-hand side gives us more
+$\mathrm{Cell}(\dots), \mathrm{Cell}(\dots)$ on the left-hand side gives more
 pairs than we want.  In that case we had to encode the relation through
 identifiers and the next-to relation pairs were stored inside our agents. The
 selection was then restricted using attribute conditional expressions. While it
@@ -624,15 +624,15 @@ syntax~\citep{buneman_comprehension_1994}, a collection query language similar t
 practical database query languages, considers other types of collections,
 including multisets. These are, however, not used in the modelling world.
 
-Observables could be developed further and made into first-class entities in
-the language, for example by making them attributes of types. For instance in
-our plant growth example we would keep our initial $\mathrm{Ros}$ type and use
-our observable primitives to define its $n$ attribute instead of defining the
-observables outside our agents. First-class observables would work particularly
-well with an extension for a native representation of levels (the `nested-in'
-relation we noted earlier), in which case the idea of the agent attributes at a
-higher level being observables of agents at a lower-level would be both
-intuitive and powerful.
+Observables could be developed further and made into first-class entities in the
+language, for example by making them attributes of types. For instance in the
+plant growth example (\sct{plantDev} we would keep our initial $\mathrm{Ros}$
+type and use the observable primitives to define its $n$ attribute instead of
+defining the observables outside the agents. First-class observables would work
+particularly well with an extension for a native representation of levels (the
+`nested-in' relation we noted earlier), in which case the idea of the agent
+attributes at a higher level being observables of agents at a lower-level would
+be both intuitive and powerful.
 
 Fluents allow the convenient expression of changing values, which is
 important as models become more comprehensive and start reaching outside their
@@ -652,18 +652,19 @@ Our embedding in a programming language increases expressive power, and fits
 with the availability of rich types.  There have been other languages that,
 while not giving the full power of a programming language, still allow for
 complex expressions to appear, e.g., inside rate expressions. For example in
-React(C) \citep{john_biochemical_2011} rate expressions can be build from a subset
-of a functional programming language with a reflection option to get access to
-the full state of the system. This allows conditions to be encoded inside rates
-by setting the rates to zero if they are not met. Simulators for other widely
-used languages like KaSim (the simulator for Kappa~\citep{danos2008}) and
+React(C) \citep{john_biochemical_2011} rate expressions can be build from a
+subset of a functional programming language with a reflection option to get
+access to the full state of the system. This allows conditions to be encoded
+inside rates by setting the rates to zero if they are not met. Simulators for
+other widely used languages like KaSim (the simulator for
+Kappa~\citep{danos_rule-based_2008}) and
 BioNetGen~\citep{blinov_bionetgen:_2004} also allow more sophisticated rate
 expressions than traditional mass-action kinetic rates.
 
-Our embedding in Haskell lifts some constraints of modelling languages
-and, we think, gets the best of both worlds: it naturally and succinctly
-captures some elements in our domain of interest but, at the same time, when
-greater expressive power is needed we can turn to the programming language. This
+Our embedding in Haskell lifts some constraints of modelling languages and, we
+think, gets the best of both worlds: it naturally and succinctly captures some
+elements in our domain of interest but, at the same time, when greater
+expressive power is needed we can turn to the programming language. This
 increase in expressive power might come at the expense of the ability to do
 general analysis of models since we cannot say much about what is happening in
 the Haskell \texttt{exprs} inside the rules. There seems to be a trend, though,
@@ -676,8 +677,8 @@ programming language, as we did, is in some cases better than doing the opposite
 we have fewer constraints on our definitions and more generally full access to
 the language for structuring our model definitions. We also note, as we have
 seen, that there is a hybrid approach that allows mixing the graphical
-definition of CPNs with programming language constructs (ML
-language)~\citep{jensen_coloured_1987}.
+definition of CPNs with programming language constructs~\citep[ML
+language;][]{jensen_coloured_1987}.
 
 \section{Conclusion}
 In conclusion, extended Chromar and its concrete realisation in Haskell give a
