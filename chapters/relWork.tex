@@ -253,7 +253,7 @@ species in the state of the system. The state of the system is an unstructured
 collection (multiset) of copies (molecules) of each species. Qualitatively,
 applying a reaction to a state (multiset) means removing from the state the
 elements that appear in the left-hand side (lhs) of the reaction and adding the
-elements that appear on ths right-hand side (rhs) of the reaction.
+elements that appear on the right-hand side (rhs) of the reaction.
 
 There is an equivalent graphical representation where the system is given as a
 bipartite graph representing species as places (round nodes) and reactions as
@@ -692,7 +692,7 @@ projects integrating a modelling language based on systems dynamics with an
 integrated development environment have started adding some discrete features as
 well to combine dynamics with object-based representations \citep[Ventity,
 AnyLogic;][]{yeager_entity-based_2014, borshchev2004system}. These have some
-characteristics in comon with the Modelica family of languages but the object
+characteristics in common with the Modelica family of languages but the object
 dynamics are first-class and are represented through some language abstraction
 that allows their definition. We next focus in more detail on one of these,
 Simile, which has been used in biology before.
@@ -740,7 +740,7 @@ Leaf objects also grows (see creation box). This concise description is at the
 level of objects instead of at the level of events, like in rule-based
 languages, which means that the dynamics are distributed across the
 model. Having the dynamics at the rule instead of the at the object level
-sometimes seems more natural as they correspond more intuitevely to the
+sometimes seems more natural as they correspond more intuitively to the
 conceptual view of biological events. Even with mental models of processes, one
 usually speaks about the dynamics of the system as interactions of components
 instead of the behaviour of each component individually.
@@ -845,11 +845,11 @@ To deal with the problem of extension many models are written in a modular way
 such that related components are packaged together. Each component is written in
 the most convenient way. The problem comes in their combination.Sometimes models
 are written in different programming languages, with different input/output
-formats, different time-steps, units and other incompatabilities. What happens
+formats, different time-steps, units and other incompatibilities. What happens
 in practice is that models are usually reimplemented in one language to create a
 multi-model written in a single language. This is the approach taken, for
 example, in the Framework Model where all constituent models are reimplemented
-in Matlab along with other compatability changes, likes time resolution changes.
+in Matlab along with other compatibility changes, likes time resolution changes.
 
 There has been some work on multi-model simulators that can deal with
 heterogeneous models written in possibly different languages or have other
@@ -886,13 +886,13 @@ in a programming language remain.
 
 \subsection{Crop Simulation frameworks}
 Modelling has historically been used much more extensively in crop science than
-in plant biology. Several large models incorporating significant environemental
+in plant biology. Several large models incorporating significant environmental
 components (from soil to ecosystem) have been developed. These have been
 increasingly developed in a modular fashion providing the user with
 functionality for common modelling scenarios, like calculation of water uptake
 or light interception by the canopy \citep{keating_overview_2003}. In order to
 increase re-usability and decrease user effort, several frameworks have been
-developed on top of crop simulaiton software that offer a set of parameterised
+developed on top of crop simulation software that offer a set of parameterised
 components that can be used to model different scenarios or even different crops
 \citep{brown_plant_2014}.
 
@@ -918,7 +918,7 @@ representation of the most commonly used constructs in these models, reactions,
 compartments along with model information, like units and so on.
 
 As models started becoming more complex it faced the same limitations we noted
-in the Introduction and in the Petri Net section regading dynamic organisation
+in the Introduction and in the Petri Net section regarding dynamic organisation
 among others. This led to the development of multiple extensions to the original
 format \citep[SBML L3;][]{sbmlL3} to handle the increased complexity. For
 example, the `Dynamic Structures' package adds support for defining dynamic

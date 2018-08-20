@@ -337,7 +337,7 @@ definition of the model. We define the following agent types:
     $\mathbb{N} \cup \{\epsilon\}$ and the relevant attributes ($\mr{l}$ for the
     left and $\mr{r}$ for the right neighbour) represent either a bound state
     (via an identifier) or a non-bound state ($\epsilon$). The type label
-    $\mr{mode}$ is intepreted as the set $\{ 1, 2 \}$ and it represents the
+    $\mr{mode}$ is interpreted as the set $\{ 1, 2 \}$ and it represents the
     state of the cell, either growing (1) or idle (2). The other attributes
     represent the size of the cell ($\mr{s}$) and its auxin ($\mr{a}$) and
     division-factor ($\mr{d}$) concentrations (Figure~\ref{fig:rootDevChromar}).
@@ -406,7 +406,7 @@ factor, $\mr{d}$, and auxin concentration, $\mr{a}$, we write:
   \frac{v(s)}{s})}, d=d (1 - k(a) + \frac{v(s)}{s}), \ar{s}{v(s)})
 \end{align*}
 The degradation of the division factor, again, depends on the auxin
-concnetration in the cell.
+concentration in the cell.
 
 For the cell cycle we need to switch the mode of the cell, $\mr{m}$, from
 growing to idle.
@@ -499,7 +499,7 @@ Relations \newline (explicit) & No & Yes \newline (hierarchy) & No \newline
     State \newline abstraction & No & No & No & No & Yes & Yes\\
     \addlinespace[0.2cm]
     Time & No & No & No & Yes \newline (via ODEs) & Yes & Yes\\
-    Intepretation & CTMC& CTMC& CTMC& CTMC + \newline others & - & CTMC\\
+    Interpretation & CTMC& CTMC& CTMC& CTMC + \newline others & - & CTMC\\
     \bottomrule
     \label{tab:comp}
   \end{tabular}}
@@ -532,7 +532,7 @@ If we accept the view that models should serve as both tools for simulation as
 well as tools for thought for our understanding then procedural representations
 are not adequate. Chromar follows the declarative style. Rules correspond to
 biological events and the user declares how the state changes during the
-event. The simulation need not be defined as the intepretation as a CTMC gives
+event. The simulation need not be defined as the interpretation as a CTMC gives
 that without any extra effort. Here I gave a particular implementation of the
 language as an embedded language inside Haskell using the Haskell expressions as
 an expression language. While Haskell follows the declarative style, certain
@@ -548,7 +548,7 @@ is model composability. This exists in Chromar too and it is crucial for the
 more comprehensive multi-models that we are interested in in this work. In
 Chromar composing two models is just a matter of concatenating their rule
 sets. An example of this is the multi-model lifecycle model of Arabidopsis I
-present in Chapter~\ref{chp:fms}. This is not as straighforward in procedural
+present in Chapter~\ref{chp:fms}. This is not as straightforward in procedural
 model implementations where the whole simulation and representation would have
 to be altered.
 

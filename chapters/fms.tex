@@ -36,7 +36,7 @@ organism is present. In particular in this chapter I do the following:
   over decades (\sct{pop}).
 \item Show simulation results (ecological measure of interest) of the
   population-level model with contrasting environmental and genetic inputs to
-  highlight that ecological questions can increasingly be informed by mechanstic
+  highlight that ecological questions can increasingly be informed by mechanistic
   understanding of growth processes \citep{millar_intracellular_2016,
     doebeli_towards_2017} (\sct{results}).
 \end{itemize}
@@ -193,7 +193,7 @@ until the next favourable season (Figure~\ref{fig:seedInd} A).
     in Valencia (C) for two different value of $\psi_i$. The red line is the
     germination threshold. Stochasticity comes from the model representation and
     can sometimes be amplified by the binary threshold and weather constraints
-    to lead to differrent germination behaviour of otherwise identical seeds (H
+    to lead to different germination behaviour of otherwise identical seeds (H
     case) B Same as A for weather data from Oulu (D) C Yearly weekly averages of
     moisture and temperature levels in Valencia D Weather data as in (C) for
     Oulu.  }
@@ -359,7 +359,7 @@ other organs, an organ will receive either the full expected amount or a portion
 of it.
 
 A flow in the opposite direction (\textsf{mobl} rule, Figure~\ref{fig:fmv1})
-represents carbon mobilization from the organs if the central sucrose pool
+represents carbon mobilisation from the organs if the central sucrose pool
 (\(\mr{Cell}(c)\)) is reduced to a critical level. Thus each organ can be either
 a net sink or source of carbon. For each organ, we also have a flow leaving the
 system from the \(c\) pool for the cost of the maintenance respiration and other
@@ -397,8 +397,8 @@ event but growth events are rarer because not all growth request are successful
 (competition). In order to avoid 'starvation' of organs due to the increased
 carbon amount I decreased the growth request size to $g(m)/10$ and increased the
 rate of the growth rule to $10 \cdot d(i, t)$. If $c - g(m)/10 > c_b$ then the
-request is succesful and the organ gets the whole amount for growth otherwise
-the request is unsuccesful and the organ gets nothing. The competition recovers
+request is successful and the organ gets the whole amount for growth otherwise
+the request is unsuccessful and the organ gets nothing. The competition recovers
 the explicit partitioning of FMv1 albeit with greater variability even with the
 smaller request size (see Figure~\ref{fig:comp}).
 
@@ -476,7 +476,7 @@ same stage so for example a plant with a small rosette that makes very little
 fruit will mature its seed at the same time as a very branchy plant with a lot
 of fruit. This is a simplification and in fact throughout the FM-life model we
 assume independence of timing with growth although the duration of the period
-will indireclty affect growth (see indicative simulations below,
+will indirectly affect growth (see indicative simulations below,
 Figure~\ref{fig:reprGInd}). The thermal units that accumulate at time \(t\) are
 simply the value of the temperature at \(t\) above a base temperature \(T_{b}\):
 
@@ -510,8 +510,8 @@ from spring to autumn where the temperatures are above freezing.
   \centering
   \includegraphics[width=0.8\textwidth]{figures/phenInd/fplant.eps}
   \caption{Indicative runs of the timing to seed dispersal model run with daily
-    timestep. A Since temperature is favourable in Valencia throughour the year
-    develoment takes place continuously even in the winter. B In Oulu
+    timestep. A Since temperature is favourable in Valencia throughout the year
+    development takes place continuously even in the winter. B In Oulu
     development towards seed dispersal can happen only in late spring, summer,
     and early autumn when temperatures are favourable. Development then starts
     accumulating rapidly in late spring. C Weekly temperature averages for year
@@ -669,7 +669,7 @@ determined seed number given by the \(b(m)\) function.
   the two clusters from A (cluster labels in y-axis). Germination time
   distributions are in brown, flowering time distributions are in green and seed
   dispersal distributions in red. C Illustration of the phenology only simulation
-  with growth-indepedent birth function b(m)=1 (each plant makes a single
+  with growth-independent birth function b(m)=1 (each plant makes a single
   seed). The choice of, $\psi_i$ (seed dormancy level) and $f_i$ (initial floral
   repression) is done probabilistically through a normal distribution D Results
   of simulations of the growth models for the median dates of developmental
@@ -959,7 +959,7 @@ The effect of seed dormancy on lineage length can be seen in
 Figure~\ref{fig:psisCorVal}. For the low dormancy distribution (mean $\psi_i=0$)
 taking into account only phenology the distribution of dormancy values is
 negatively correlated with lineage length, as expected (more dormant lineages
-have fewere generations, Figure~\ref{fig:psisCorVal} B -- timing only). Applying
+have fewer generations, Figure~\ref{fig:psisCorVal} B -- timing only). Applying
 a growth-based birth function, which can sometimes be $0$, gives a different
 picture as higher dormancy is positively correlated with lineage length, perhaps
 reinforcing the genotype distinction we observed above (Figure~\ref{fig:psisCorVal}
@@ -968,7 +968,7 @@ is a negative correlation between dormancy and lineage length. Applying the
 birth function changes the correlation where lineages at the two ends of the
 dormancy distribution do better than the ones close to the mean
 (Figure~\ref{fig:psisCorVal} D). This required further investigation as it is not
-clearly intepretable as the result in the low dormancy case.
+clearly interpretable as the result in the low dormancy case.
 
 \begin{figure}[tb]
   \centering
@@ -1050,9 +1050,9 @@ the phenology model alone).
 The distinction between genotypes can perhaps also be appreciated by looking at
 the correlation between dormancy values in the distributions and lineage length
 (Figure~\ref{fig:psisCorOul}). In both low and high dormancy case, $0$ and $2.5$
-$\psi_i$ respectively, the correlelation does not change when consider timing
+$\psi_i$ respectively, the correlation does not change when consider timing
 and growth as opposed to timing alone (Figure~\ref{fig:psisCorOul} B, D). This
-can be intepreted by the higher reproductive success of LL plants I have
+can be interpreted by the higher reproductive success of LL plants I have
 identified above.
 
 \begin{figure}[tb]
@@ -1170,7 +1170,7 @@ the year (Figure~\ref{fig:seedInd} A). It would be interesting to quantify this
 effect perhaps by changing the phenology simulations from a daily to an hourly
 timestep. Perhaps this also suggests that this type of phenomenological models
 that are meant to reproduce field experimental data are best suited to
-determinstic representations. I could have used the fluents of Chromar, for
+deterministic representations. I could have used the fluents of Chromar, for
 example, to represent the timing parts of the models (enriched expressions of
 Chromar \sct{extSyntax}).
 
@@ -1182,10 +1182,10 @@ component models have not
 inevitably sensitive to the timing of the growth period, because a longer
 interval of exponential growth in good conditions rapidly changes absolute
 biomass, as illustrated in Figure~\ref{fig:growthInv}D. I therefore modified the
-growth models concervatively to account for severe winter conditions and to
+growth models conservatively to account for severe winter conditions and to
 limit photosynthesis in dry conditions (\ssec{fm-lite}). The moisture effect on
 seed maturation (through photosynthesis) in particular is important and extends
-the effects of water availability, an important field environemntal condition,
+the effects of water availability, an important field environmental condition,
 to the whole lifecycle as opposed to only the seed dormancy stage in
 \citep{burghardt_modeling_2015}, for example. Nonetheless, the FM-life model
 predicted unreasonably high fruit mass in some cases. The binary birth function
