@@ -284,7 +284,7 @@ l(\rho) + r(\rho)$, which we write as $\rho \bullet s$.
 
 %semantics
 Petri Nets can be given a stochastic interpretation as Continuous Time Markov
-Chains (CTMCs). A CTMC is a triple $(S, Q, I)$ with a $S$ a set of states,
+Chains (CTMCs). A CTMC is a triple $(S, Q, I)$ with $S$ a set of states,
 $Q: S \times S \rightarrow \mathbb{R}$ that gives the transition rate between
 any two states, and $I$ the initial state. For each reaction apart from the base
 rate given by $k$ we need to know how many times it can be applied in a give
@@ -366,14 +366,14 @@ dynamics of these systems reflect the interpretation of the hierarchical
 relation over collections objects as compartmental organisation inside
 cells. Therefore sometimes the permitted operations are directly inspired by
 this view while in other cases they seem more generic. In all cases, however,
-the additional structure allows to express more stringent conditions on the
+the additional structure allows expressing more stringent conditions on the
 left-hand side of rules that select based on structure and type (as possible in
 PNs).
 \begin{center}
     \includegraphics{figures/nest.eps}
   \end{center}  
 The nesting relation can also take other interpretations, for example as a
-`part-of' relation. At a static level this might be reasonable but some of the
+`part-of' relation. At a static level this might be reasonable but some 
 allowed dynamics might not be sensible any more as they only make sense for a
 particular cell-inspired interpretation of the relation (see discussion in
 \citet{artale_part-whole_1996}).
@@ -505,7 +505,7 @@ This is an example of an implicit representation of a relation between objects
 where the relation information is stored in the objects themselves. This is in
 contrast to the explicit representation of relations that we have seen in the
 languages with representation of structure (hierarchy and links, see
-previous sections). While it is more flexible it places more burden on the user
+previous sections). While it is more flexible, it places more burden on the user
 to maintain this relation.
 
 To represent \emph{growth} we add another colour,
@@ -646,10 +646,10 @@ $$
 \mr{Cell}(a_i)< \mr{Cell}(a_{i+1}) > \rightarrow \mr{Cell}(a_i+D(a_{i+1}-a_i)< \mr{Cell}(a_{i+1}+D(a_i-a_{i+1}) >
 $$
 
-L-systems might be not be as good in cases where the structure of the system is
+L-systems might not be as good in cases where the structure of the system is
 not linear or cannot (easily) be linearised as a string. Take, for example, the
 dynamics from our plant development example (\sct{plantDev}). The
-leaves in that case and the 'cell` are not linearly related. It would therefore
+leaves in that case and the ``cell'' are not linearly related. It would therefore
 be hard to write, for example, the rule for leaf growth that requires
 information from both the leaves and cell objects.
 
@@ -704,7 +704,7 @@ Simile, which has been used in biology before.
 Simile is another graphical language that has similarities to our approach
 \citep{muetzelfeldt_simile_2003}. Simile is used mainly in the domains of
 ecology and agricultural sciences but has also been used in systems biology
-systems biology (for the whole-plant model \citep{chew_multiscale_2014} that was
+(for the whole-plant model \citep{chew_multiscale_2014} that was
 the inspiration for our example in \sct{plantDev}) to exactly solve the
 kind of limitations we noted in the object-only based languages. External inputs
 are also supported, which is particularly important for adding weather data to
@@ -814,7 +814,7 @@ function step(s: State) -> State
 \end{BVerbatim}
 
 where we assume we are in a programming language that allows the definition of
-compound data types that we use to represent the information about cells and the
+compound data types used to represent the information about cells and the
 shoot. We first decide on a representation for the state of the system where we
 use a list to represent the array of cells in the root since lists are
 ordered. Then in order to simulate the system we apply the \texttt{step}
@@ -907,15 +907,15 @@ programming language remain.
 
 \subsection{Model interchange formats (SBML)}
 % SBML
-The growth of the systems biology movement led to a large number of tools for
-the representation and analysis of models of molecular processes. Most of the
-models can be represented by all dealt with similar type of processes of genetic
-networks and were represented similarly as systems of ODE's in the continuous
-form or Petri Nets in a discrete form. The Systems Biology Markup Language
-\citep[SMBL;][]{hucka_systems_2003} was developed as an interchange format
-between the different tools for these kind of processes and had support for the
-representation of the most commonly used constructs in these models, reactions,
-compartments along with model information, like units and so on.
+The growth of the systems biology movement led to the development of many tools
+for the representation and analysis of models of molecular processes. Most of
+the models can be represented by all dealt with similar type of processes of
+genetic networks and were represented similarly as systems of ODE's in the
+continuous form or Petri Nets in a discrete form. The Systems Biology Markup
+Language \citep[SMBL;][]{hucka_systems_2003} was developed as an interchange
+format between the different tools for these kinds of processes and had support
+for the representation of the most commonly used constructs in these models,
+reactions, compartments along with model information, like units and so on.
 
 As models started becoming more complex it faced the same limitations we noted
 in the Introduction and in the Petri Net section regarding dynamic organisation
@@ -931,10 +931,6 @@ SBML models are only used as a description and interchange language and they do
 not have any interpretation as mathematical objects. Using them directly for
 modelling is probably impractical although there are some graphical tools that
 allow the construction of SMBL models \citep{hoops_copasicomplex_2006}.
-
-
-
-
 
 
 %\section{Conclusion}

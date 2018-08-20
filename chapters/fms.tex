@@ -1,7 +1,7 @@
 As we have seen in the Introduction plant models are rarely comprehensive enough
 to reconstruct the organism and evolutionary ecology models usually abstract the
 organism away considering only its development as a numerical variable
-(phenology).The first version of the Framework Model
+(phenology). The first version of the Framework Model
 \citep[FMv1;][]{chew_multiscale_2014} is an attempt at reproducing a `digital
 Arabidopsis' inspired by functional-structural models that consider molecular
 mechanisms as well as development. It only represents vegetative growth, which
@@ -219,7 +219,7 @@ circadian clock and FT gene expression model of FMv1.
 The timing component is the simpler flowering phenology model of
 \citet{wilczek_effects_2009} rather than the augmented version in FMv1
 (combination of \citet{chew_augmented_2012} with
-\citet{salazar_prediction_2009}. Vegetative development extends from \(dev = 0\)
+\citet{salazar_prediction_2009}). Vegetative development extends from \(dev = 0\)
 to a threshold value, \(D_{f}\), where the plant flowers. The main contributing
 environmental factors are photoperiod, ambient temperature and vernalisation,
 giving the modified photothermal units, \(\mr{mptu}\), at a time \(t\) as:
@@ -275,13 +275,14 @@ D).
 \subsubsection*{Growth}
 As in FMv1 \citep{chew_multiscale_2014}, the growth component includes a carbon
 budget for the plant from \citet{rasse_leaf_2006}, which in turn includes
-photosynthesis rate equations based on the \citet{farquhar_biochemical_1980}
-. Growth at the organ level (rosette leaves and root) is represented based on
-the Greenlab model \citep{christophe_model-based_2008}. We will consider a
-sucrose carbon pool (\(c\)), a starch carbon pool (\(s\)), and one pool for the
-biomass of the root and each of the rosette leaves (left panel, Figure~\ref{fig:fmv1}). In
-Chromar we have the following agents to store the state (amount of carbon, or
-total biomass) of these pools:
+photosynthesis rate equations based on the
+\citet{farquhar_biochemical_1980}. Growth at the organ level (rosette leaves and
+root) is represented based on the Greenlab model
+\citep{christophe_model-based_2008}. We will consider a sucrose carbon pool
+(\(c\)), a starch carbon pool (\(s\)), and one pool for the biomass of the root
+and each of the rosette leaves (left panel, Figure~\ref{fig:fmv1}). In Chromar
+we have the following agents to store the state (amount of carbon, or total
+biomass) of these pools:
 \begin{figure}[p]
 \centering
 \resizebox{\textwidth}{!}{
@@ -471,7 +472,7 @@ The timing component is a thermal time model from
 \citet{burghardt_modeling_2015}, representing the development of the
 inflorescence and seed from \(dev = 0\) at flowering, to a threshold value,
 \(D_{s}\), where the plant disperses its seeds. Here there is no genetic
-input. Moreover there is no input from the vegetative or growth model from the
+input. Moreover, there is no input from the vegetative or growth model from the
 same stage so for example a plant with a small rosette that makes very little
 fruit will mature its seed at the same time as a very branchy plant with a lot
 of fruit. This is a simplification and in fact throughout the FM-life model we
@@ -792,7 +793,7 @@ reproductive success over time.
   \includegraphics[width=\textwidth]{figures/popExps/pops.eps}
   \caption{Populations plots over time for two locations, Valencia and Oulu, and
     two genetic backgrounds (two values of seed dormancy and initial floral
-    represssion levels. A Number of plants present at any instance from year 15
+    represssion levels). A Number of plants present at any instance from year 15
     to year 60 of a 60-year simulation in Valencia. B Similar to A but in Oulu.}
   \label{fig:pops}
 \end{figure}
@@ -1158,11 +1159,11 @@ observation of LH genotypes at this location.
 
 Variability timing results, as we have noted, appears as a result of variable
 weather conditions each year, difference in genetic parameter values, and the
-stochasticity inherent in the model representation (Figure~\ref{fig:growthInv} A,
-B). Both parameters and variable weather inevitably have some effect on the
+stochasticity inherent in the model representation (Figure~\ref{fig:growthInv}
+A, B). Both parameters and variable weather inevitably have some effect on the
 timing results and in turn on the growth results and overall population measures
 we considered (Figure~\ref{fig:growthInv} B, C). As for the stochasticity in the
-model representation we can get a hint on the effect from the indicative
+model representation, we can get a hint on the effect from the indicative
 simulations of the seed dormancy model. There the stochasticity might, for
 example, drastically change the germination behaviour of otherwise identical
 seeds because of the hard transition thresholds and weather constraints during

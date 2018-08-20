@@ -429,7 +429,7 @@ split the concentrations of auxin and the dividing factor between the two cells:
     m=1), \\
   &  \mr{Cell}(\ar{id}{k}, \ar{l}{nc})
 \end{align*}
-The cell divides only in the idle phase and the division sets the the mode back
+The cell divides only in the idle phase and the division sets the mode back
 to growing while the rate of division depends on the concentration of the
 division factor. The dividing cell gets pushed to the left, keeping its id and
 changing its right-neighbour identifier to the identifier of the new cell. The
@@ -508,7 +508,7 @@ Relations \newline (explicit) & No & Yes \newline (hierarchy) & No \newline
 \subsection{Declarative modelling}
 A distinction exists in programming languages between imperative and declarative
 styles. In the imperative style a computer program consists of a series of
-instruction of how the described process should be computer. On the other hand
+instruction of how the described process should be computed. On the other hand
 in more declarative languages the programmer defines what the program should do
 but not how that should be done. Mainstream programming languages follow the
 imperative style, which has prevailed, perhaps since computer hardware is
@@ -521,15 +521,15 @@ differential equations, for example, are declarative statements about how
 functions of time (and/or space) on the described quantities relate to the rates
 of change of these functions. On the other hand, as we have seen, many models
 are represented as programs in imperative languages, which means that the
-represented biological knowledge is coupled with the how the process should be
+represented biological knowledge is coupled with how the process should be
 simulated along with other statements relating to particular choices for the
 representation of the state of the system (Models as programs
 \sct{pragmaticApproaches}). While libraries or frameworks provide ways to
 separate to an extent the biology from the implementation of the simulation (see
 \sct{simFrameworks}), this is not guaranteed.
 
-If we accept the view that models should serve as both tools for simulation as
-well as tools for thought for our understanding then procedural representations
+If we accept the view that models should serve as both tools for simulation and
+as tools for thought for our understanding then procedural representations
 are not adequate. Chromar follows the declarative style. Rules correspond to
 biological events and the user declares how the state changes during the
 event. The simulation need not be defined as the interpretation as a CTMC gives
@@ -545,7 +545,7 @@ power of a general-purpose programming language is not required.
 
 Another common advantage of the declarative style over a more procedural style
 is model composability. This exists in Chromar too and it is crucial for the
-more comprehensive multi-models that we are interested in in this work. In
+more comprehensive multi-models that we are interested in this work. In
 Chromar composing two models is just a matter of concatenating their rule
 sets. An example of this is the multi-model lifecycle model of Arabidopsis I
 present in Chapter~\ref{chp:fms}. This is not as straightforward in procedural
@@ -660,7 +660,7 @@ used languages like KaSim (the simulator for Kappa~\citep{danos2008}) and
 BioNetGen~\citep{blinov_bionetgen:_2004} also allow more sophisticated rate
 expressions than traditional mass-action kinetic rates.
 
-Our embedding in Haskell lifts some of the constraints of modelling languages
+Our embedding in Haskell lifts some constraints of modelling languages
 and, we think, gets the best of both worlds: it naturally and succinctly
 captures some elements in our domain of interest but, at the same time, when
 greater expressive power is needed we can turn to the programming language. This

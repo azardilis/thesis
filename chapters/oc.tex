@@ -2,7 +2,7 @@ Biological dynamics, from single cell behaviours to emergent properties of
 populations, are the result of the complex interplay between genomes and the
 environment. Efforts to tightly regulate them have so far largely been focused
 on (re)engineering genomes. In this chapter I instead address the problem of
-controlling the plant biomass manipulating the environment around it. While the
+controlling the plant biomass manipulating the surroudning environment. While the
 automatic climate control problem has been studied before for greenhouses, the
 focus of such efforts was on the minimisation of energy consumption and/or
 achieving assigned climate regimes. Seldom those works attempted to optimise
@@ -59,7 +59,7 @@ growth-related quantities over its simulation time. In the following work,
 however, I will treat the FM model a Single Input Single Output system
 accepting temperature as input and outputting biomass by regarding all the other
 inputs as constant and ignoring the rest of the output signals. Despite the
-``black box'' approach we take to model plant growth, it is instructive to look
+`black box' approach we take to model plant growth, it is instructive to look
 at two particular metabolic processes that are highly temperature dependent.
 
 \begin{figure}[tb]
@@ -120,7 +120,7 @@ $$
 where $m_{T*}(t)$ is the temperature dependent biomass trajectory predicted from
 the FM. To reflect physical constraints, we impose upper and lower bounds on the
 temperature $T_l < T(t) < T_u$. Additionally, here I consider the case of a
-``single plant control''. Notably, this approach can be extended, with
+`single plant control'. Notably, this approach can be extended, with
 appropriate modifications, to the control of crops.
 
 \begin{figure}[tb]
@@ -418,7 +418,7 @@ can formalise this as: for any interval $j$ all the values in the sequence
 $p_{1j}, \dots, p_{nj}$ should be unique. In order to not have to deal with this
 extra constraint we make a change to the formulation of the problem such that
 the solutions of the combinatorial optimisation procedure are guaranteed to
-satisfy this ``non-overlap constraint'' without having the constraint explicitly
+satisfy this `non-overlap constraint' without having the constraint explicitly
 in the optimisation procedure. In particular suppose that we have a permutation
 matrix, $\Pi(n)$, that lists all the possible permutation of $n$ numbers:
 
@@ -459,7 +459,7 @@ introduce an overlap penalty in the objective function.
 
 \subsection{Results} 
 In this section we explore solutions to the permutation-index problem defined in
-the previous section using combinatorial optimisation techniques. In particular
+the previous section using combinatorial optimisation techniques. In particular,
 we use a Matlab implementation \citep[MEIGO too;][]{banga2014} of the Variable
 Neighbourhood Search algorithm \citep[VNS;][]{mladenovic1997variable}.
 
