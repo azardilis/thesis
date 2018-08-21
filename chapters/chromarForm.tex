@@ -1,4 +1,4 @@
-In the previous chapter I gave some example illustrating how Chromar works. In
+In the previous chapter I gave some examples illustrating how Chromar works. In
 this chapter I formally introduce the syntax and semantics of Chromar. Formal
 definition of programming languages is a common practice in the computer science
 world. It has the many of the same advantages over informal, natural language
@@ -6,8 +6,8 @@ descriptions as we have noted earlier regarding formal against informal
 descriptions of biological models. The formal description acts as a tool for the
 language designer to understand and design the language by making design choices
 explicit and understanding the relation between different features of the
-language. This usually also then makes the implementation process easier but the
-language is not tied to that implementation.
+language. This usually also then makes the implementation process easier while
+the language is not tied to that implementation.
 
 Most of the work in this chapter appears in the articles describing Chromar
 \citep{honorato-zimmer_chromar_2017, honorato-zimmer_chromar_2018}.
@@ -17,8 +17,8 @@ Most of the work in this chapter appears in the articles describing Chromar
 \label{sec:syntax}
 I next define the abstract syntax of basic Chromar.
 
-Regarding notation, I write $\s{a}$ for a possibly empty sequence of objects,
-whose typical elements are given by mathematical expressions $a$. I write
+Regarding notation, we write $\s{a}$ for a possibly empty sequence of objects,
+whose typical elements are given by mathematical expressions $a$. We write
 $\s{a}.i$ for the $i$th element of the sequence and $|\s{a}|$ for its length,
 and write the empty sequence as $\varepsilon$ and use commas for the composition
 of sequences.  We assume we have a countable set of names $N$ ranged over by
@@ -55,7 +55,7 @@ variables:
  \[\G \vdash id:b  \quad (id:b \, \in \, \G)\]
 
  The syntax and typing rules for the rest of basic Chromar are given in
- Figure~\ref{fig:syntax}. We next go through the various syntactic constructs
+ Figure~\ref{fig:syntax}. I next go through the various syntactic constructs
  and explain their syntax and typing rules:
 
 \begin{figure}[!htbp]
@@ -160,7 +160,7 @@ Then in a type environment extended with the defined agent types, the rule check
 
 \subsection{Syntactic extensions}
 
-Our concrete realisation of Chromar provides two syntactic extensions to the above language which we explain informally below. Chromar with these extensions can be translated to Chromar without them; we omit a formal treatment of the translation.
+My concrete realisation of Chromar provides two syntactic extensions to the above language which we explain informally below. Chromar with these extensions can be translated to Chromar without them; we omit a formal treatment of the translation.
 
 
 \subsubsection*{Missing attributes} \label{sec:syntaxExt} We can relax the constraint of having to specify the all the attributes %full interfaces 
@@ -290,7 +290,7 @@ follows:
 
 \subsubsection*{Rules}
 \label{sec:ruleSem}
-Rules induce (stochastic) reactions, and we discuss those first. A
+Rules induce (stochastic) reactions, and I discuss those first. A
 \emph{reaction} is a structure $\rho \, = \, l \xrightarrow{k} r$ with $l, r$
 states and $k$ a positive real number. We will assume that these names also act
 as accessors for the parts of the reaction structure, so for a reaction $\rho$,
@@ -474,7 +474,7 @@ matches.
 
 \section{Extended Chromar} 
 \label{sec:extChromar} 
-We now extend basic Chromar to include the fluent and observable features that
+I now extend basic Chromar to include the fluent and observable features that
 were introduced informally in Chapter~\ref{chp:chromarEx}. Observables and
 fluents extend the given set of (\emph{ordinary}) expressions, $e \in E$, to
 give what we call \emph{enriched expressions} $e_r$. These consist of ordinary
@@ -581,7 +581,8 @@ expressions to be used in models.
 
 
 \subsubsection*{Agent expressions, rules, and models}
-Enriched expressions can appear in the same places where expressions can be expected and can also be bound  to variables in models. In more detail:
+Enriched expressions can appear in the same places where expressions can be
+expected and can also be bound to variables in models. In more detail:
 
 \begin{itemize}
 

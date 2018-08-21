@@ -85,7 +85,7 @@ as undivided wholes or as organisations of their elementary components/modules
 at different levels of detail are crucial for fundamental questions in
 biology. We will call these aspects of biology that deal with modules, their
 organisation (interaction), and hierarchy as the \emph{organisational} aspects
-of systems. Importantly this organisation changed dynamically.
+of systems. Importantly this organisation changes dynamically.
 
 Explicitly representing the functioning of modules in organisational only terms
 in detail, however, is probably impractical in many cases. Even when considering
@@ -150,8 +150,9 @@ usually represented externally in a configuration file. While this achieves the
 goal of simulation, the resulting multi-model does not achieve the second goal
 of models that we have identified regarding understanding since the organisation
 is opaque. The connections are merely identification of variables and it is not
-clear how these affect each other. Furthermore, these connections are written in
-staticcally, which encourages larger modules that are guaranteed to be static.
+clear how these affect each other. Furthermore, these connections are expressed
+in a static way, which encourages larger modules that are guaranteed to be
+static.
 
 \begin{figure}[tb]
   \centering
@@ -246,12 +247,12 @@ section and the above framework examples, one could imagine a (possibly visual)
 interface where existing or new modules can be connected like jigsaw puzzle
 pieces similar to the way programs are defined in visual programming languages
 like Scratch \citep{maloney_scratch_2010}. This perhaps could work on the web,
-like the Kappa platform, to lower the adaptation curve.
+like a version of the Kappa platform, to lower the adoption curve.
 
 \subsection{Database ideas}
 For the observables we use an analogy of the state of the system (multiset of
-agent values) to a database. The first part of the observables are defined with
-a `select' statement that picks out parts of the state in similarly to the
+agent values) to a database. The first part of the observables is defined with
+a `select' statement that picks out parts of the state similarly to the
 select statement in database query languages. Similar techniques appear already
 in trace-query languages where we have observables over state traces (sequences
 of states) instead of single states \citep{laurent_trace_2018}. The left-hand
@@ -356,17 +357,18 @@ of the organism and the population might explain its evolution
 
 As we go from individual detailed mechanisms to the population level it is
 always important to experimentally test our understanding and hypotheses that we
-formalise in models. While common for crop species, they usually only consider only one
-generation. The short length of the Arabidopsis lifecycle along with detailed
-molecular and genetic data might make it possible to make experiments to see the
-links between genomes and the population over multiple generations in natural
-conditions.  \citet{rubin_circadian_2018}, for example, do field experiments
+formalise in models. While population experiments in natural conditions are
+common for crop species, they usually only consider one generation. The short
+length of the Arabidopsis lifecycle along with detailed molecular and genetic
+understanding might make it possible to perform experiments to see the links
+between genomes and the population over multiple generations in natural
+conditions. \citet{rubin_circadian_2018}, for example, do field experiments
 (natural weather conditions) with populations of circadian clock mutant
 Arabidopsis plants to observe the effect on developmental timing and shoot
-architecture. This study is again for a single generation but includes traits
-like total fruit mass that could be used as proxies for reproductive success
-therefore allowing validation of multi-scale models and the evolutionary
-hypotheses they suggest.
+architecture. This study is again for a single generation but interestingly
+includes traits like total fruit mass that could be used as proxies for
+reproductive success therefore allowing validation of multi-scale models and the
+evolutionary hypotheses they suggest.
 
 % Experimental validation? From genes to populations?
 
