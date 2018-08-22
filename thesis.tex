@@ -22,6 +22,8 @@
 \usepackage{mathpartir}
 \usepackage{fancyvrb}
 \usepackage{multirow}
+\usepackage{caption}
+\usepackage[toc,page]{appendix}
 
 \frenchspacing
 
@@ -259,6 +261,11 @@ Thanks to...
 % \bibliography{thesis}
 
 \printbibliography[heading=bibintoc]
+
+\appendix
+\chapter{Additional FM-life population simulations}
+\label{app:fmLifeMore}
+\input{chapters/appendix}
 
 %% ... that's all, folks!
 \end{document}

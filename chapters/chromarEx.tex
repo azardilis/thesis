@@ -57,7 +57,8 @@ from the same sources. Note that the author order follows the traditional
 alphabetical order of computer science literature. Ricardo Honorato-Zimmer
 participated in the meetings/discussions of ideas with Prof Gordon Plotkin who
 was my primary supervisor for this part of the work while Prof Andrew Millar was
-secondary.
+secondary. Ricardo Honorato-Zimmer also contributed some code in the
+implementation of multiset operations in the simulator of Chromar.
 
 
 \section{Plant development in a field}
@@ -350,7 +351,13 @@ definition of the model. We define the following agent types:
     \centering
     \includegraphics[width=0.7\linewidth]{figures/rootChromar.eps}
     \caption{Scheme for capturing the `next-to' relation between cells and the
-      division rule.}
+      division rule. Each cells is represented by a square and the auxin
+      concentration by the size of the blue circle inside. Positional
+      information is stored using identifiers, each cell stores its own
+      identifer and the identifiers of its left ($l$ attribute) and right ($r$
+      attribute) neighbours. After a division event a new cell is created and on
+      the left of the mother cell, which is given a new cell. Positional
+      information is changed across the affected cells to reflect this change.}
     \label{fig:rootDevChromar}
   \end{figure}
 
@@ -477,9 +484,10 @@ Haskell).
 Table~\ref{tab:comp} shows a summary of the discussion points and a comparison
 of the main features of Chromar and the languages from the previous chapter.
 
+\begin{table}
 \begin{center}
   \resizebox {0.95\textwidth }{!}{%
-  \begin{tabular}{p{0.13\linewidth}p{0.13\linewidth}p{0.13\linewidth}p{0.13\linewidth}p{0.13\linewidth}p{0.13\linewidth}p{0.13\linewidth}}
+    \begin{tabular}{p{0.13\linewidth}p{0.13\linewidth}p{0.13\linewidth}p{0.13\linewidth}p{0.13\linewidth}p{0.13\linewidth}p{0.13\linewidth}}
     \toprule
     & PN & SMMR & CPN & DG & Simile & Chromar\\
     \midrule
@@ -501,9 +509,14 @@ Relations \newline (explicit) & No & Yes \newline (hierarchy) & No \newline
     Time & No & No & No & Yes \newline (via ODEs) & Yes & Yes\\
     Interpretation & CTMC& CTMC& CTMC& CTMC + \newline others & - & CTMC\\
     \bottomrule
-    \label{tab:comp}
   \end{tabular}}
 \end{center}
+    \caption{A comparison of indicative languages across the categories we
+    identified in the previous chapter (Chapter~\ref{chp:relWork}). Comparison
+    is betwen Petri Nets (abbr. PN), Coloured Petri Nets (CPNs), Dynamcical
+    Grammars (abbr. DG), Simile, and Chromar.}
+      \label{tab:comp}
+\end{table}
 
 \subsection{Declarative modelling}
 A distinction exists in programming languages between imperative and declarative
