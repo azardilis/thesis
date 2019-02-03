@@ -293,6 +293,291 @@
   publisher	= {Frontiers}
 }
 
+@inbook{Brim_Češka_Šafránek_2013,
+  place =	 {Berlin, Heidelberg},
+  series =	 {Lecture Notes in Computer Science},
+  title =	 {Model Checking of Biological Systems},
+  ISBN =	 {978-3-642-38874-3},
+  url =		 {https://doi.org/10.1007/978-3-642-38874-3_3},
+  DOI =		 {10.1007/978-3-642-38874-3_3},
+  abstractNote = {Model checking together with other formal methods and
+                  techniques is being adapted for applications to biological
+                  systems. We present a selection of approaches used for
+                  modeling biological systems and formalizing their interesting
+                  properties in temporal logics. We also give a brief account of
+                  high performance model checking techniques and add a few case
+                  studies that demonstrate the use of model checking in
+                  computational systems biology. The primary aim is to give a
+                  reference for further reading.},
+  booktitle =	 {Formal Methods for Dynamical Systems: 13th International
+                  School on Formal Methods for the Design of Computer,
+                  Communication, and Software Systems, SFM 2013, Bertinoro,
+                  Italy, June 17-22, 2013. Advanced Lectures},
+  publisher =	 {Springer Berlin Heidelberg},
+  author =	 {Brim, Luboš and Češka, Milan and Šafránek, David},
+  editor =	 {Bernardo, Marco and de Vink, Erik and Di Pierro, Alessandra
+                  and Wiklicky, HerbertEditors},
+  year =	 {2013},
+  pages =	 {63–112},
+  collection =	 {Lecture Notes in Computer Science}
+}
+
+@inproceedings{Boutillier_Camporesi_Coquet_Feret_Lý_Theret_Vignet_2018,
+  series =	 {Lecture Notes in Computer Science},
+  title =	 {KaSa: A Static Analyzer for Kappa},
+  ISBN =	 {978-3-319-99429-1},
+  abstractNote = {KaSa is a static analyzer for Kappa models. Its goal is
+                  two-fold. Firstly, KaSa assists the modeler by warning about
+                  potential issues in the model. Secondly, KaSa may provide
+                  useful properties to check that what is implemented is what
+                  the modeler has in mind and to provide a quick overview of the
+                  model for the people who have not written it.The cornerstone
+                  of KaSa is a fix-point engine which detects some patterns that
+                  may never occur whatever the evolution of the system may
+                  be. From this, many useful information may be collected: KaSa
+                  warns about rules that may never be applied, about potential
+                  irreversible transformations of proteins (that may not be
+                  reverted even thanks to an arbitrary number of computation
+                  steps) and about the potential formation of unbounded
+                  molecular compounds. Lastly, KaSa detects potential influences
+                  (activation/inhibition relation) between rules.In this paper,
+                  we illustrate the main features of KaSa on a model of the
+                  extracellular activation of the transforming growth factor,
+                  TGF-b.},
+  booktitle =	 {Computational Methods in Systems Biology},
+  publisher =	 {Springer International Publishing},
+  author =	 {Boutillier, Pierre and Camporesi, Ferdinanda and Coquet, Jean
+                  and Feret, Jérôme and Lý, Kim Quyên and Theret, Nathalie and
+                  Vignet, Pierre},
+  editor =	 {Češka, Milan and Šafránek, DavidEditors},
+  year =	 {2018},
+  pages =	 {285–291},
+  collection =	 {Lecture Notes in Computer Science}
+}
+ 
+@inproceedings{Camporesi_Feret_Lý_2017,
+  series =	 {Lecture Notes in Computer Science},
+  title =	 {KaDE: A Tool to Compile Kappa Rules into (Reduced) ODE Models},
+  ISBN =	 {978-3-319-67471-1},
+  abstractNote = {Kappa is a formal language that can be used to model systems
+                  of biochemical interactions among proteins. It offers several
+                  semantics to describe the behaviour of Kappa models at
+                  different levels of abstraction. Each Kappa model is a set of
+                  context-free rewrite rules. One way to understand the
+                  semantics of a Kappa model is to read its rules as an implicit
+                  description of a (potentially infinite) reaction network. KaDE
+                  is interpreting this definition to compile Kappa models into
+                  reaction networks (or equivalently into sets of ordinary
+                  differential equations). KaDE uses a static analysis that
+                  identifies pairs of sites that are indistinguishable from the
+                  rules point of view, to infer backward and forward
+                  bisimulations, hence reducing the size of the underlying
+                  reaction networks without having to generate them
+                  explicitly. In this paper, we describe the main current
+                  functionalities of KaDE and we give some benchmarks on case
+                  studies.},
+  booktitle =	 {Computational Methods in Systems Biology},
+  publisher =	 {Springer International Publishing},
+  author =	 {Camporesi, Ferdinanda and Feret, Jérôme and Lý, Kim Quyên},
+  editor =	 {Feret, Jérôme and Koeppl, HeinzEditors},
+  year =	 {2017},
+  pages =	 {291–299},
+  collection =	 {Lecture Notes in Computer Science}
+}
+
+
+@article{Barnat_Brim_2012,
+  title =	 {On Parameter Synthesis by Parallel Model Checking},
+  volume =	 {9},
+  ISSN =	 {1545-5963},
+  DOI =		 {10.1109/TCBB.2011.110},
+  abstractNote = {An important problem in current computational systems biology
+                  is to analyze models of biological systems dynamics under
+                  parameter uncertainty. This paper presents a novel algorithm
+                  for parameter synthesis based on parallel model checking. The
+                  algorithm is conceptually universal with respect to the
+                  modeling approach employed. We introduce the algorithm, show
+                  its scalability, and examine its applicability on several
+                  biological models.},
+  number =	 {3},
+  journal =	 {IEEE/ACM Trans. Comput. Biol. Bioinformatics},
+  author =	 {Barnat, Jiri and Brim, Lubos and Krejci, Adam and Streck, Adam
+                  and Safranek, David and Vejnar, Martin and Vejpustek, Tomas},
+  year =	 {2012},
+  month =	 {May},
+  pages =	 {693–705}
+}
+
+ 
+@article{Heath_Kwiatkowska_Norman_Parker_Tymchyshyn_2008,
+  series =	 {Converging Sciences: Informatics and Biology},
+  title =	 {Probabilistic model checking of complex biological pathways},
+  volume =	 {391},
+  ISSN =	 {0304-3975},
+  DOI =		 {10.1016/j.tcs.2007.11.013},
+  abstractNote = {Probabilistic model checking is a formal verification
+                  technique that has been successfully applied to the analysis
+                  of systems from a broad range of domains, including security
+                  and communication protocols, distributed algorithms and power
+                  management. In this paper we illustrate its applicability to a
+                  complex biological system: the FGF (Fibroblast Growth Factor)
+                  signalling pathway. We give a detailed description of how this
+                  case study can be modelled in the probabilistic model checker
+                  PRISM, discussing some of the issues that arise in doing so,
+                  and show how we can thus examine a rich selection of
+                  quantitative properties of this model. We present experimental
+                  results for the case study under several different scenarios
+                  and provide a detailed analysis, illustrating how this
+                  approach can be used to yield a better understanding of the
+                  dynamics of the pathway. Finally, we outline a number of exact
+                  and approximate techniques to enable the verification of
+                  larger and more complex pathways and apply several of them to
+                  the FGF case study.},
+  number =	 {3},
+  journal =	 {Theoretical Computer Science},
+  author =	 {Heath, John and Kwiatkowska, Marta and Norman, Gethin and
+                  Parker, David and Tymchyshyn, Oksana},
+  year =	 {2008},
+  month =	 {Feb},
+  pages =	 {239–257},
+  collection =	 {Converging Sciences: Informatics and Biology}
+}
+
+
+@inproceedings{Kwiatkowska_Norman_Parker_2011,
+  series =	 {Lecture Notes in Computer Science},
+  title =	 {PRISM 4.0: Verification of Probabilistic Real-Time Systems},
+  ISBN =	 {978-3-642-22110-1},
+  abstractNote = {This paper describes a major new release of the PRISM
+                  probabilistic model checker, adding, in particular,
+                  quantitative verification of (priced) probabilistic timed
+                  automata. These model systems exhibiting probabilistic,
+                  nondeterministic and real-time characteristics. In many
+                  application domains, all three aspects are essential; this
+                  includes, for example, embedded controllers in automotive or
+                  avionic systems, wireless communication protocols such as
+                  Bluetooth or Zigbee, and randomised security protocols. PRISM,
+                  which is open-source, also contains several new components
+                  that are of independent use. These include: an extensible
+                  toolkit for building, verifying and refining abstractions of
+                  probabilistic models; an explicit-state probabilistic model
+                  checking library; a discrete-event simulation engine for
+                  statistical model checking; support for generation of optimal
+                  adversaries/strategies; and a benchmark suite.},
+  booktitle =	 {Computer Aided Verification},
+  publisher =	 {Springer Berlin Heidelberg},
+  author =	 {Kwiatkowska, Marta and Norman, Gethin and Parker, David},
+  editor =	 {Gopalakrishnan, Ganesh and Qadeer, ShazEditors},
+  year =	 {2011},
+  pages =	 {585–591},
+  collection =	 {Lecture Notes in Computer Science}
+}
+
+
+@article{Calzone_Fages_Soliman_2006,
+  title =	 {BIOCHAM: an environment for modeling biological systems and
+                  formalizing experimental knowledge},
+  volume =	 {22},
+  ISSN =	 {1367-4803},
+  DOI =		 {10.1093/bioinformatics/btl172},
+  abstractNote = {Abstract.  Summary: BIOCHAM (the BIOCHemical Abstract Machine)
+                  is a software environment for modeling biochemical systems. It
+                  is based on two aspects: (1) the a},
+  number =	 {14},
+  journal =	 {Bioinformatics},
+  author =	 {Calzone, Laurence and Fages, François and Soliman, Sylvain},
+  year =	 {2006},
+  month =	 {Jul},
+  pages =	 {1805–1807}
+}
+
+
+@article{Aziz_Sanwal_Singhal_Brayton_2000,
+  title =	 {Model-checking Continuous-time Markov Chains},
+  volume =	 {1},
+  ISSN =	 {1529-3785},
+  DOI =		 {10.1145/343369.343402},
+  abstractNote = {We present a logical formalism for expressing properties of
+                  continuous-time Markov chains. The semantics for such
+                  properties arise as a natural extension of previous work on
+                  discrete-time Markov chains to continuous time. The major
+                  result is that the verification problem is decidable; this is
+                  shown using results in algebraic and transcendental number
+                  theory.},
+  number =	 {1},
+  journal =	 {ACM Trans. Comput. Logic},
+  author =	 {Aziz, Adnan and Sanwal, Kumud and Singhal, Vigyan and Brayton,
+                  Robert},
+  year =	 {2000},
+  month =	 {Jul},
+  pages =	 {162–170}
+}
+ 
+@article{Haverkort_Hermanns_Katoen_Baier_2003,
+  title =	 {Model-Checking Algorithms for Continuous-Time Markov Chains},
+  volume =	 {29},
+  ISSN =	 {0098-5589},
+  DOI =		 {10.1109/TSE.2003.1205180},
+  abstractNote = {<p>Abstract—Continuous-time Markov chains (CTMCs) have been
+                  widely used to determine system performance and dependability
+                  characteristics. Their analysis most often concerns the
+                  computation of steady-state and transient-state
+                  probabilities. This paper introduces a branching temporal
+                  logic for expressing real-time probabilistic properties on
+                  CTMCs and presents approximate model checking algorithms for
+                  this logic. The logic, an extension of the continuous
+                  stochastic logic CSL of Aziz et al., contains a time-bounded
+                  until operator to express probabilistic timing properties over
+                  paths as well as an operator to express steady-state
+                  probabilities. We show that the model checking problem for
+                  this logic reduces to a system of linear equations (for
+                  unbounded until and the steady-state operator) and a Volterra
+                  integral equation system (for time-bounded until). We then
+                  show that the problem of model-checking time-bounded until
+                  properties can be reduced to the problem of computing
+                  transient state probabilities for CTMCs. This allows the
+                  verification of probabilistic timing properties by efficient
+                  techniques for transient analysis for CTMCs such as
+                  uniformization. Finally, we show that a variant of lumping
+                  equivalence (bisimulation), a well-known notion for
+                  aggregating CTMCs, preserves the validity of all formulas in
+                  the logic.</p>},
+  number =	 {6},
+  journal =	 {IEEE Transactions on Software Engineering},
+  author =	 {Haverkort, B. and Hermanns, H. and Katoen, J. and Baier, C.},
+  year =	 {2003},
+  pages =	 {524–541}
+}
+
+
+ @inbook{Kwiatkowska_Norman_Parker_2007,
+           place={Berlin, Heidelberg},
+                  series={Lecture Notes in Computer Science}, title={Stochastic
+                  Model Checking}, ISBN={978-3-540-72522-0},
+                  url={https://doi.org/10.1007/978-3-540-72522-0_6},
+                  DOI={10.1007/978-3-540-72522-0_6}, abstractNote={This tutorial
+                  presents an overview of model checking for both discrete and
+                  continuous-time Markov chains (DTMCs and CTMCs). Model
+                  checking algorithms are given for verifying DTMCs and CTMCs
+                  against specifications written in probabilistic extensions of
+                  temporal logic, including quantitative properties with
+                  rewards. Example properties include the probability that a
+                  fault occurs and the expected number of faults in a given time
+                  period. We also describe the practical application of
+                  stochastic model checking with the probabilistic model checker
+                  PRISM by outlining the main features supported by PRISM and
+                  three real-world case studies: a probabilistic security
+                  protocol, dynamic power management and a biological pathway.},
+                  booktitle={Formal Methods for Performance Evaluation: 7th
+                  International School on Formal Methods for the Design of
+                  Computer, Communication, and Software Systems, SFM 2007,
+                  Bertinoro, Italy, May 28-June 2, 2007, Advanced Lectures},
+                  publisher={Springer Berlin Heidelberg}, author={Kwiatkowska,
+                  Marta and Norman, Gethin and Parker, David}, editor={Bernardo,
+                  Marco and Hillston, JaneEditors}, year={2007},
+                  pages={220–270}, collection={Lecture Notes in Computer
+                  Science} }
+
 @Article{	  boutillier2018kappa,
   title		= {The Kappa platform for rule-based modeling},
   author	= {Boutillier, Pierre and Maasha, Mutaamba and Li, Xing and
