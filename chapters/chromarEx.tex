@@ -519,11 +519,15 @@ species is just a matter of having more than one agent type. Interaction with
 the environment, which is usually important in this context, can be encoded with
 fluents as we do above for water availability for the root and more extensively
 to encode weather condition in different locations in the whole life Arabidopsis
-models in Chapter~\ref{chp:fms}. Again computationally with, for example, large
-population simulations at the individual level might not be preferred, but a
-description of the rules in Chromar could still be valuable as documentation of
-our understanding. Other quantities (\ie not discrete objects -- agents) can be
-mixed as well by encoding as agent attributes or fluents.
+models in Chapter~\ref{chp:fms}. Population with structure of some kind (\eg
+spatial) can also be encoded given a suitable representation of relations (as we
+did above for an array of cells for example). Other quantities (\ie not discrete
+objects -- agents) can be mixed as well by encoding as agent attributes or
+fluents. If we consider population models as a special case of evolutionary
+models \citep{doebeli_towards_2017} then these could be encoded as well.  Again
+computationally with, for example, performing large population simulations at
+the individual level might not be preferred, but a description of the rules in
+Chromar could still be valuable as documentation of our understanding.
 
 Beyond biology, agent-based modelling where descriptions are made, again, with
 discrete entities as the main unit is used in other disciplines
@@ -531,8 +535,6 @@ discrete entities as the main unit is used in other disciplines
 their interactions \citep{macal2010tutorial}. Both of these should be natural in
 Chromar with agent attributes for the dynamic agent state and rules for their
 synchronisation/interaction.
-
-%+ econonomics and social sciences
 
 \section{Comparison to related work}
 Having seen the properties of Chromar in action in this chapter and of other
