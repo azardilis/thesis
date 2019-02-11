@@ -477,35 +477,62 @@ wish to model in detail and mechanistically via rules.
 \section{Applicability of Chromar}
 In the above section we have explored some examples to showcase the main
 theoretical ideas of Chromar. All of these examples come from the plant biology
-world.
+world but that is a product of the environment where this thesis was
+undertaken. A detailed investigation of the applicability is a significant
+undertaking and beyond the scope of this thesis but I ouline below certain areas
+where it is not hard to imagine Chromar models being applicable.
 
-when we talk about systems, organisation we identify unities, objects with
-defined boundaries hence Chromar
+In systems theory, as was discussed in Chapter~\ref{chp:intro},
+there is a stress on the organisation side of living things. In this view there
+is the assumption then that we can identify unities, that is objects with
+well-defined boundaries that form this organisation through their relations
+\citep[see for example Section 9 in;][]{varela_autopoiesis:_1974}. In Chromar
+discrete entities, agents, are the main entities in the language so writing
+systems models of many kinds should be quite natural.
 
-developmental biology is obvious and is one of the first domains where systems
-view was prevalent
-this is so standard for 
-Standard recipes for diffusion, cell division, growth
-Cell, Cell -> Cell, CEll
+Starting from Biology, developmental biology is a field where the systems view
+was recognised perhaps because there you have cells, which are the most
+recognised discrete unities in the biological world. Therefore developmental
+models should feel quite natural in Chromar. In development there are usually
+two levels, the molecular level creating a field over some domain and the tissue
+level that grows on top of that domain. We have seen a simple example of this
+with the root example above but one could easily imagine 'recipes' for writing
+the most common dynamics at both the molecular and tissue levels. For example,
+starting with a $\mathrm{Cell(c : \mathrm{Real})}$ agent for a cell with some
+concentration of chemical $c$, diffusion along with other molecular rules
+(production, degradation, reactions) can be easily written. At the tissue level,
+cell division should also be possible with some mechanism of defining the
+neighbour relation. Beyond that when going into tissue mechanics that give rise
+to shape \citep[morphodynamics, see for example for
+plants;][]{formosa-jordan2018} then we could have more agent types to represent
+the walls between the cells and even specific mechanisms for doing that like
+agents for imaginary springs between cells (a common abstrction for the
+forces. The computational requirements are then higher, which might make the
+current Chromar implementation not suitable, but the description of the model in
+Chromar even without simulation should still be very useful as a specification
+of the understanding about a system.
 
-Cell -> Wall etc.
-springs
+Ecological models is another domain where Chromar will perhaps seem natural to
+practitioners. It is easy to imagine population models and we see an example of
+that in Chapter~\ref{chp:fms}. Interaction between population of different
+species is just a matter of having more than one agent type. Interaction with
+the environment, which is usually important in this context, can be encoded with
+fluents as we do above for water availability for the root and more extensively
+to encode weather condition in different locations in the whole life Arabidopsis
+models in Chapter~\ref{chp:fms}. Again computationally with, for example, large
+population simulations at the individual level might not be preferred, but a
+description of the rules in Chromar could still be valuable as documentation of
+our understanding. Other quantities (\ie not discrete objects -- agents) can be
+mixed as well by encoding as agent attributes or fluents.
 
-Even for more complex stuff:
-Provided suitable choices for types and expressions this could be integrated
-with other frameworks for computing mechanical with more complex assumptions
-than simple springs.
+Beyond biology, agent-based modelling where descriptions are made, again, with
+discrete entities as the main unit is used in other disciplines
+\citep{abar2017agent}. The main characteristics is the state of the agents and
+their interactions \citep{macal2010tutorial}. Both of these should be natural in
+Chromar with agent attributes for the dynamic agent state and rules for their
+synchronisation/interaction.
 
-
-where Disregarding simulation could be used at least as a specification 
-Beyond that any domain where agent-based methods are used in biology (ecology
-and evolutionary biology examples?)
-
-
-+ econonomics and social sciences
-
-
-
+%+ econonomics and social sciences
 
 \section{Comparison to related work}
 Having seen the properties of Chromar in action in this chapter and of other
@@ -754,17 +781,19 @@ range of tools available to the modeller for forming and analysing
 hypotheses. For this reason many modelling languages are usually packaged in
 frameworks with language-specific tools for the entire workflow
 \citep{pradal_openalea:_2008, boutillier2018kappa,
-  Calzone_Fages_Soliman_2006}. Chromar was primarily built with the modelling
-step in mind and to address specific requirements in the modelling
-process. However since a Chromar model has a CTMC intepretation, static and
-dynamic analysis methods on CTMCs should also be applicable for Chromar
-models. We define, for example, the simulation of a Chromar model using the
-Stochastic Simulation algorithm (SSA) for drawing trajectories from a CTMC (see
-Chapter~\ref{chp:chromarForm}). Other static analyses of CTMCs are also
-available. Probabilistic (or stochastic) model checking, for example, is a
-particularly powerful one \cite{Kwiatkowska_Norman_Parker_2007}. A model checker
-takes as inputs the description of a CTMC model in some form and a specification
-of properties to be checked written in an appropriate temporal logic
+  Calzone_Fages_Soliman_2006}.
+
+Chromar was primarily built with the modelling step in mind and to address
+specific requirements in the modelling process. However since a Chromar model
+has a CTMC intepretation, static and dynamic analysis methods on CTMCs should
+also be applicable for Chromar models. We define, for example, the simulation of
+a Chromar model using the Stochastic Simulation algorithm (SSA) for drawing
+trajectories from a CTMC (see Chapter~\ref{chp:chromarForm}). Other static
+analyses of CTMCs are also available. Probabilistic (or stochastic) model
+checking, for example, is a particularly powerful one
+\citep{Kwiatkowska_Norman_Parker_2007}. A model checker takes as inputs the
+description of a CTMC model in some form and a specification of properties to be
+checked written in an appropriate temporal logic
 \cite{Haverkort_Hermanns_Katoen_Baier_2003, Aziz_Sanwal_Singhal_Brayton_2000}
 and returns the (probability) that a formula is satisfied. In a biological
 setting, for example, a formula can query the relation between the concentration
@@ -772,10 +801,10 @@ of different species in relation to time (\eg what is the probabity that the
 concentration of species A is greater than that of species B between $t_1$ and
 $t_2$?). As most of the biological inspired languages have intepretations as
 CTMCs, probabilistic model checking has been used in Biology before to query the
-behaviour of models for analysis \cite{Brim_Češka_Šafránek_2013,
+behaviour of models for analysis \citep{Brim2013,
   Heath_Kwiatkowska_Norman_Parker_Tymchyshyn_2008}. It has also been used for
 model parameter identification using formula probabilities as objectives
-\cite{Barnat_Brim_2012}. % Formulas could define desired behaviour of a particular system (\eg
+\citep{Barnat_Brim_2012}. % Formulas could define desired behaviour of a particular system (\eg
 % it oscillates or it reaches a particular state), which means that the obtained
 % solutions automatically possess some properties of interest.
 
@@ -796,7 +825,7 @@ that the spate-space of the model is infinite since Haskell types can (and
 generally will) have infinite values. This does not affect the SSA since we
 compute the state rates dynamically but model checking methods usually use
 state-space representations to compute formula probabilities and are therefore
-restricted to finite state-spaces \cite[see for example PRISM
+restricted to finite state-spaces \citep[see for example PRISM
 tool;][]{Kwiatkowska_Norman_Parker_2011}.
 
 \begin{figure}
@@ -830,18 +859,17 @@ Chromar allows flexibility in these choices defining a family of
 languages. Different choices can made that place each concrete language
 somewhere in the convenience versus amenability to analysis spectrum.
 
-Finally it should be possible to develop language specific techniques similar to
-the suite of techniques available for another rule-based language, Kappa, for
-example \cite{Boutillier_Camporesi_Coquet_Feret_Lý_Theret_Vignet_2018,
-  Camporesi_Feret_Lý_2017}.  Apart from static analysis, a query language exists
-for dynamics analysis of the simulation traces that is tailored to the Kappa
-language primitives.  \cite{laurent_trace_2018}. An analogous query language for
-dynamic analysis of Chromar traces would be very powerful and very practically
-useful. While not providing any static guarantees, it should be easy to use as
-it is similar to current informal analysis of traces. Furthermore it should not
-suffer from restrictions that other formal methods impose on the state-space,
-for example as we have seen above, which means that gives greater flexibility in
-realisations of Chromar.
+Finally, it should be possible to develop language specific techniques similar
+to the suite of techniques available for another rule-based language, Kappa, for
+example \citep{Boutillier2018, Camporesi2017}.  Apart from static analysis, a
+query language exists for dynamics analysis of the simulation traces that is
+tailored to the Kappa language primitives \citep{laurent_trace_2018}. An
+analogous query language for dynamic analysis of Chromar traces would be very
+powerful and very practically useful. While not providing any static guarantees,
+it should be easy to use as it is similar to current informal analysis of
+traces. Furthermore it should not suffer from restrictions that other formal
+methods impose on the state-space, for example as we have seen above, which
+means that gives greater flexibility in realisations of Chromar.
 
 \section{Conclusion}
 In conclusion, extended Chromar and its concrete realisation in Haskell give a
