@@ -53,14 +53,25 @@ particular, in this chapter I do the following:
 
 \section{The model and main idea}
 For this work I use the Framework Model (FM) as described in
-\citet{chew2014multiscale}. The FM takes environmental inputs (CO2 level,
-temperature, light intensity, and temperature) and outputs several
-growth-related quantities over its simulation time. In the following work,
-however, I will treat the FM model a Single Input Single Output system
-accepting temperature as input and outputting biomass by regarding all the other
-inputs as constant and ignoring the rest of the output signals. Despite the
-`black box' approach we take to model plant growth, it is instructive to look
-at two particular metabolic processes that are highly temperature dependent.
+\citet{chew2014multiscale}. Unlike the rest of this thesis where I use
+stochastic plant models in Chromar, in this chapter I use the deterministic
+version of the FM in Matlab as provided in \citet{chew2014multiscale}. This
+switch was motivated by practical reasons. Since I use simulation-based
+optimisation in this chapter the speed of the simulation is crucial and the
+deterministic realisation of the FM provides a signigificantly faster simulation
+time. Furthermore, Matlab has a much greater choice of available optimisation
+libraries compared to Haskell, the language where the stochastic version of
+Chromar is implemented and embedded (other choices of languages are possible but
+the Haskell is the only currently available one).
+
+The FM takes environmental inputs (CO2 level, temperature, light intensity, and
+temperature) and outputs several growth-related quantities over its simulation
+time. In the following work, however, I will treat the FM model a Single Input
+Single Output system accepting temperature as input and outputting biomass by
+regarding all the other inputs as constant and ignoring the rest of the output
+signals. Despite the `black box' approach we take to model plant growth, it is
+instructive to look at two particular metabolic processes that are highly
+temperature dependent.
 
 \begin{figure}[tb]
 \centering

@@ -495,7 +495,7 @@ most tools therefore use a graphical interface.
 
 Going to our root development example we can use colours to represent the
 `next-to' relation between cells, as well as the concentration of auxin and
-other abstract quantifiable properties like cell size. To represent\emph{diffusion} we
+other abstract quantifiable properties like cell size. To represent \emph{diffusion} we
 employ the $\mr{Cell}$ colourset $\{\mr{id}: \mr{int}, \mr{l}:\mr{int},
 \mr{a}:\mr{int} \} $. Apart from the number of auxin molecules, $a$, we also have
 positional information. In order to determine the position of a cell in the
@@ -546,7 +546,7 @@ CSMMR~\citep{oury_coloured_2011} is an extension to
 SMMR~\citep{oury_multi-level_2013} that adds parameters to agents, motivated by
 the limitations we have noted in the object-only languages that we have
 considered (\ssec{structLangs} and \ssec{pns}). Parameters can take
-part in rules either passively by influencing rates rules, conditions and so on
+part in rules either passively by influencing rates rules, conditions
 but can also be actively changed. The addition of parameters gives it a very
 similar flavour to CPNs. However, a CSMMR model, unlike a CPN model, is given
 stochastic interpretation directly as a CTMC, without unfolding to a simpler
@@ -800,6 +800,7 @@ Turning to our examples, in order to write the root development model one could
 write something like the following in a general-purpose programming language:
 
 \begin{BVerbatim}
+  
 type Mode = Idle | Growing
 type Cell = {s, a: real, m: Mode}
 type Shoot = {s : real}
@@ -846,7 +847,7 @@ model is just a matter of concatenating more rules to the existing ones.
 \subsubsection{Multi-model simulation environments}
 To deal with the problem of extension many models are written in a modular way
 such that related components are packaged together. Each component is written in
-the most convenient way. The problem comes in their combination.Sometimes models
+the most convenient way. The problem comes in their combination. Sometimes models
 are written in different programming languages, with different input/output
 formats, different time-steps, units and other incompatibilities. What happens
 in practice is that models are usually reimplemented in one language to create a
@@ -915,7 +916,7 @@ for the representation and analysis of models of molecular processes. Most of
 the models can be represented by all dealt with similar type of processes of
 genetic networks and were represented similarly as systems of ODE's in the
 continuous form or Petri Nets in a discrete form. The Systems Biology Markup
-Language \citep[SMBL;][]{hucka_systems_2003} was developed as an interchange
+Language \citep[SBML;][]{hucka_systems_2003} was developed as an interchange
 format between the different tools for these kinds of processes and had support
 for the representation of the most commonly used constructs in these models,
 reactions, compartments along with model information, like units and so on.
@@ -933,7 +934,7 @@ representation of the \citet{karr_whole-cell_2012} whole-cell model
 SBML models are only used as a description and interchange language and they do
 not have any interpretation as mathematical objects. Using them directly for
 modelling is probably impractical although there are some graphical tools that
-allow the construction of SMBL models \citep{hoops_copasicomplex_2006}.
+allow the construction of SBML models \citep{hoops_copasicomplex_2006}.
 
 
 %\section{Conclusion}
