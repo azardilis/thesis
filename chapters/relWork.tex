@@ -309,13 +309,13 @@ Given a PN $(\Sigma, R)$ and an initial state we can get a CTMC:
 
 %examples
 PNs have been used widely for describing chemical reactions and other simple
-systems. For systems like the ones in our examples they pose some limitations
-though. Suppose for example that we wanted to write reactions for the diffusion
-of auxin along the root (see first example  \sct{rootDev}). We could write
-the following reactions for the auxin molecules in each cell, where
-$\mathrm{A}_1$ is an auxin molecule in the first cell, $\mathrm{A}_2$ is an
-auxin molecule in the second cell, with the diffusion occurring at rate
-$d$, and so on:
+systems \citep[including many uses in Biology;][]{hardy2004modeling}. For
+systems like the ones in our examples they pose some limitations though. Suppose
+for example that we wanted to write reactions for the diffusion of auxin along
+the root (see first example \sct{rootDev}). We could write the following
+reactions for the auxin molecules in each cell, where $\mathrm{A}_1$ is an auxin
+molecule in the first cell, $\mathrm{A}_2$ is an auxin molecule in the second
+cell, with the diffusion occurring at rate $d$, and so on:
 \begin{align*}
 \mathrm{A}_1 &\xrightarrow{d} \mathrm{A}_2 \\
 \mathrm{A}_2 &\xrightarrow{d} \mathrm{A}_1 \\
