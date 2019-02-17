@@ -459,6 +459,7 @@ step in FMv1 (see previous section).
     and FM-lite.}
   \label{fig:comp}
 \end{figure}
+%
 
 \subsection{Reproductive stage model (C)}
 \label{reproductive-stage-model-c}
@@ -641,16 +642,147 @@ D).
 \section{From the lifecycle to the population}
 \label{sec:pop}
 The Chromar framework allows us simply to concatenate the rules of timing and
-growth components of the three models above, to represent the whole life
-cycle. Then given an initial state with the genetic attributes of the plant
-(\(\mr{gntp}\) attribute of agents) and the environmental conditions for a
-particular location, \(e(t)\), we can simulate an entire life cycle from seed to
-seed. The timing components of the model give us the timing within the year of
-the growth period (vegetative + reproductive stages) and therefore the
-environmental conditions that the plant is exposed to during growth. The growth
-components predict growth at the individual organ level with these environmental
-conditions and therefore give us the environmentally determined seed number
-given by the \(b(m)\) function, which can depend on growth (mass $m$ of fruits).
+growth components of the three models above, to represent the whole life cycle
+(Figure~\ref{fig:fmComplete}). Then given an initial state with the genetic
+attributes of the plant (\(\mr{gntp}\) attribute of agents) and the
+environmental conditions for a particular location, \(e(t)\), we can simulate an
+entire life cycle from seed to seed. The timing components of the model give us
+the timing within the year of the growth period (vegetative + reproductive
+stages) and therefore the environmental conditions that the plant is exposed to
+during growth. The growth components predict growth at the individual organ
+level with these environmental conditions and therefore give us the
+environmentally determined seed number given by the \(b(m)\) function, which can
+depend on growth (mass $m$ of fruits).
+
+\begin{figure}[p]
+\centering
+\resizebox*{\textwidth}{0.95\textheight}{
+\begin{tabularx}{1.3\textwidth}{l} 
+\toprule
+\addlinespace[0.1cm]
+\textsf{\emph{Phenology}} \\
+$ \mr{Seed}(\ar{gntp}{a}, \ar{dev}{d}, \ar{r}{r}) \xrightarrow{1.0} $ \\
+\addlinespace[-0.27cm]
+$\mr{Seed}(\ar{dev}{d + htu(temp, moist, f(r,temp,moist), a.\psi_i)}, \mr{r}{f(r, temp, moist)})$ \\
+
+$\mr{Seed}(\ar{gntp}{a},\ar{dev}{d},\ar{r}{r} ) \xrightarrow{1.0} $
+$\mr{Plant}(\ar{gntp}{a}), \mr{Root}(\ldots),\mr{Leaf}( \ldots ), \mr{Leaf}(\ldots) \, \, \lbrack d > D_{g}\rbrack$ \\
+
+$\mr{Plant}(\ar{gntp}{a},\ar{dev}{d}, \ar{wc}{w}) \xrightarrow{1.0} \mr{Plant}(\ar{dev}{d + mptu( temp, dl, a.f_{i}, w )},\ar{wc}{f(w)})$ \\
+
+$\mr{Plant}(\ar{gntp}{a}, \ar{dev}{d}, \ar{wc}{w}) \xrightarrow{1.0} \mr{\ FPlant}(\ar{gntp}{a}) \, \, \lbrack d > D_{f} \rbrack$ \\
+
+$\mr{FPlant}( \ar{dev}{d} ) \xrightarrow{1.0} \mr{FPlant}(\ar{dev}{d + tu(temp)})$ \\
+
+$\mr{FPlant}( \mr{attr} = a,\mr{\ dev} = d ) \xrightarrow{1.0} \mr{Seed}( \mr{attr} = a,\ \mr{dev} = 0,\ r = 0 )\ \ \lbrack d > D_{s}\rbrack$ \\
+\addlinespace[0.2cm]
+\textsf{\emph{Metabolism}} \\
+\textsf{growth (per organ type)} \\
+\addlinespace[-0.1cm]
+$\mathrm{Leaf}(\ar{m}{m},\ar{i}{i}), \mathrm{Cell}(\ar{c}{c}) \xrightarrow{d_l(i, t)}
+\mathrm{Leaf}(\ar{m}{m+g_l(m)}), \mathrm{Cell}(\ar{c}{c-g_l(m)}) [c-g_l(m) > c_b]$ \\
+
+$\mathrm{Root}(\ar{m}{m}), \mathrm{Cell}(\ar{c}{c}) \xrightarrow{d_r(t)}
+\mathrm{Root}(\ar{m}{m+g_r(m)}), \mathrm{Cell}(\ar{c}{c-g_r(m)}) [c-g_r(m) > c_b]$ \\
+
+$\mathrm{LLeaf}(\ar{m}{m}), \mathrm{Cell}(\ar{c}{c}) \xrightarrow{d_{ll}(t)}
+\mathrm{LLeaf}(\ar{m}{m+g_{ll}(m)}), \mathrm{Cell}(\ar{c}{c-g_{ll}(m)}) [c-g_{ll}(m) > c_b]$ \\
+
+$\mathrm{INode}(\ar{m}{m}), \mathrm{Cell}(\ar{c}{c}) \xrightarrow{d_{i}(t)}
+\mathrm{INode}(\ar{m}{m+g_{i}(m)}), \mathrm{Cell}(\ar{c}{c-g_{i}(m)}) [c-g_{i}(m) > c_b]$ \\
+
+$\mathrm{Fruit}(\ar{m}{m}), \mathrm{Cell}(\ar{c}{c}) \xrightarrow{d_{f}(t)}
+\mathrm{Fruit}(\ar{m}{m+g_{f}(m)}), \mathrm{Cell}(\ar{c}{c-g_{f}(m)}) [c-g_{f}(m) > c_b]$ \\
+
+\textsf{maintenance (per organ type)} \\
+\addlinespace[-0.1cm]
+$\mathrm{Leaf}(\ar{m}{m}), \mathrm{Cell}(\ar{c}{c}) \xrightarrow{1.0}
+\mathrm{Leaf}(\ar{m}{m}), \mathrm{Cell}(\ar{c}{c-r_{l}(m)})$ \\
+
+$\mathrm{Root}(\ar{m}{m}), \mathrm{Cell}(\ar{c}{c}) \xrightarrow{1.0}
+\mathrm{Root}(\ar{m}{m}), \mathrm{Cell}(\ar{c}{c-r_{r}(m)})$ \\
+
+$\mathrm{LLeaf}(\ar{m}{m}), \mathrm{Cell}(\ar{c}{c}) \xrightarrow{1.0}
+\mathrm{LLeaf}(\ar{m}{m}), \mathrm{Cell}(\ar{c}{c-r_{ll}(m)})$ \\
+
+$\mathrm{INode}(\ar{m}{m}), \mathrm{Cell}(\ar{c}{c}) \xrightarrow{1.0}
+\mathrm{INode}(\ar{m}{m}), \mathrm{Cell}(\ar{c}{c-r_{i}(m)})$ \\
+
+$\mathrm{Fruit}(\ar{m}{m}), \mathrm{Cell}(\ar{c}{c}) \xrightarrow{1.0}
+\mathrm{Fruit}(\ar{m}{m}), \mathrm{Cell}(\ar{c}{c-r_{f}(m)})$ \\
+
+\textsf{mobilisation (per organ type)} \\
+\addlinespace[-0.1cm]
+$\mathrm{Leaf}(\ar{m}{m}), \mathrm{Cell}(\ar{c}{c}) \xrightarrow{1.0}
+\mathrm{Leaf}(\ar{m}{m-t_{l}(m)}), \mathrm{Cell}(\ar{c}{c+t_{l}(m)})
+\; [c \leq c_b]$ \\
+
+$\mathrm{Root}(\ar{m}{m}), \mathrm{Cell}(\ar{c}{c}) \xrightarrow{1.0}
+\mathrm{Root}(\ar{m}{m-t_{r}(m)}), \mathrm{Cell}(\ar{c}{c+t_{r}(m)})
+\; [c \leq c_b]$ \\
+
+$\mathrm{LLeaf}(\ar{m}{m}), \mathrm{Cell}(\ar{c}{c}) \xrightarrow{1.0}
+\mathrm{LLeaf}(\ar{m}{m-t_{ll}(m)}), \mathrm{Cell}(\ar{c}{c+t_{ll}(m)})
+\; [c \leq c_b]$ \\
+
+$\mathrm{INode}(\ar{m}{m}), \mathrm{Cell}(\ar{c}{c}) \xrightarrow{1.0}
+\mathrm{INode}(\ar{m}{m-t_{i}(m)}), \mathrm{Cell}(\ar{c}{c+t_{i}(m)})
+\; [c \leq c_b]$ \\
+
+$\mathrm{Fruit}(\ar{m}{m}), \mathrm{Cell}(\ar{c}{c}) \xrightarrow{1.0}
+\mathrm{Fruit}(\ar{m}{m-t_{f}(m)}), \mathrm{Cell}(\ar{c}{c+t_{f}(m)}) \;
+[c \leq c_b]$ \\
+
+\textsf{assimilation} \\
+\addlinespace[-0.1cm]
+$\mathrm{Cell}(\ar{c}{c}, \ar{s}{s}) \xrightarrow{\phi(e(t))}
+\mathrm{Cell}(\ar{c}{c+k_c a_{\mathrm{plant}}}, \ar{s}{s+(1-k_c) a_{\mathrm{plant}}})
+[c \leq c_b]$ \\
+
+\textsf{starch} \\
+\addlinespace[-0.1cm]
+$\mathrm{Cell}(\ar{c}{c}, \ar{s}{s}) \xrightarrow{}
+\mathrm{Cell}(\ar{c}{c+f_d(e(t)}), \ar{s}{s-f_d(e(t)}) \;
+[\mathrm{night} \land s-f_d(e(t)) > 0]$ \\ 
+
+\textsf{\emph{Development}} \\
+\addlinespace[-0.1cm]
+$\mathrm{Plant}(), \mathrm{VAxis}(\ar{n}{n}) \xrightarrow{f_o(e(t))}
+\mathrm{Plant}(), \mathrm{VAxis}(\ar{n}{n+1}), \mathrm{LAxis}(\ar{i}{n+1}),
+\mathrm{Leaf}(\dots)$ \\
+
+$\mathrm{FPlant}, \mathrm{VAxis}(\ar{n}{n}) \xrightarrow{f(e(t))}$ \\
+\addlinespace[-0.27cm]
+$\mathrm{FPlant}, \mathrm{VAxis}(\ar{n}{n+1})
+\mathrm{INode}(\ar{i}{n+1}, \ar{pid}{V \, n+1}),
+\mathrm{Leaf}(\ar{i}{n+1}, \dots)
+\; [n < v_{\mathrm{max}}(n_f)]$ \\
+
+$\mathrm{FPlant}, \mathrm{VAxis}(\ar{n}{n}) \xrightarrow{f(e(t))}
+\mathrm{FPlant}, \mathrm{VAxis}(\ar{n}{n+1}), \mathrm{Fruit}(\ar{pi}{V \; n+1})
+\; [n = v_{\mathrm{max}}(n_f)]$ \\
+
+$\mathrm{FPlant}, \mathrm{LAxis}(\ar{i}{i},\ar{n}{n}), \mathrm{Fruit}(\ar{pi}{V \; i+1}) \xrightarrow{f(e(t))}$ \\
+\addlinespace[-0.27cm]
+$\mathrm{FPlant}, \mathrm{LAxis}(\ar{n}{n+1}), \mathrm{Fruit},
+\mathrm{INode}(\ar{i}{n+1}, \ar{pi}{L \, i}), \mathrm{LLeaf}(\ar{i}{n+1}, \ar{pi}{L \; i})
+\; [n < l_{\mathrm{max}}(n_f, i) \wedge t_{\mathrm{del}}]$ \\
+
+$\mathrm{FPlant}, \mathrm{LAxis}(\ar{i}{i}, \ar{n}{n}) \xrightarrow{f(e(t))}
+\mathrm{FPlant}, \mathrm{LAxis}(\ar{n}{n+1}), \mathrm{Fruit}(\ar{pi}{L \; i})
+\; [n = l_{\mathrm{max}}(n_f, i)]$ \\
+
+\bottomrule
+\end{tabularx}} %}
+\caption{A list of all the rules for the dynamics of FM-life. Phenology rules
+  determine the timing of the life-cycle transitions. Metabolism rules encode
+  the flow of carbon and starch between the main pools ($\mathrm{Cell}$ agent)
+  and the organs. Development rules encode the creation of new organs -- in the
+  vegetative stage the creation of new leaves and in the reproductive stage the
+  organs representing the full infloresence structure described in
+  \ref{growth-1}}
+\label{fig:fmComplete}
+\end{figure}
 
 
 \subsection{Population level model and plotting conventions}
@@ -1219,9 +1351,28 @@ fitness or on phenology
 these components sharpens ecological insight, by understanding the performance
 of genetic variants in the environment that underlies differences in fitness
 \citep[see discussions in][]{burghardt_modeling_2015, doebeli_towards_2017} and
-can thus inform evolutionary hypotheses. Adding genetic variation between
-generations will in future model Arabidopsis evolution explicitly, perhaps after
-competing genetic variants \emph{in silico} using adaptive dynamics approaches
-\citep{brannstrom_hitchhikers_2013, weise_mechanistic_2015}.  Thus, the FM-life
-model offers a further tool to bridge among disciplines in plant biology,
-ecology and evolution.
+can thus inform evolutionary hypotheses. This is perhaps one of the first
+instances of models going from the molecular mechanism to the whole plant and to
+the population, which points in the direction of closing the circle of
+understanding allowing one to ask 'why' as well as 'how' questions (see
+\ref{sec:resCircle} and more general discussion in \ref{sec:ecology}). This was
+also a signficant test for Chromar and this model shows the breadth of
+applicability since we have several different types of dynamics at different
+levels of organisation.
+
+Adding genetic variation between generations will in future model Arabidopsis
+evolution explicitly, perhaps after competing genetic variants \emph{in silico}
+using adaptive dynamics approaches \citep{brannstrom_hitchhikers_2013,
+  weise_mechanistic_2015}. Adding different genetic variants in the populations
+of FM-life models introduces competition implicitly as the different variatns
+will have different reproductive rates, which means that inspecting the
+population structure at any timepoint can give a ranking of the variants. For
+example, if we had two populations with two different dormancy or floral
+repression levels they would have different birth dates at each location
+depending on the period in the year that they grow as we have seen. Competition
+can also be added more explicitly by, for example, considering death of the
+growing plants at different developmental stages and competition for common
+resources like space and soil nutrients. This allows to explicitly test fitness
+hypotheses for different mechanisms going to the molecular level. Thus, the
+FM-life model offers a unique tool (and opportunity) to bridge among disciplines
+in plant biology, ecology and evolution.
